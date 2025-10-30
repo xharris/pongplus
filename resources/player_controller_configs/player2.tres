@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PlayerControllerConfig" load_steps=5 format=3 uid="uid://bjvscjrt5oohf"]
+
+[ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="1_6n3kk"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_6n3kk"]
+device = -1
+keycode = 76
+unicode = 108
+
+[sub_resource type="InputEventKey" id="InputEventKey_eo0y6"]
+device = -1
+keycode = 75
+unicode = 107
+
+[sub_resource type="InputEventKey" id="InputEventKey_r4iy0"]
+device = -1
+keycode = 73
+unicode = 105
+
+[resource]
+script = ExtResource("1_6n3kk")
+up = SubResource("InputEventKey_r4iy0")
+down = SubResource("InputEventKey_eo0y6")
+attack = SubResource("InputEventKey_6n3kk")
+metadata/_custom_type_script = "uid://dgxxs0f1ucqi0"

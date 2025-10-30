@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://df5xis8hnkamb"]
+
+[ext_resource type="Script" uid="uid://bbpxanlu2oiws" path="res://components/missile/missile.gd" id="1_nbh8m"]
+
+[node name="Missile" type="Node2D"]
+script = ExtResource("1_nbh8m")

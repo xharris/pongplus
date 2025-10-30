@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://dhd07b8guciwu"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_0p35y"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_6hruh"]
+[ext_resource type="Resource" uid="uid://dw78u7op1vk8f" path="res://resources/ball_visitors/target_last_platform.tres" id="2_poc1g"]
+
+[resource]
+script = ExtResource("2_6hruh")
+name = "play"
+on_me_hit_ball = Array[ExtResource("1_0p35y")]([])
+on_ball_hit_me = Array[ExtResource("1_0p35y")]([ExtResource("2_poc1g")])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"
