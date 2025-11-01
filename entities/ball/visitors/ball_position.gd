@@ -19,4 +19,4 @@ func visit_ball(me: Ball):
                 for ball in balls:
                     ball.missile.stop_pathing()
                     ball.global_position = view_size.get_center()
-                    _log.info("center %s at %v" % [ball, ball.global_position])
+                    _log.debug("center %s at %v" % [ball, ball.global_position])

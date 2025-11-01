@@ -3,7 +3,7 @@ class_name Player
 
 enum BallDirection {STRAIGHT, UP, DOWN}
 
-var _log = Logger.new("player", Logger.Level.DEBUG)
+var _log = Logger.new("player")#, Logger.Level.DEBUG)
     
 @onready var movement: PlatformMovement = $PlatformMovement
 @onready var controller: PlayerController = $PlayerController

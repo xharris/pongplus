@@ -59,7 +59,7 @@ func path_to(target: Node2D):
             duration_curve.sample(duration_curve_position),
         )
     )
-    _log.info("target %s" % [target])
+    _log.debug("target %s" % [target])
 
 func stop_pathing():
     if _tween:
