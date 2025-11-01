@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BallPosition" load_steps=2 format=3 uid="uid://bawolmnh2iigs"]
+
+[ext_resource type="Script" uid="uid://cnn7shs13qbfs" path="res://entities/ball/visitors/ball_position.gd" id="1_qkpip"]
+
+[resource]
+script = ExtResource("1_qkpip")
+position = 0
+metadata/_custom_type_script = "uid://cnn7shs13qbfs"

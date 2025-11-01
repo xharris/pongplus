@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=10 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="PackedScene" uid="uid://du5nv34wqy0ef" path="res://components/platform/platform_movement.tscn" id="1_symyc"]
@@ -10,6 +10,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8fjmc"]
 radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qiwj3"]
+radius = 70.0
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_abrql")
@@ -35,7 +38,12 @@ vframes = 2
 
 [node name="PlayerController" parent="." instance=ExtResource("3_bls4j")]
 
+[node name="Hurtbox" parent="." instance=ExtResource("5_fkugw")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_8fjmc")
+
 [node name="Hitbox" parent="." instance=ExtResource("5_fkugw")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_8fjmc")
+shape = SubResource("CircleShape2D_qiwj3")

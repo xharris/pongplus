@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BallPathTo" load_steps=2 format=3 uid="uid://dochcbkgngp1a"]
+
+[ext_resource type="Script" uid="uid://d3l74jdgrxrj4" path="res://entities/ball/visitors/ball_path_to.gd" id="1_jlel1"]
+
+[resource]
+script = ExtResource("1_jlel1")
+target = 2
+metadata/_custom_type_script = "uid://d3l74jdgrxrj4"

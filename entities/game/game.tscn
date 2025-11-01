@@ -1,40 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://nwggbimfhwtc"]
+[gd_scene load_steps=9 format=3 uid="uid://nwggbimfhwtc"]
 
 [ext_resource type="PackedScene" uid="uid://cfckcjj77ft5n" path="res://components/platform/platform.tscn" id="1_5xshk"]
+[ext_resource type="Script" uid="uid://d4drjhi2ttmd7" path="res://entities/game/game.gd" id="1_pxw13"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="2_j054j"]
-[ext_resource type="PackedScene" uid="uid://lxewn5fqam13" path="res://components/missile/missile_target.tscn" id="2_vbwj1"]
 [ext_resource type="PackedScene" uid="uid://cd6xno3u30o4r" path="res://entities/ball/ball.tscn" id="3_bbd0t"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="3_vjvwb"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="4_vbwj1"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="6_ikuqk"]
+[ext_resource type="Resource" uid="uid://dw78u7op1vk8f" path="res://resources/ball_visitors/target_random_platform.tres" id="7_pxw13"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_pxw13")
 
 [node name="PlatformL1" parent="." node_paths=PackedStringArray("down") instance=ExtResource("1_5xshk")]
 position = Vector2(234, 176)
 down = NodePath("../PlatformL2")
 
-[node name="MissileTarget" parent="PlatformL1" instance=ExtResource("2_vbwj1")]
-
 [node name="PlatformL2" parent="." node_paths=PackedStringArray("up") instance=ExtResource("1_5xshk")]
 position = Vector2(234, 420)
 up = NodePath("../PlatformL1")
-
-[node name="MissileTarget" parent="PlatformL2" instance=ExtResource("2_vbwj1")]
 
 [node name="PlatformR1" parent="." node_paths=PackedStringArray("down") instance=ExtResource("1_5xshk")]
 position = Vector2(935, 147)
 down = NodePath("../PlatformR2")
 
-[node name="MissileTarget" parent="PlatformR1" instance=ExtResource("2_vbwj1")]
-
 [node name="PlatformR2" parent="." node_paths=PackedStringArray("up") instance=ExtResource("1_5xshk")]
 position = Vector2(938, 424)
 up = NodePath("../PlatformR1")
-
-[node name="MissileTarget" parent="PlatformR2" instance=ExtResource("2_vbwj1")]
-
-[node name="Ball" parent="PlatformR2" instance=ExtResource("3_bbd0t")]
-position = Vector2(-384, -147)
 
 [node name="Player1" parent="." instance=ExtResource("2_j054j")]
 position = Vector2(39, 57)
@@ -43,3 +35,7 @@ player_controller_config = ExtResource("3_vjvwb")
 [node name="Player2" parent="." instance=ExtResource("2_j054j")]
 position = Vector2(1116, 45)
 player_controller_config = ExtResource("4_vbwj1")
+
+[node name="Ball" parent="." instance=ExtResource("3_bbd0t")]
+position = Vector2(554, 277)
+on_ready = Array[ExtResource("6_ikuqk")]([ExtResource("7_pxw13")])

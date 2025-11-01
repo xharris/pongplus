@@ -2,7 +2,12 @@ extends Controller
 class_name PlayerController
 
 @export var config: PlayerControllerConfig
-var _charging: bool = false
+var is_charging: bool = false
+var charge_duration: float = 0
+
+func _process(delta: float) -> void:
+    if is_charging:
+        charge_duration += delta
 
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_pressed():
@@ -12,9 +17,10 @@ func _unhandled_input(event: InputEvent) -> void:
             down.emit()
         if config.attack and event.is_match(config.attack):
             charge_attack.emit()
-            _charging = true
+            charge_duration = 0
+            is_charging = true
     
     if event.is_released():
-        if _charging and config.attack and event.is_match(config.attack):
+        if is_charging and config.attack and event.is_match(config.attack):
             release_attack.emit()
-            _charging = false
+            is_charging = false

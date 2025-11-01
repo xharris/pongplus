@@ -21,3 +21,13 @@ func _on_body_entered(body: Node2D):
 
 func _on_body_exited(body: Node2D):
     _entered.erase(body)
+
+func disable():
+    for c in find_children("*"):
+        if c is CollisionShape2D:
+            c.disabled = true
+            
+func enable():
+    for c in find_children("*"):
+        if c is CollisionShape2D:
+            c.disabled = false

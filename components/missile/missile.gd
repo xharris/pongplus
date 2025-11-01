@@ -1,12 +1,26 @@
 extends Node2D
 class_name Missile
 
+## seconds
+const MISSILE_DURATION_MIN = 3
+## seconds
+const MISSILE_DURATION_MAX = 3
+
+var _log = Logger.new("missile")
 var _current_curve: Curve2D
 var _tween: Tween
 
+var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
 var target_history: Array[Node2D]
 var curve_distance: float = 0
 var missile_position: Vector2
+## [0, 1]
+var duration_curve_position: float:
+    set(v):
+        duration_curve_position = clampf(v, 0, 1)
+var is_pathing: bool:
+    get:
+        return _tween and _tween.is_running()
 
 func _process(delta: float) -> void:
     if _current_curve:
@@ -39,5 +53,15 @@ func path_to(target: Node2D):
         func(p):
             missile_position = curve.sample(0, p),
         0.0, 1.0,
-        3
+        lerp(
+            MISSILE_DURATION_MIN,
+            MISSILE_DURATION_MAX,
+            duration_curve.sample(duration_curve_position),
+        )
     )
+    _log.info("target %s" % [target])
+
+func stop_pathing():
+    if _tween:
+        _tween.stop()
+        _tween = null

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BallDurationCurvePosition" load_steps=2 format=3 uid="uid://ctr26w3na3vvl"]
+
+[ext_resource type="Script" uid="uid://cnswg8imq43pe" path="res://entities/ball/visitors/ball_duration_curve_position.gd" id="1_v2x3t"]
+
+[resource]
+script = ExtResource("1_v2x3t")
+type = 0
+amount = 0.05
+metadata/_custom_type_script = "uid://cnswg8imq43pe"
