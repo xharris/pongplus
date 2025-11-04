@@ -4,20 +4,33 @@ class_name Player
 enum BallDirection {STRAIGHT, UP, DOWN}
 
 var _log = Logger.new("player")#, Logger.Level.DEBUG)
-    
+
 @onready var movement: PlatformMovement = $PlatformMovement
 @onready var controller: PlayerController = $PlayerController
 @onready var hitbox: Hitbox = $Hitbox
 @onready var hurtbox: Hitbox = $Hurtbox
+@onready var character: Character = $Character
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
 
 var ball_hit_direction: BallDirection = BallDirection.STRAIGHT
+var hitbox_timer: Timer
 
 func accept(v: Visitor):
     if v is PlayerVisitor:
         v.visit_player(self)
+
+func _process(delta: float) -> void:
+    # face direction
+    var view_center = get_viewport_rect().get_center()
+    if global_position.x > view_center.x:
+        character.face_left()
+    else:
+        character.face_right()
+    # attack charge indicator
+    if controller.is_charging:
+        hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
 
 func _ready() -> void:
     controller.config = player_controller_config
@@ -26,10 +39,11 @@ func _ready() -> void:
     movement.moved.connect(_on_moved)
     controller.up.connect(_on_up)
     controller.down.connect(_on_down)
+    controller.charge_attack.connect(_on_charge_attack)
     controller.release_attack.connect(_on_release_attack)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     hurtbox.body_entered_once.connect(_on_hurtbox_body_entered_once)
-    
+
     for a in abilities:
         Visitor.visit(self, a.on_ready)
 
@@ -41,14 +55,24 @@ func _on_hurtbox_body_entered_once(body: Node2D):
             Visitor.visit(self, a.on_ball_hit_me)
             Visitor.visit(parent, a.on_ball_hit_me)
 
+func _on_charge_attack():
+    character.charge_attack()
+
 func _on_release_attack():
-    ## enable hitbox for X seconds
+    # play swing animation
+    character.attack()
+    # enable hitbox for X seconds
     hitbox.enable()
-    var timer = Timer.new()
-    timer.timeout.connect(hitbox.disable)
-    timer.wait_time = Constants.ATTACK_HITBOX_ACTIVE_DURATION
-    add_child(timer)
-    timer.start()
+    hitbox_timer = Timer.new()
+    hitbox_timer.timeout.connect(_on_hitbox_timer_timeout)
+    hitbox_timer.wait_time = Constants.ATTACK_HITBOX_ACTIVE_DURATION
+    add_child(hitbox_timer)
+    hitbox_timer.start()
+    hitbox.update_indicator(0)
+
+func _on_hitbox_timer_timeout():
+    hitbox_timer = null
+    hitbox.disable()
 
 func _on_hitbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
@@ -103,16 +127,30 @@ func _on_hitbox_body_entered_once(body: Node2D):
             Visitor.visit(self, a.on_me_hit_ball)  
             Visitor.visit(parent, a.on_me_hit_ball)    
 
+## Is currently in the middle of an attack
+func is_attack_locked():
+    return controller.is_charging or character.is_attacking()
+
+## Is currently charging an attack
+func is_charge_attack_locked():
+    return controller.is_charging
+
+## Is locked out of moving
+func is_movement_locked():
+    return controller.is_charging or \
+        character.is_attacking() or \
+        (hitbox_timer != null and hitbox_timer.time_left > 0)
+
 func _on_up():
-    if controller.is_charging:
+    if is_charge_attack_locked():
         ball_hit_direction = BallDirection.UP
-    else:
+    if not is_movement_locked():
         movement.move_up()
 
 func _on_down():
-    if controller.is_charging:
+    if is_charge_attack_locked():
         ball_hit_direction = BallDirection.DOWN
-    else:
+    if not is_movement_locked():
         movement.move_down()
 
 func _on_moved(platform: Platform):

@@ -1,6 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://4b5bvjbbd8nl"]
+[gd_scene load_steps=6 format=3 uid="uid://4b5bvjbbd8nl"]
 
 [ext_resource type="Script" uid="uid://c5f888s12w4mo" path="res://components/hitbox/hitbox.gd" id="1_xtorj"]
+[ext_resource type="Texture2D" uid="uid://djl7l2fdqsybp" path="res://components/hitbox/circle.png" id="2_g3mi3"]
+
+[sub_resource type="Curve" id="Curve_ldwq0"]
+_data = [Vector2(0, 0.15), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 20
+
+[sub_resource type="CurveTexture" id="CurveTexture_n0ecy"]
+curve = SubResource("Curve_ldwq0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7jqgp"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 50.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 25.93
+initial_velocity_max = 25.93
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_n0ecy")
 
 [node name="Hitbox" type="Area2D"]
 script = ExtResource("1_xtorj")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+amount = 50
+texture = ExtResource("2_g3mi3")
+process_material = SubResource("ParticleProcessMaterial_7jqgp")

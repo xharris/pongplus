@@ -48,7 +48,7 @@ func path_to(target: Node2D):
     _tween = create_tween()
     _tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
     _tween.set_trans(Tween.TRANS_LINEAR)
-    #_tween.set_ease(Tween.EASE_OUT)
+    _tween.set_ease(Tween.EASE_OUT)
     _tween.tween_method(
         func(p):
             missile_position = curve.sample(0, p),
