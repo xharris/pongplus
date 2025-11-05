@@ -10,6 +10,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @onready var hitbox: Hitbox = $Hitbox
 @onready var hurtbox: Hitbox = $Hurtbox
 @onready var character: Character = $Character
+@onready var camera: Camera = $Camera
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
@@ -78,6 +79,7 @@ func _on_hitbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
     if parent is Ball:
         _log.debug("I hit %s" % [parent])
+        camera.shake(Vector2(4, 0))
         # get last platform targeted
         var targets = parent.missile.target_history.duplicate()
         targets.reverse()

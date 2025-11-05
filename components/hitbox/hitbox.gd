@@ -50,7 +50,7 @@ func update_indicator(amount_ratio: float = INDICATOR_AMOUNT_RATIO):
                 if c is CollisionShape2D:
                     var shape = c.shape
                     if shape is CircleShape2D:
-                        _log.info("set particles radius: %d" % [shape.radius])
+                        _log.debug("set particles radius: %d" % [shape.radius])
                         particles_mat.emission_ring_radius = shape.radius
                         particles_mat.emission_ring_inner_radius = shape.radius
                         

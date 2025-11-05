@@ -1,10 +1,10 @@
 extends Node2D
 class_name Missile
 
-## seconds
-const MISSILE_DURATION_MIN = 3
-## seconds
-const MISSILE_DURATION_MAX = 3
+## Seconds
+const MISSILE_DURATION_MIN: float = 3
+## Seconds
+const MISSILE_DURATION_MAX: float = 1
 
 var _log = Logger.new("missile")
 var _current_curve: Curve2D

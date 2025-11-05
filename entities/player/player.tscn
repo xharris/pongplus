@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=11 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="PackedScene" uid="uid://du5nv34wqy0ef" path="res://components/platform/platform_movement.tscn" id="1_symyc"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ckj14pn1icvha" path="res://components/player_controller/player_controller.tscn" id="3_bls4j"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="5_fkugw"]
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="7_qiwj3"]
+[ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="8_26q78"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8fjmc"]
 radius = 16.0
@@ -33,3 +34,5 @@ shape = SubResource("CircleShape2D_8fjmc")
 shape = SubResource("CircleShape2D_qiwj3")
 
 [node name="Character" parent="." instance=ExtResource("7_qiwj3")]
+
+[node name="Camera" parent="." instance=ExtResource("8_26q78")]
