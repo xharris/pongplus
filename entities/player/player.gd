@@ -16,7 +16,6 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var abilities: Array[Ability]
 
 var ball_hit_direction: BallDirection = BallDirection.STRAIGHT
-var hitbox_timer: Timer
 var _flash_timer: Timer
 
 func accept(v: Visitor):
@@ -45,9 +44,19 @@ func _ready() -> void:
     controller.release_attack.connect(_on_release_attack)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     hurtbox.body_entered_once.connect(_on_hurtbox_body_entered_once)
+    character.attack_window_start.connect(_on_attack_window_start)
+    character.attack_window_end.connect(_on_attack_window_end)
 
     for a in abilities:
         Visitor.visit(self, a.on_ready)
+
+func _on_attack_window_start():
+    hitbox.enable()
+    character.set_weapon_color(Color.WHITE, 0.8)
+
+func _on_attack_window_end():
+    hitbox.disable()
+    character.set_weapon_color(Color.WHITE, 0)
 
 func _on_hurtbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
@@ -58,30 +67,20 @@ func _on_hurtbox_body_entered_once(body: Node2D):
             Visitor.visit(parent, a.on_ball_hit_me)
 
 func _on_charge_attack():
-    character.charge_attack()
+    if not is_attack_locked():
+        character.charge_attack()
 
 func _on_release_attack():
     # play swing animation
     character.attack()
-    # enable hitbox for X seconds
-    hitbox.enable()
-    hitbox_timer = Timer.new()
-    hitbox_timer.timeout.connect(_on_hitbox_timer_timeout)
-    hitbox_timer.wait_time = Constants.ATTACK_HITBOX_ACTIVE_DURATION
-    add_child(hitbox_timer)
-    hitbox_timer.start()
+    # hide indicator
     hitbox.update_indicator(0)
-
-func _on_hitbox_timer_timeout():
-    hitbox_timer = null
-    hitbox.disable()
 
 func _on_hitbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
     if parent is Ball:
         _log.debug("I hit %s" % [parent])
-        camera.shake(Vector2(4, 0))
-        flash_weapon(0.2, Color.WHITE, 0.75)
+        camera.shake(Vector2(4, 0), 1)
         # get last platform targeted
         var targets = parent.missile.target_history.duplicate()
         targets.reverse()
@@ -125,8 +124,8 @@ func _on_hitbox_body_entered_once(body: Node2D):
             Visitor.visit(parent, a.on_me_hit_ball)
     ball_hit_direction = BallDirection.STRAIGHT
 
-func flash_weapon(duration: float, color: Color = Color.WHITE, constrast: float = 1.0):
-    character.set_weapon_color(color, constrast)
+func flash_weapon(duration: float, color: Color = Color.WHITE, contrast: float = 1.0):
+    character.set_weapon_color(color, contrast)
     if _flash_timer:
         remove_child(_flash_timer)
     _flash_timer = Timer.new()
@@ -140,7 +139,7 @@ func _on_flash_weapon_finished():
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
-    return controller.is_charging or character.is_attacking()
+    return controller.is_charging or (character.is_attacking() and not character.attack_window_ended)
 
 ## Is currently charging an attack
 func is_charge_attack_locked():
@@ -149,8 +148,7 @@ func is_charge_attack_locked():
 ## Is locked out of moving
 func is_movement_locked():
     return controller.is_charging or \
-        character.is_attacking() or \
-        (hitbox_timer != null and hitbox_timer.time_left > 0)
+        (character.is_attacking() and not character.attack_window_ended)
 
 func _on_up():
     if is_charge_attack_locked():

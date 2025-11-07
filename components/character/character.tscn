@@ -133,6 +133,23 @@ tracks/4/keys = {
 "update": 0,
 "values": [1.5708, 4.71239]
 }
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1, 2.75),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_attack_window_start"
+}, {
+"args": [],
+"method": &"_attack_window_end"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uqrhf"]
 _data = {
@@ -208,7 +225,8 @@ hframes = 3
 [node name="Weapon" type="Node2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_uqrhf")
-position = Vector2(22, -5.79198e-05)
+position = Vector2(18.0018, 10.581)
+rotation = 2.3562
 
 [node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
 use_parent_material = true

@@ -29,6 +29,6 @@ func _process(delta: float) -> void:
         _shake_t -= delta
         t += delta * shake_intensity
 
-func shake(amount: Vector2):
+func shake(amount: Vector2, duration: float = shake_duration):
     _shake_offset = amount
-    _shake_t = shake_duration
+    _shake_t = duration
