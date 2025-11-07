@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://nwggbimfhwtc"]
 
-[ext_resource type="PackedScene" uid="uid://cfckcjj77ft5n" path="res://components/platform/platform.tscn" id="1_5xshk"]
 [ext_resource type="Script" uid="uid://d4drjhi2ttmd7" path="res://entities/game/game.gd" id="1_pxw13"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="2_j054j"]
+[ext_resource type="PackedScene" uid="uid://b1p04oipvkp57" path="res://levels/space/space.tscn" id="2_pxw13"]
 [ext_resource type="PackedScene" uid="uid://cd6xno3u30o4r" path="res://entities/ball/ball.tscn" id="3_bbd0t"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="3_vjvwb"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="4_vbwj1"]
@@ -12,21 +12,7 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("1_pxw13")
 
-[node name="PlatformL1" parent="." node_paths=PackedStringArray("down") instance=ExtResource("1_5xshk")]
-position = Vector2(234, 176)
-down = NodePath("../PlatformL2")
-
-[node name="PlatformL2" parent="." node_paths=PackedStringArray("up") instance=ExtResource("1_5xshk")]
-position = Vector2(234, 420)
-up = NodePath("../PlatformL1")
-
-[node name="PlatformR1" parent="." node_paths=PackedStringArray("down") instance=ExtResource("1_5xshk")]
-position = Vector2(935, 147)
-down = NodePath("../PlatformR2")
-
-[node name="PlatformR2" parent="." node_paths=PackedStringArray("up") instance=ExtResource("1_5xshk")]
-position = Vector2(938, 424)
-up = NodePath("../PlatformR1")
+[node name="Space" parent="." instance=ExtResource("2_pxw13")]
 
 [node name="Player1" parent="." instance=ExtResource("2_j054j")]
 position = Vector2(39, 57)

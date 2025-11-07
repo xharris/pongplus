@@ -17,6 +17,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
 var ball_hit_direction: BallDirection = BallDirection.STRAIGHT
 var hitbox_timer: Timer
+var _flash_timer: Timer
 
 func accept(v: Visitor):
     if v is PlayerVisitor:
@@ -80,6 +81,7 @@ func _on_hitbox_body_entered_once(body: Node2D):
     if parent is Ball:
         _log.debug("I hit %s" % [parent])
         camera.shake(Vector2(4, 0))
+        flash_weapon(0.2, Color.WHITE, 0.75)
         # get last platform targeted
         var targets = parent.missile.target_history.duplicate()
         targets.reverse()
@@ -96,20 +98,15 @@ func _on_hitbox_body_entered_once(body: Node2D):
                 ])
             return
         # get same index platform in group
-        var index_in_group = platform.index_in_group()
-        if index_in_group < 0:
-            _log.warn("current platform is not in a group")
+        var last_group = PlatformGroup.get_group(platform)
+        if not last_group:
+            _log.warn("platform is not part of a group: %s" % [platform])
             return
-        # get a different group
-        var groups: Array[Platform.Group]
-        for g in Platform.groups:
-            if g.index != platform.group_index:
-                groups.append(g)
-        if groups.is_empty():
-            _log.warn("no other platform groups found")
-            return
-        
-        var group: Platform.Group = groups.pick_random()
+        var groups: Array[PlatformGroup]
+        groups.assign(get_tree().get_nodes_in_group(Groups.PLATFORM_GROUP))
+        groups.erase(last_group)        
+        var group: PlatformGroup = groups.pick_random()
+        var index_in_group = last_group.platforms.find(platform)
         var opposite_platform = group.platforms[clampi(index_in_group, 0, group.platforms.size()-1)]
         # get next platform to target
         match ball_hit_direction:
@@ -119,15 +116,27 @@ func _on_hitbox_body_entered_once(body: Node2D):
                 parent.next_missile_target = opposite_platform.down
             _:
                 parent.next_missile_target = opposite_platform
-                
         # move to it
         _log.debug("Ball next target: from %s to %s" % [platform, parent.next_missile_target])
         parent.missile_path_next_target()
-    
         for a in abilities:
             _log.debug("using ability %s" % [a.name])
             Visitor.visit(self, a.on_me_hit_ball)  
-            Visitor.visit(parent, a.on_me_hit_ball)    
+            Visitor.visit(parent, a.on_me_hit_ball)
+    ball_hit_direction = BallDirection.STRAIGHT
+
+func flash_weapon(duration: float, color: Color = Color.WHITE, constrast: float = 1.0):
+    character.set_weapon_color(color, constrast)
+    if _flash_timer:
+        remove_child(_flash_timer)
+    _flash_timer = Timer.new()
+    _flash_timer.wait_time = duration
+    _flash_timer.autostart = true
+    _flash_timer.timeout.connect(_on_flash_weapon_finished)
+    add_child(_flash_timer)
+    
+func _on_flash_weapon_finished():
+    character.set_weapon_color()
 
 ## Is currently in the middle of an attack
 func is_attack_locked():

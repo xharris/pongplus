@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GridPositionStrategy" load_steps=2 format=3 uid="uid://chanhih3qbpux"]
+
+[ext_resource type="Script" uid="uid://clv1db5jxmtnk" path="res://components/position_strategy/strategies/grid.gd" id="1_l6ygr"]
+
+[resource]
+script = ExtResource("1_l6ygr")
+size = Vector2(4, 4)
+offset = Vector2i(3, 1)
+metadata/_custom_type_script = "uid://clv1db5jxmtnk"

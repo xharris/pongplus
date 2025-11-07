@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1p04oipvkp57"]
+
+[ext_resource type="Script" uid="uid://c7pyip5fxqxrc" path="res://components/platform/platform_group.gd" id="1_jraqu"]
+[ext_resource type="Resource" uid="uid://dk1aywv3knvii" path="res://levels/space/platform_position_left.tres" id="2_ivyi0"]
+[ext_resource type="PackedScene" uid="uid://cfckcjj77ft5n" path="res://components/platform/platform.tscn" id="3_4l3f4"]
+[ext_resource type="Resource" uid="uid://chanhih3qbpux" path="res://levels/space/platform_position_right.tres" id="4_5qrbm"]
+
+[node name="Space" type="Node2D"]
+
+[node name="Left" type="Node2D" parent="."]
+script = ExtResource("1_jraqu")
+position_strategy = ExtResource("2_ivyi0")
+metadata/_custom_type_script = "uid://c7pyip5fxqxrc"
+
+[node name="Platform" parent="Left" instance=ExtResource("3_4l3f4")]
+
+[node name="Platform2" parent="Left" instance=ExtResource("3_4l3f4")]
+
+[node name="Platform3" parent="Left" instance=ExtResource("3_4l3f4")]
+
+[node name="Right" type="Node2D" parent="."]
+script = ExtResource("1_jraqu")
+position_strategy = ExtResource("4_5qrbm")
+metadata/_custom_type_script = "uid://c7pyip5fxqxrc"
+
+[node name="Platform" parent="Right" instance=ExtResource("3_4l3f4")]
+
+[node name="Platform2" parent="Right" instance=ExtResource("3_4l3f4")]
+
+[node name="Platform3" parent="Right" instance=ExtResource("3_4l3f4")]

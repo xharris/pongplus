@@ -3,6 +3,9 @@ class_name Character
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Node2D = %Sprite
+@onready var weapon: Node2D = %Weapon
+
+var _log = Logger.new("character")
 
 func charge_attack():
     animation_player.stop(true)
@@ -21,3 +24,8 @@ func face_right():
     
 func face_left():
     sprite.scale.x = -1
+
+func set_weapon_color(color: Color = Color.WHITE, value: float = 0):
+    var material: ShaderMaterial = weapon.material
+    material.set_shader_parameter("flash_color", color)
+    material.set_shader_parameter("flash_value", value)
