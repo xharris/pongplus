@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CameraShake" load_steps=2 format=3 uid="uid://df5po4q22l4j1"]
+
+[ext_resource type="Script" uid="uid://d2isw0wgsh42n" path="res://components/camera/visitors/camera_shake.gd" id="1_3tapd"]
+
+[resource]
+script = ExtResource("1_3tapd")
+amount = Vector2(4, 0)
+duration = 1.5
+metadata/_custom_type_script = "uid://d2isw0wgsh42n"

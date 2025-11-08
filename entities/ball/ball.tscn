@@ -13,7 +13,7 @@ script = ExtResource("1_jyt08")
 
 [node name="Missile" parent="." instance=ExtResource("1_61umk")]
 
-[node name="Ball" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
 texture = ExtResource("3_w5wpn")
 

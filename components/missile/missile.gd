@@ -21,10 +21,12 @@ var duration_curve_position: float:
 var is_pathing: bool:
     get:
         return _tween and _tween.is_running()
+var _last_position: Vector2
+var velocity: Vector2
 
 func _process(delta: float) -> void:
-    if _current_curve:
-        pass
+    velocity = (global_position - _last_position).normalized()
+    _last_position = global_position
 
 func path_to(target: Node2D):
     target_history.append(target)

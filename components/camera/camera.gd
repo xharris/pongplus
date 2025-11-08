@@ -16,6 +16,10 @@ var _shake_offset: Vector2 = Vector2(0, 0)
 var t: float = 0
 var _xform: Transform2D
 
+func accept(v: Visitor):
+    if v is CameraVisitor:
+        v.visit_camera(self)
+
 func _ready() -> void:
     add_to_group(Groups.CAMERA)
 

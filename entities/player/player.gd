@@ -16,11 +16,10 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var abilities: Array[Ability]
 
 var ball_hit_direction: BallDirection = BallDirection.STRAIGHT
-var _flash_timer: Timer
 
 func accept(v: Visitor):
-    if v is PlayerVisitor:
-        v.visit_player(self)
+    camera.accept(v)
+    character.accept(v)
 
 func _process(delta: float) -> void:
     # face direction
@@ -80,7 +79,6 @@ func _on_hitbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
     if parent is Ball:
         _log.debug("I hit %s" % [parent])
-        camera.shake(Vector2(4, 0), 1)
         # get last platform targeted
         var targets = parent.missile.target_history.duplicate()
         targets.reverse()
@@ -123,19 +121,6 @@ func _on_hitbox_body_entered_once(body: Node2D):
             Visitor.visit(self, a.on_me_hit_ball)  
             Visitor.visit(parent, a.on_me_hit_ball)
     ball_hit_direction = BallDirection.STRAIGHT
-
-func flash_weapon(duration: float, color: Color = Color.WHITE, contrast: float = 1.0):
-    character.set_weapon_color(color, contrast)
-    if _flash_timer:
-        remove_child(_flash_timer)
-    _flash_timer = Timer.new()
-    _flash_timer.wait_time = duration
-    _flash_timer.autostart = true
-    _flash_timer.timeout.connect(_on_flash_weapon_finished)
-    add_child(_flash_timer)
-    
-func _on_flash_weapon_finished():
-    character.set_weapon_color()
 
 ## Is currently in the middle of an attack
 func is_attack_locked():

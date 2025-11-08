@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterFlashWeapon" load_steps=2 format=3 uid="uid://cilyext635ffc"]
+
+[ext_resource type="Script" uid="uid://ckn5h5jxkhcvg" path="res://components/character/visitors/flash_weapon.gd" id="1_y6nge"]
+
+[resource]
+script = ExtResource("1_y6nge")
+duration = 0.25
+color = Color(1, 1, 1, 1)
+contrast = 1.0
+metadata/_custom_type_script = "uid://ckn5h5jxkhcvg"

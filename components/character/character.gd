@@ -16,6 +16,10 @@ var attack_window_active: bool:
 var attack_window_ended: bool:
     get: return _attack_window_ended
 
+func accept(v: Visitor):
+    if v is CharacterVisitor:
+        v.visit_character(self)
+
 func charge_attack():
     animation_player.stop(true)
     animation_player.play("attack")
