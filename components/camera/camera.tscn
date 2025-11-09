@@ -3,5 +3,4 @@
 [ext_resource type="Script" uid="uid://bpu0kx3kdynxc" path="res://components/camera/camera.gd" id="1_s8cyt"]
 
 [node name="Camera" type="Node2D"]
-top_level = true
 script = ExtResource("1_s8cyt")

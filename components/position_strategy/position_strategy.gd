@@ -1,3 +1,4 @@
+## Position list of nodes in specific formation (formations in ./strategies)
 extends Resource
 class_name PositionStrategy
 

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1ksrh6dvtg8u"]
-
-[ext_resource type="Script" uid="uid://b15xrsoc3l3db" path="res://components/camera/camera_focal_point.gd" id="1_7crvv"]
-
-[node name="CameraFocalPoint" type="Node2D"]
-script = ExtResource("1_7crvv")

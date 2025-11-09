@@ -10,20 +10,21 @@ const FOCAL_POINT_OFFSET: int = 60
 ## [code]1.0[/code] is exact average of all focal points[br]
 static var focal_point_weight: float = 0.2
 
-static func update_view(delta: float):
+static func update_view(_delta: float):
     var root: Node2D = Engine.get_main_loop().current_scene
     if not root:
         return
     var canvas_transform = Transform2D.IDENTITY
-    for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
-        canvas_transform *= c._xform
     # get focal point
     var total_position: Vector2
     var focal_points = 0
-    for c: CameraFocalPoint in root.get_tree().get_nodes_in_group(Groups.CAMERA_FOCAL_POINT):
-        focal_points += 1
-        total_position += c.global_position
+    for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
+        canvas_transform *= c._xform
+        if c.is_focal_point:
+            focal_points += 1
+            total_position += c.global_position
     var viewport = root.get_viewport()
+    #_static_log.debug("focal points: %d" % [focal_points])
     if focal_points > 0:
         var avg_position = total_position / focal_points
         var view_center = viewport.get_visible_rect().size / 2
@@ -33,6 +34,7 @@ static func update_view(delta: float):
 
 @export var shake_duration: float = 1.5
 @export var shake_intensity: float = 30
+@export var is_focal_point: bool = false
 
 var _log = Logger.new("camera")
 var _shake_t: float = 0

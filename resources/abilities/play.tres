@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Ability" load_steps=10 format=3 uid="uid://dhd07b8guciwu"]
 
-[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_0p35y"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="1_0p35y"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_6hruh"]
 [ext_resource type="Resource" uid="uid://dochcbkgngp1a" path="res://resources/ball_visitors/all_stop_pathing.tres" id="2_7v7mu"]
 [ext_resource type="Resource" uid="uid://bm6dn72476p5w" path="res://resources/ball_visitors/set_one_instance.tres" id="2_ffbih"]

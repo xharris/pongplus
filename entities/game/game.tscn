@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cd6xno3u30o4r" path="res://entities/ball/ball.tscn" id="3_bbd0t"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="3_vjvwb"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="4_vbwj1"]
-[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="6_ikuqk"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="6_ikuqk"]
 [ext_resource type="Resource" uid="uid://dw78u7op1vk8f" path="res://resources/ball_visitors/target_random_platform.tres" id="7_pxw13"]
 
 [node name="Game" type="Node2D"]
