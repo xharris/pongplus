@@ -1,16 +1,40 @@
 extends Node2D
 class_name Camera
 
+static var _static_log = Logger.new("Camera", Logger.Level.DEBUG)
+
+const FOCAL_POINT_OFFSET: int = 60
+## Midpoint to follow between center of screen and focal point.[br]
+## [code]0.0[/code] is locked to center (no movement)[br]
+## [code]0.5[/code] is halfway[br]
+## [code]1.0[/code] is exact average of all focal points[br]
+static var focal_point_weight: float = 0.2
+
 static func update_view(delta: float):
-    var root = Engine.get_main_loop().root
+    var root: Node2D = Engine.get_main_loop().current_scene
+    if not root:
+        return
     var canvas_transform = Transform2D.IDENTITY
     for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
         canvas_transform *= c._xform
+    # get focal point
+    var total_position: Vector2
+    var focal_points = 0
+    for c: CameraFocalPoint in root.get_tree().get_nodes_in_group(Groups.CAMERA_FOCAL_POINT):
+        focal_points += 1
+        total_position += c.global_position
+    var viewport = root.get_viewport()
+    if focal_points > 0:
+        var avg_position = total_position / focal_points
+        var view_center = viewport.get_visible_rect().size / 2
+        var adjusted_position = lerp(view_center, avg_position, focal_point_weight)
+        canvas_transform = canvas_transform.translated(-adjusted_position + view_center)
     root.get_viewport().canvas_transform = canvas_transform
 
 @export var shake_duration: float = 1.5
 @export var shake_intensity: float = 30
 
+var _log = Logger.new("camera")
 var _shake_t: float = 0
 var _shake_offset: Vector2 = Vector2(0, 0)
 var t: float = 0

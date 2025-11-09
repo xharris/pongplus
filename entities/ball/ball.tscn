@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd6xno3u30o4r"]
+[gd_scene load_steps=7 format=3 uid="uid://cd6xno3u30o4r"]
 
 [ext_resource type="PackedScene" uid="uid://df5xis8hnkamb" path="res://components/missile/missile.tscn" id="1_61umk"]
 [ext_resource type="Script" uid="uid://dwjmlg6e8aiyq" path="res://entities/ball/ball.gd" id="1_jyt08"]
 [ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="3_w5wpn"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="4_we1t7"]
+[ext_resource type="PackedScene" uid="uid://d1ksrh6dvtg8u" path="res://components/camera/camera_focal_point.tscn" id="5_6mrx1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w5wpn"]
 radius = 16.0
@@ -21,3 +22,5 @@ texture = ExtResource("3_w5wpn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_w5wpn")
+
+[node name="CameraFocalPoint" parent="." instance=ExtResource("5_6mrx1")]

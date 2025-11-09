@@ -1,7 +1,7 @@
 extends Node2D
 class_name Player
 
-enum BallDirection {STRAIGHT, UP, DOWN}
+enum AimDirection {STRAIGHT, UP, DOWN}
 
 var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
@@ -15,7 +15,8 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
 
-var ball_hit_direction: BallDirection = BallDirection.STRAIGHT
+var ball_hit_direction: AimDirection = AimDirection.STRAIGHT
+var _platform_move_tween: Tween
 
 func accept(v: Visitor):
     camera.accept(v)
@@ -107,9 +108,9 @@ func _on_hitbox_body_entered_once(body: Node2D):
         var opposite_platform = group.platforms[clampi(index_in_group, 0, group.platforms.size()-1)]
         # get next platform to target
         match ball_hit_direction:
-            BallDirection.UP when opposite_platform.up:
+            AimDirection.UP when opposite_platform.up:
                 parent.next_missile_target = opposite_platform.up
-            BallDirection.DOWN when opposite_platform.down:
+            AimDirection.DOWN when opposite_platform.down:
                 parent.next_missile_target = opposite_platform.down
             _:
                 parent.next_missile_target = opposite_platform
@@ -120,11 +121,11 @@ func _on_hitbox_body_entered_once(body: Node2D):
             _log.debug("using ability %s" % [a.name])
             Visitor.visit(self, a.on_me_hit_ball)  
             Visitor.visit(parent, a.on_me_hit_ball)
-    ball_hit_direction = BallDirection.STRAIGHT
+    ball_hit_direction = AimDirection.STRAIGHT
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
-    return controller.is_charging or (character.is_attacking() and not character.attack_window_ended)
+    return controller.is_charging or character.is_attacking()
 
 ## Is currently charging an attack
 func is_charge_attack_locked():
@@ -132,20 +133,22 @@ func is_charge_attack_locked():
 
 ## Is locked out of moving
 func is_movement_locked():
-    return controller.is_charging or \
-        (character.is_attacking() and not character.attack_window_ended)
+    return controller.is_charging or character.is_attacking()
 
 func _on_up():
     if is_charge_attack_locked():
-        ball_hit_direction = BallDirection.UP
+        ball_hit_direction = AimDirection.UP
     if not is_movement_locked():
         movement.move_up()
 
 func _on_down():
     if is_charge_attack_locked():
-        ball_hit_direction = BallDirection.DOWN
+        ball_hit_direction = AimDirection.DOWN
     if not is_movement_locked():
         movement.move_down()
 
 func _on_moved(platform: Platform):
-    global_position = platform.global_position
+    if _platform_move_tween:
+        _platform_move_tween.stop()
+    _platform_move_tween = create_tween()
+    _platform_move_tween.tween_property(self, "global_position", platform.global_position, 0.1)

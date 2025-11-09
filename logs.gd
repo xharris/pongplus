@@ -13,7 +13,7 @@ static func set_global_level(level):
     print_rich("[color=%s][b]set global log level %s[/b][/color]" % [Color.WHITE, Level.find_key(level)])
     _global_level = level
 
-@export var ignore_repeats = false
+@export var ignore_repeats = true
 var _level = Level.NONE
 var _prefix: String = "":
     set(v):
