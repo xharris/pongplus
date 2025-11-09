@@ -1,7 +1,7 @@
 extends Node2D
 class_name Camera
 
-static var _static_log = Logger.new("Camera", Logger.Level.DEBUG)
+static var _static_log = Logger.new("camera")#, Logger.Level.DEBUG)
 
 const FOCAL_POINT_OFFSET: int = 60
 ## Midpoint to follow between center of screen and focal point.[br]
@@ -24,7 +24,6 @@ static func update_view(_delta: float):
             focal_points += 1
             total_position += c.global_position
     var viewport = root.get_viewport()
-    #_static_log.debug("focal points: %d" % [focal_points])
     if focal_points > 0:
         var avg_position = total_position / focal_points
         var view_center = viewport.get_visible_rect().size / 2

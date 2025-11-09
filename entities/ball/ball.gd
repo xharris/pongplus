@@ -13,9 +13,11 @@ var squeeze_amount = 0.5
 var squeeze_duration = 1
 var sprite_scale = 3
 
-func accept(visitor: Visitor):
-    if visitor is BallVisitor:
-        visitor.visit_ball(self)
+func accept(v: Visitor):
+    if v is BallVisitor:
+        v.visit_ball(self)
+    else:
+        missile.accept(v)
 
 func _ready() -> void:
     add_to_group(Groups.BALL)

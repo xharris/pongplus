@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="1_0p35y"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_6hruh"]
-[ext_resource type="Resource" uid="uid://dochcbkgngp1a" path="res://resources/ball_visitors/all_stop_pathing.tres" id="2_7v7mu"]
+[ext_resource type="Resource" uid="uid://dochcbkgngp1a" path="res://resources/missile_visitors/all_stop_pathing.tres" id="2_7v7mu"]
 [ext_resource type="Resource" uid="uid://bm6dn72476p5w" path="res://resources/ball_visitors/set_one_instance.tres" id="2_ffbih"]
 [ext_resource type="Resource" uid="uid://bawolmnh2iigs" path="res://resources/ball_visitors/all_center.tres" id="2_hdc6s"]
-[ext_resource type="Resource" uid="uid://ctr26w3na3vvl" path="res://resources/ball_visitors/increase_speed.tres" id="3_ffbih"]
-[ext_resource type="Resource" uid="uid://cwpm7u4snq5le" path="res://resources/ball_visitors/all_target_random_platform.tres" id="4_7v7mu"]
+[ext_resource type="Resource" uid="uid://ctr26w3na3vvl" path="res://resources/missile_visitors/increase_speed.tres" id="3_ffbih"]
+[ext_resource type="Resource" uid="uid://cwpm7u4snq5le" path="res://resources/missile_visitors/all_target_random_platform.tres" id="4_7v7mu"]
 [ext_resource type="Resource" uid="uid://df5po4q22l4j1" path="res://resources/camera_visitors/camera_shake_small.tres" id="7_ydmur"]
 [ext_resource type="Resource" uid="uid://cilyext635ffc" path="res://resources/character_visitors/flash_weapon_quick.tres" id="8_8ldof"]
 
