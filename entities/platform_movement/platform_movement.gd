@@ -13,23 +13,23 @@ func move_up() -> bool:
     if not _current:
         _log.warn("not currently on a platform")
         return false
-    if not _current.up:
+    var next = _current.up
+    if not next:
         return false
-    _current = _current.up
-    while _current and not can_move_to(_current):
-        _current = _current.up
-    return move_to_platform(_current)
+    while next and not can_move_to(next):
+        next = next.up
+    return move_to_platform(next)
 
 func move_down() -> bool:
     if not _current:
         _log.warn("not currently on a platform")
         return false
-    if not _current.down:
+    var next = _current.down
+    if not next:
         return false
-    _current = _current.down
-    while _current and not can_move_to(_current):
-        _current = _current.down
-    return move_to_platform(_current)
+    while next and not can_move_to(next):
+        next = next.down
+    return move_to_platform(next)
 
 func move_to_closest():
     # get nearest platform

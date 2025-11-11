@@ -2,10 +2,12 @@ extends Node2D
 class_name NodeGroup
 
 static func get_group(node: Node2D) -> NodeGroup:
+    if not node:
+        return
     for g: NodeGroup in node.get_tree().get_nodes_in_group(Groups.NODE_GROUP):
         if g.is_ancestor_of(node):
             return g
-    return null
+    return
 
 @export var position_strategy: PositionStrategy
 

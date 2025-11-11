@@ -2,14 +2,17 @@
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="1_6uw1r"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_apd76"]
-[ext_resource type="Resource" uid="uid://dw78u7op1vk8f" path="res://resources/missile_visitors/target_random_platform.tres" id="2_msgjp"]
 [ext_resource type="Resource" uid="uid://bmtj5vfmhs08g" path="res://resources/platform_visitors/disable_platform.tres" id="2_wgwou"]
+[ext_resource type="Resource" uid="uid://d33uvp37ersrx" path="res://resources/missile_visitors/missile_path_to_platform_random.tres" id="3_msgjp"]
 
 [resource]
 script = ExtResource("2_apd76")
 name = "ball"
-on_ready = Array[ExtResource("1_6uw1r")]([ExtResource("2_msgjp")])
+on_ready = Array[ExtResource("1_6uw1r")]([ExtResource("3_msgjp")])
+on_me_hit_missile_straight = Array[ExtResource("1_6uw1r")]([])
+on_me_hit_missile_up = Array[ExtResource("1_6uw1r")]([])
+on_me_hit_missile_down = Array[ExtResource("1_6uw1r")]([])
 on_me_hit_ball = Array[ExtResource("1_6uw1r")]([])
 on_ball_hit_me = Array[ExtResource("1_6uw1r")]([])
-on_me_hit_player_platform = Array[ExtResource("1_6uw1r")]([ExtResource("2_wgwou"), null])
+on_me_hit_player_platform = Array[ExtResource("1_6uw1r")]([ExtResource("2_wgwou"), ExtResource("3_msgjp")])
 metadata/_custom_type_script = "uid://2ap2s3ni6oid"

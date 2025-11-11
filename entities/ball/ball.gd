@@ -26,6 +26,7 @@ func _ready() -> void:
     add_to_group(Groups.BALL)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_body_entered_once)
+    missile.start_path_to.connect(_on_missile_start_path_to)
     sprite.scale = Vector2(sprite_scale, sprite_scale)
     for a in abilities:
         Visitor.visit(self, a.on_ready)
@@ -43,9 +44,7 @@ func _physics_process(_delta: float) -> void:
         global_position = missile.missile_position
     sprite.rotation = missile.velocity.angle()
 
-func missile_path_next_target():
-    if next_missile_target:
-        missile.path_to(next_missile_target)
-        var tween = sprite.create_tween()
-        tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
-            .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
+func _on_missile_start_path_to():
+    var tween = sprite.create_tween()
+    tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
+        .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))

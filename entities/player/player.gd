@@ -1,6 +1,8 @@
 extends Node2D
 class_name Player
 
+enum AimDirection {STRAIGHT, UP, DOWN}
+
 var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
 @onready var movement: PlatformMovement = $PlatformMovement
@@ -14,7 +16,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var abilities: Array[Ability]
 
 var _platform_move_tween: Tween
-var _ball_missile_target_strategy: BallMissileTargetStrategy = BallMissileTargetStrategy.new()
+var aim_direction: AimDirection = AimDirection.STRAIGHT
 
 func accept(v: Visitor):
     if v is CameraVisitor:
@@ -82,16 +84,24 @@ func _on_release_attack():
     hitbox.update_indicator(0)
 
 func _on_hitbox_body_entered_once(body: Node2D):
-    var parent = body.get_parent()
-    if parent is Ball:
-        #var next_missile_target = 
-        _log.debug("I hit %s" % [parent])
-        if _ball_missile_target_strategy:
-            var next_missile_target = _ball_missile_target_strategy.get_next_target(parent.missile)
-            parent.missile.path_to(next_missile_target)
-            _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.STRAIGHT
-        else:
-            _log.warn("ball missile target strategy is null")
+    if body is Hitbox:
+        var parent = body.get_parent()
+        var missile: Missile = Util.find_child(parent, Missile)
+        if missile:
+            var visitors: Array[Visitor]
+            match aim_direction:
+                AimDirection.UP:
+                    for a in abilities:
+                        visitors.append_array(a.on_me_hit_missile_up)
+                AimDirection.DOWN:
+                    for a in abilities:
+                        visitors.append_array(a.on_me_hit_missile_down)
+                AimDirection.STRAIGHT:
+                    for a in abilities:
+                        visitors.append_array(a.on_me_hit_missile_straight)
+            _log.debug("me hit %s's Missile, %d visitor(s)" % [parent, visitors.size()])
+            Visitor.visit(self, visitors)
+            Visitor.visit(missile, visitors)
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
@@ -107,13 +117,13 @@ func is_movement_locked():
 
 func _on_up():
     if is_charge_attack_locked():
-        _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.UP
+        aim_direction = AimDirection.UP
     if not is_movement_locked():
         movement.move_up()
 
 func _on_down():
     if is_charge_attack_locked():
-        _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.DOWN
+        aim_direction = AimDirection.DOWN
     if not is_movement_locked():
         movement.move_down()
 

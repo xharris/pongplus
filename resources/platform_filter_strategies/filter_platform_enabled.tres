@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlatformFilterStrategy" load_steps=2 format=3 uid="uid://dn8iyanjx0p27"]
+
+[ext_resource type="Script" uid="uid://hbmxluf5raoj" path="res://components/platform/platform_filter_strategy.gd" id="1_k47kx"]
+
+[resource]
+script = ExtResource("1_k47kx")
+enabled = true
+metadata/_custom_type_script = "uid://hbmxluf5raoj"

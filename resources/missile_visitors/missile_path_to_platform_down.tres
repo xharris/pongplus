@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MissilePathToDirection" load_steps=3 format=3 uid="uid://cir2p0mlpq0jf"]
+
+[ext_resource type="Script" uid="uid://c6ganj6sqydie" path="res://entities/ball/visitors/missile_path_to_direction.gd" id="1_c5e8p"]
+[ext_resource type="Resource" uid="uid://dn8iyanjx0p27" path="res://resources/platform_filter_strategies/filter_platform_enabled.tres" id="2_6rkwy"]
+
+[resource]
+script = ExtResource("1_c5e8p")
+direction = 2
+target_group = &"platform"
+target_filter_strategy = ExtResource("2_6rkwy")
+metadata/_custom_type_script = "uid://c6ganj6sqydie"

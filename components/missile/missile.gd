@@ -1,6 +1,8 @@
 extends Node2D
 class_name Missile
 
+signal start_path_to(target: Node2D)
+
 ## Seconds
 const MISSILE_DURATION_MIN: float = 3
 ## Seconds
@@ -80,6 +82,7 @@ func path_to(target: Node2D):
         )
     )
     _log.debug("target %s" % [target])
+    start_path_to.emit(target)
 
 func stop_pathing():
     if _tween:
