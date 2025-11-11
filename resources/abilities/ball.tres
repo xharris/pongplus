@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=5 format=3 uid="uid://bxy2wh7iyefe6"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="1_6uw1r"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_apd76"]
+[ext_resource type="Resource" uid="uid://dw78u7op1vk8f" path="res://resources/missile_visitors/target_random_platform.tres" id="2_msgjp"]
+[ext_resource type="Resource" uid="uid://bmtj5vfmhs08g" path="res://resources/platform_visitors/disable_platform.tres" id="2_wgwou"]
+
+[resource]
+script = ExtResource("2_apd76")
+name = "ball"
+on_ready = Array[ExtResource("1_6uw1r")]([ExtResource("2_msgjp")])
+on_me_hit_ball = Array[ExtResource("1_6uw1r")]([])
+on_ball_hit_me = Array[ExtResource("1_6uw1r")]([])
+on_me_hit_player_platform = Array[ExtResource("1_6uw1r")]([ExtResource("2_wgwou"), null])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"

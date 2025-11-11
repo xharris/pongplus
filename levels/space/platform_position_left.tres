@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GridPositionStrategy" load_steps=2 format=3 uid="uid://dk1aywv3knvii"]
 
-[ext_resource type="Script" uid="uid://clv1db5jxmtnk" path="res://components/position_strategy/strategies/grid.gd" id="1_oeyed"]
+[ext_resource type="Script" uid="uid://clv1db5jxmtnk" path="res://components/node_group/strategies/grid.gd" id="1_oeyed"]
 
 [resource]
 script = ExtResource("1_oeyed")

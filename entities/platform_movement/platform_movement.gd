@@ -3,7 +3,7 @@ class_name PlatformMovement
 
 signal moved(p: Platform)
 
-var _log = Logger.new("platform_movement")
+var _log = Logger.new("platform_movement")#, Logger.Level.DEBUG)
 var _current: Platform
 
 func _ready() -> void:
@@ -13,13 +13,23 @@ func move_up() -> bool:
     if not _current:
         _log.warn("not currently on a platform")
         return false
-    return move_to_platform(_current.up)
+    if not _current.up:
+        return false
+    _current = _current.up
+    while _current and not can_move_to(_current):
+        _current = _current.up
+    return move_to_platform(_current)
 
 func move_down() -> bool:
     if not _current:
         _log.warn("not currently on a platform")
         return false
-    return move_to_platform(_current.down)
+    if not _current.down:
+        return false
+    _current = _current.down
+    while _current and not can_move_to(_current):
+        _current = _current.down
+    return move_to_platform(_current)
 
 func move_to_closest():
     # get nearest platform
@@ -37,12 +47,14 @@ func _distance_to_platform(p: Platform) -> float:
     return global_position.distance_to(p.global_position)
     
 func can_move_to(other: Platform):
-    return not _current or (_current.up == other or _current.down == other)
+    return other and not other.is_disabled()
 
 func move_to_platform(next: Platform) -> bool:
     if not next:
+        _log.debug("given 'next' platform is null")
         return false
     if not can_move_to(next):
+        _log.debug("illegal platform move")
         return false
     _current = next
     moved.emit(_current)

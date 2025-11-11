@@ -1,8 +1,6 @@
 extends Node2D
 class_name Player
 
-enum AimDirection {STRAIGHT, UP, DOWN}
-
 var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
 @onready var movement: PlatformMovement = $PlatformMovement
@@ -15,12 +13,16 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
 
-var ball_hit_direction: AimDirection = AimDirection.STRAIGHT
 var _platform_move_tween: Tween
+var _ball_missile_target_strategy: BallMissileTargetStrategy = BallMissileTargetStrategy.new()
 
 func accept(v: Visitor):
-    camera.accept(v)
-    character.accept(v)
+    if v is CameraVisitor:
+        camera.accept(v)
+    elif v is CharacterVisitor:
+        character.accept(v)
+    elif v is HitboxVisitor:
+        hitbox.accept(v)
 
 func _process(delta: float) -> void:
     # face direction
@@ -42,6 +44,7 @@ func _ready() -> void:
     controller.down.connect(_on_down)
     controller.charge_attack.connect(_on_charge_attack)
     controller.release_attack.connect(_on_release_attack)
+    hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     hurtbox.body_entered_once.connect(_on_hurtbox_body_entered_once)
     character.attack_window_start.connect(_on_attack_window_start)
@@ -60,11 +63,13 @@ func _on_attack_window_end():
 
 func _on_hurtbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
-    if parent is Ball:
-        for a in abilities:
-            _log.debug("%s hit me" % [parent])
-            Visitor.visit(self, a.on_ball_hit_me)
-            Visitor.visit(parent, a.on_ball_hit_me)
+    if body is Hitbox:
+        match body.id:
+            Hitboxes.BALL:
+                for a in abilities:
+                    _log.debug("%s hit me" % [parent])
+                    Visitor.visit(self, a.on_ball_hit_me)
+                    Visitor.visit(parent, a.on_ball_hit_me)
 
 func _on_charge_attack():
     if not is_attack_locked():
@@ -79,49 +84,14 @@ func _on_release_attack():
 func _on_hitbox_body_entered_once(body: Node2D):
     var parent = body.get_parent()
     if parent is Ball:
+        #var next_missile_target = 
         _log.debug("I hit %s" % [parent])
-        # get last platform targeted
-        var targets = parent.missile.target_history.duplicate()
-        targets.reverse()
-        var platform: Platform
-        for t in targets:
-            var p: Platform = Util.get_ancestor(t, Platform)
-            if p:
-                platform = p
-                break
-        if not platform:
-            _log.warn(
-                "no previously targeted platform:\n\tmissile.target_history: %s" % [
-                    parent.missile.target_history
-                ])
-            return
-        # get same index platform in group
-        var last_group = PlatformGroup.get_group(platform)
-        if not last_group:
-            _log.warn("platform is not part of a group: %s" % [platform])
-            return
-        var groups: Array[PlatformGroup]
-        groups.assign(get_tree().get_nodes_in_group(Groups.PLATFORM_GROUP))
-        groups.erase(last_group)        
-        var group: PlatformGroup = groups.pick_random()
-        var index_in_group = last_group.platforms.find(platform)
-        var opposite_platform = group.platforms[clampi(index_in_group, 0, group.platforms.size()-1)]
-        # get next platform to target
-        match ball_hit_direction:
-            AimDirection.UP when opposite_platform.up:
-                parent.next_missile_target = opposite_platform.up
-            AimDirection.DOWN when opposite_platform.down:
-                parent.next_missile_target = opposite_platform.down
-            _:
-                parent.next_missile_target = opposite_platform
-        # move to it
-        _log.debug("Ball next target: from %s to %s" % [platform, parent.next_missile_target])
-        parent.missile_path_next_target()
-        for a in abilities:
-            _log.debug("using ability %s" % [a.name])
-            Visitor.visit(self, a.on_me_hit_ball)  
-            Visitor.visit(parent, a.on_me_hit_ball)
-    ball_hit_direction = AimDirection.STRAIGHT
+        if _ball_missile_target_strategy:
+            var next_missile_target = _ball_missile_target_strategy.get_next_target(parent.missile)
+            parent.missile.path_to(next_missile_target)
+            _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.STRAIGHT
+        else:
+            _log.warn("ball missile target strategy is null")
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
@@ -137,13 +107,13 @@ func is_movement_locked():
 
 func _on_up():
     if is_charge_attack_locked():
-        ball_hit_direction = AimDirection.UP
+        _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.UP
     if not is_movement_locked():
         movement.move_up()
 
 func _on_down():
     if is_charge_attack_locked():
-        ball_hit_direction = AimDirection.DOWN
+        _ball_missile_target_strategy.direction = BallMissileTargetStrategy.AimDirection.DOWN
     if not is_movement_locked():
         movement.move_down()
 

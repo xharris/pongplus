@@ -225,8 +225,7 @@ hframes = 3
 [node name="Weapon" type="Node2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_uqrhf")
-position = Vector2(18.0018, 10.581)
-rotation = 2.3562
+position = Vector2(22, -5.79198e-05)
 
 [node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
 use_parent_material = true

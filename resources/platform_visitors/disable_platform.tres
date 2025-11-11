@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlatformDisabled" load_steps=2 format=3 uid="uid://bmtj5vfmhs08g"]
+
+[ext_resource type="Script" uid="uid://bartpgn7hvcj5" path="res://components/platform/visitors/platform_disabled.gd" id="1_pyni4"]
+
+[resource]
+script = ExtResource("1_pyni4")
+disabled = true
+metadata/_custom_type_script = "uid://bartpgn7hvcj5"

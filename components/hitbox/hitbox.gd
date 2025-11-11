@@ -4,13 +4,19 @@ class_name Hitbox
 const INDICATOR_AMOUNT_RATIO: float = 1.0
 
 signal body_entered_once(body: Node2D)
-
-var _log = Logger.new("hitbox")
+signal accepted_visitor(v: Visitor)
 
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
-@export var id: String
+@export var id: StringName
+var _log = Logger.new("hitbox")
 var _entered: Array[Node2D]
+
+func accept(v: Visitor):
+    if v is HitboxVisitor:
+        v.visit_hitbox(self)
+    else:
+        accepted_visitor.emit(v)
 
 func _ready() -> void:
     particles.amount_ratio = 0

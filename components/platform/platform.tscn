@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfckcjj77ft5n"]
+[gd_scene load_steps=3 format=3 uid="uid://cfckcjj77ft5n"]
 
 [ext_resource type="Script" uid="uid://d1s5exgu6f27l" path="res://components/platform/platform.gd" id="1_nc71g"]
+[ext_resource type="Texture2D" uid="uid://di4ydcu36yrj2" path="res://components/platform/circle.png" id="2_m2s26"]
 
 [node name="Platform" type="Node2D"]
 script = ExtResource("1_nc71g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(3, 3)
+texture = ExtResource("2_m2s26")

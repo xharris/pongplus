@@ -7,7 +7,8 @@ const SCENE = preload("res://entities/ball/ball.tscn")
 @onready var hitbox: Hitbox = $Hitbox
 @onready var sprite: Sprite2D = $Sprite2D
 
-@export var on_ready: Array[Visitor]
+@export var abilities: Array[Ability]
+
 var next_missile_target: Node2D
 var squeeze_amount = 0.5
 var squeeze_duration = 1
@@ -16,13 +17,26 @@ var sprite_scale = 3
 func accept(v: Visitor):
     if v is BallVisitor:
         v.visit_ball(self)
-    else:
+    elif v is MissileVisitor:
         missile.accept(v)
+    elif v is HitboxVisitor:
+        hitbox.accept(v)
 
 func _ready() -> void:
     add_to_group(Groups.BALL)
+    hitbox.accepted_visitor.connect(accept)
+    hitbox.body_entered_once.connect(_on_body_entered_once)
     sprite.scale = Vector2(sprite_scale, sprite_scale)
-    Visitor.visit(self, on_ready)
+    for a in abilities:
+        Visitor.visit(self, a.on_ready)
+
+func _on_body_entered_once(body: Node2D):
+    if body is Hitbox:
+        match body.id:
+            Hitboxes.PLAYER_PLATFORM:
+                for a in abilities:
+                    Visitor.visit(self, a.on_me_hit_player_platform)
+                    Visitor.visit(body, a.on_me_hit_player_platform)
 
 func _physics_process(_delta: float) -> void:
     if missile.is_pathing:

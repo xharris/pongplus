@@ -2,7 +2,8 @@ extends Node
 class_name Groups
 
 const PLATFORM = &"platform"
-const PLATFORM_GROUP = &"platform_group"
+const PLAYER_PLATFORM = &"player_platform"
+const NODE_GROUP = &"node_group"
 const MISSILE = &"missile"
 const MISSILE_TARGET = &"missile_target"
 const HITBOX = &"hitbox"

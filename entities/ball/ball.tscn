@@ -19,6 +19,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("3_w5wpn")
 
 [node name="Hitbox" parent="." instance=ExtResource("4_we1t7")]
+id = &"ball"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_w5wpn")

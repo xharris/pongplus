@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://txbfw3lcfa6s"]
+
+[ext_resource type="PackedScene" uid="uid://cfckcjj77ft5n" path="res://components/platform/platform.tscn" id="1_bqh1d"]
+[ext_resource type="Script" uid="uid://bpg37mekqx6q2" path="res://entities/player_platform/player_platform.gd" id="1_wxxnv"]
+[ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="2_wxxnv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ly5ed"]
+
+[node name="PlayerPlatform" type="Node2D"]
+script = ExtResource("1_wxxnv")
+
+[node name="Platform" parent="." instance=ExtResource("1_bqh1d")]
+
+[node name="Hitbox" parent="." instance=ExtResource("2_wxxnv")]
+id = &"player_platform"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ly5ed")
