@@ -1,17 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://nwggbimfhwtc"]
+[gd_scene load_steps=8 format=3 uid="uid://nwggbimfhwtc"]
 
 [ext_resource type="Script" uid="uid://d4drjhi2ttmd7" path="res://entities/game/game.gd" id="1_pxw13"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="2_j054j"]
 [ext_resource type="PackedScene" uid="uid://b1p04oipvkp57" path="res://levels/space/space.tscn" id="2_pxw13"]
-[ext_resource type="PackedScene" uid="uid://cd6xno3u30o4r" path="res://entities/ball/ball.tscn" id="3_bbd0t"]
+[ext_resource type="Resource" uid="uid://dfmaov33n1my" path="res://resources/gameplay/default_gameplay.tres" id="2_qrgux"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="3_vjvwb"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="4_vbwj1"]
 [ext_resource type="PackedScene" uid="uid://cb741g5t3iwb4" path="res://ui/score_overlay/score_overlay.tscn" id="9_qrgux"]
-[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="10_h6hte"]
-[ext_resource type="Resource" uid="uid://bxy2wh7iyefe6" path="res://resources/abilities/ball.tres" id="11_qixuh"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_pxw13")
+gameplay = ExtResource("2_qrgux")
 
 [node name="Space" parent="." instance=ExtResource("2_pxw13")]
 
@@ -27,7 +26,3 @@ player_controller_config = ExtResource("3_vjvwb")
 [node name="Player2" parent="." instance=ExtResource("2_j054j")]
 position = Vector2(1116, 45)
 player_controller_config = ExtResource("4_vbwj1")
-
-[node name="Ball" parent="." instance=ExtResource("3_bbd0t")]
-position = Vector2(554, 277)
-abilities = Array[ExtResource("10_h6hte")]([ExtResource("11_qixuh")])

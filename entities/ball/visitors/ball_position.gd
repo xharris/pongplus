@@ -1,9 +1,9 @@
 extends BallVisitor
 class_name BallPosition
 
-enum Position {ALL_CENTER}
+enum Position {CENTER, ALL_CENTER}
 
-var _log = Logger.new("ball_position")
+var _log = Logger.new("ball_position")#, Logger.Level.DEBUG)
 @export var position: Position
 
 func visit_ball(me: Ball):
@@ -13,10 +13,9 @@ func visit_ball(me: Ball):
             balls.assign(me.get_tree().get_nodes_in_group(Groups.BALL))
             
     match position:
-        Position.ALL_CENTER:
+        Position.ALL_CENTER, Position.CENTER:
             var view_size = me.get_viewport_rect()
-            if me.is_inside_tree():
-                for ball in balls:
-                    ball.missile.stop_pathing()
-                    ball.global_position = view_size.get_center()
-                    _log.debug("center %s at %v" % [ball, ball.global_position])
+            for ball in balls:
+                ball.missile.stop_pathing()
+                ball.global_position = view_size.get_center()
+                _log.debug("center %s at %v" % [ball, ball.global_position])

@@ -11,6 +11,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @onready var hurtbox: Hitbox = $Hurtbox
 @onready var character: Character = $Character
 @onready var camera: Camera = $Camera
+@onready var health: Health = $Health
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
@@ -25,6 +26,8 @@ func accept(v: Visitor):
         character.accept(v)
     elif v is HitboxVisitor:
         hitbox.accept(v)
+    elif v is HealthVisitor:
+        health.accept(v)
 
 func _process(delta: float) -> void:
     # face direction
@@ -38,9 +41,11 @@ func _process(delta: float) -> void:
         hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
 
 func _ready() -> void:
+    add_to_group(Groups.PLAYER)
     controller.config = player_controller_config
     hitbox.disable()
     
+    health.current_changed.connect(_on_health_current_changed)
     movement.moved.connect(_on_moved)
     controller.up.connect(_on_up)
     controller.down.connect(_on_down)
@@ -48,12 +53,14 @@ func _ready() -> void:
     controller.release_attack.connect(_on_release_attack)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
-    hurtbox.body_entered_once.connect(_on_hurtbox_body_entered_once)
     character.attack_window_start.connect(_on_attack_window_start)
     character.attack_window_end.connect(_on_attack_window_end)
 
     for a in abilities:
         Visitor.visit(self, a.on_ready)
+
+func _on_health_current_changed(amount: int):
+    EventBus.player_health_current_changed.emit(self, amount)
 
 func _on_attack_window_start():
     hitbox.enable()
@@ -62,16 +69,6 @@ func _on_attack_window_start():
 func _on_attack_window_end():
     hitbox.disable()
     character.set_weapon_color(Color.WHITE, 0)
-
-func _on_hurtbox_body_entered_once(body: Node2D):
-    var parent = body.get_parent()
-    if body is Hitbox:
-        match body.id:
-            Hitboxes.BALL:
-                for a in abilities:
-                    _log.debug("%s hit me" % [parent])
-                    Visitor.visit(self, a.on_ball_hit_me)
-                    Visitor.visit(parent, a.on_ball_hit_me)
 
 func _on_charge_attack():
     if not is_attack_locked():

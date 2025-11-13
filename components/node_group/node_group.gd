@@ -29,7 +29,7 @@ func update_items():
     items.clear()
     for c in get_children():
         items.append(c)
-    items.sort_custom(func(a: NodeGroup, b: NodeGroup):
+    items.sort_custom(func(a: Node2D, b: Node2D):
         return a.global_position.y < b.global_position.y)
     # connect groups
     for i in items.size():

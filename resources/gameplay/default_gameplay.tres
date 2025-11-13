@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Gameplay" load_steps=5 format=3 uid="uid://dfmaov33n1my"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_a65u5"]
+[ext_resource type="Script" uid="uid://dgk27trhnuo5i" path="res://components/gameplay.gd" id="2_dnd7h"]
+[ext_resource type="Resource" uid="uid://cdnj1j4p2le0t" path="res://resources/ball_visitors/ball_destroy_all.tres" id="2_yrlpe"]
+[ext_resource type="Resource" uid="uid://30hvjqepbnub" path="res://resources/ball_visitors/ball_at_least_one.tres" id="5_iyg3j"]
+
+[resource]
+script = ExtResource("2_dnd7h")
+on_start = Array[ExtResource("1_a65u5")]([ExtResource("5_iyg3j")])
+on_player_take_damage = Array[ExtResource("1_a65u5")]([ExtResource("2_yrlpe"), ExtResource("5_iyg3j")])
+metadata/_custom_type_script = "uid://dgk27trhnuo5i"

@@ -57,6 +57,7 @@ func _process(delta: float) -> void:
         _shake_offset = _shake_offset.lerp(Vector2.ZERO, amount)
         _shake_t -= delta
         t += delta * shake_intensity
+    print(global_position)
 
 func shake(amount: Vector2, duration: float = shake_duration):
     _shake_offset = amount

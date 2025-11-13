@@ -1,18 +1,26 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=5 format=3 uid="uid://bxy2wh7iyefe6"]
+[gd_resource type="Resource" script_class="Ability" load_steps=12 format=3 uid="uid://bxy2wh7iyefe6"]
 
-[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor.gd" id="1_6uw1r"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_jyyjp"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_apd76"]
+[ext_resource type="Resource" uid="uid://c8462hpps06fd" path="res://resources/health_visitors/take_1_damage.tres" id="2_thce1"]
 [ext_resource type="Resource" uid="uid://bmtj5vfmhs08g" path="res://resources/platform_visitors/disable_platform.tres" id="2_wgwou"]
 [ext_resource type="Resource" uid="uid://d33uvp37ersrx" path="res://resources/missile_visitors/missile_path_to_platform_random.tres" id="3_msgjp"]
+[ext_resource type="Resource" uid="uid://cdnj1j4p2le0t" path="res://resources/ball_visitors/ball_destroy_all.tres" id="3_rvpfw"]
+[ext_resource type="Resource" uid="uid://scu8e60s7sjh" path="res://resources/ball_visitors/destroy_ball.tres" id="3_thce1"]
+[ext_resource type="Resource" uid="uid://bm6dn72476p5w" path="res://resources/ball_visitors/ball_set_1_instance.tres" id="4_jmmjg"]
+[ext_resource type="Resource" uid="uid://bawolmnh2iigs" path="res://resources/ball_visitors/ball_all_center.tres" id="5_jmmjg"]
+[ext_resource type="Resource" uid="uid://8oevxr38rvm1" path="res://resources/ball_visitors/ball_center.tres" id="8_jyyjp"]
+[ext_resource type="Resource" uid="uid://30hvjqepbnub" path="res://resources/ball_visitors/ball_at_least_one.tres" id="8_onrke"]
 
 [resource]
 script = ExtResource("2_apd76")
 name = "ball"
-on_ready = Array[ExtResource("1_6uw1r")]([ExtResource("3_msgjp")])
-on_me_hit_missile_straight = Array[ExtResource("1_6uw1r")]([])
-on_me_hit_missile_up = Array[ExtResource("1_6uw1r")]([])
-on_me_hit_missile_down = Array[ExtResource("1_6uw1r")]([])
-on_me_hit_ball = Array[ExtResource("1_6uw1r")]([])
-on_ball_hit_me = Array[ExtResource("1_6uw1r")]([])
-on_me_hit_player_platform = Array[ExtResource("1_6uw1r")]([ExtResource("2_wgwou"), ExtResource("3_msgjp")])
+on_ready = Array[ExtResource("1_jyyjp")]([ExtResource("8_jyyjp"), ExtResource("3_msgjp")])
+on_me_hit_missile = Array[ExtResource("1_jyyjp")]([])
+on_me_hit_missile_straight = Array[ExtResource("1_jyyjp")]([])
+on_me_hit_missile_up = Array[ExtResource("1_jyyjp")]([])
+on_me_hit_missile_down = Array[ExtResource("1_jyyjp")]([])
+on_me_hit_player = Array[ExtResource("1_jyyjp")]([ExtResource("2_thce1"), ExtResource("3_rvpfw"), ExtResource("4_jmmjg"), ExtResource("5_jmmjg")])
+on_health_take_damage = Array[ExtResource("1_jyyjp")]([])
+on_me_hit_player_platform = Array[ExtResource("1_jyyjp")]([ExtResource("2_thce1"), ExtResource("3_thce1"), ExtResource("2_wgwou"), ExtResource("8_onrke")])
 metadata/_custom_type_script = "uid://2ap2s3ni6oid"

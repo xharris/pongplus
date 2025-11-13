@@ -5,7 +5,7 @@ class_name MissilePathToDirection
 
 enum AimDirection {STRAIGHT, UP, DOWN, RANDOM}
 
-var _log = Logger.new("ball_missile_path_to", Logger.Level.DEBUG)
+var _log = Logger.new("ball_missile_path_to")#, Logger.Level.DEBUG)
 @export var direction: AimDirection
 @export var target_group: StringName
 @export var target_filter_strategy: FilterStrategy
@@ -23,6 +23,10 @@ func _get_last_target(me: Missile) -> Node2D:
 
 func visit_missile(me: Missile):
     var items: Array[Node2D]
+    ## BUG Cannot call method 'get_nodes_in_group' on a null value.
+    ## 1. ball destroys platform
+    ## 2. player moves and touches destroyed platform
+    ## 3. ERROR
     items.assign(me.get_tree().get_nodes_in_group(target_group))
     # filter: avoid targeting same node
     if avoid_repeat:
@@ -49,8 +53,7 @@ func visit_missile(me: Missile):
     # filter: use filter strategy
     if target_filter_strategy:
         items = items.filter(target_filter_strategy.filter)
-    if items.size() == 0:
-        _log.error(items.size() == 0, "no targets")
+    if _log.warn_if(items.size() == 0, "no targets"):
         me.stop_pathing()
         return
     # use aim direction
