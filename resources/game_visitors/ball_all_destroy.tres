@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="GameVisitGroup" load_steps=4 format=3 uid="uid://cdnj1j4p2le0t"]
 
-[ext_resource type="Script" uid="uid://dnw0vnfgbeykc" path="res://entities/game/visitors/game_visit_group.gd" id="1_nllh6"]
+[ext_resource type="Script" uid="uid://dnw0vnfgbeykc" path="res://game/visitors/game_visit_group.gd" id="1_nllh6"]
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="2_kr3pr"]
 [ext_resource type="Resource" uid="uid://scu8e60s7sjh" path="res://resources/ball_visitors/ball_destroy.tres" id="3_s0on6"]
 
