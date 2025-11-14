@@ -25,14 +25,16 @@ func accept(v: Visitor):
         hitbox.accept(v)
 
 func _ready() -> void:
+    hide()
     add_to_group(Groups.BALL)
     EventBus.ball_created.emit.call_deferred(self)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_body_entered_once)
-    missile.start_path_to.connect(_on_missile_start_path_to)
+    missile.started_path_to.connect(_on_missile_started_path_to)
     sprite.scale = Vector2(sprite_scale, sprite_scale)
     tree_exited.connect(_on_tree_exited)
     _update()
+    show()
     _log.debug("created (%s)" % [get_instance_id()])
         
 func _process(delta: float) -> void:
@@ -60,7 +62,7 @@ func _physics_process(_delta: float) -> void:
         global_position = missile.missile_position
     sprite.rotation = missile.velocity.angle()
 
-func _on_missile_start_path_to():
+func _on_missile_started_path_to():
     var tween = sprite.create_tween()
     tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
         .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
@@ -68,5 +70,6 @@ func _on_missile_start_path_to():
 func _update():
     for a in abilities:
         if not _ability_ready_called.has(a.name):
-            Visitor.visit(self, a.on_ready)
+            await Visitor.visit(self, a.on_ready)
             _ability_ready_called.append(a.name)
+    

@@ -9,6 +9,9 @@ var _current: Platform
 func _ready() -> void:
     move_to_closest.call_deferred()
 
+func get_current_platform() -> Platform:
+    return _current
+
 func move_up() -> bool:
     if not _current:
         _log.warn("not currently on a platform")

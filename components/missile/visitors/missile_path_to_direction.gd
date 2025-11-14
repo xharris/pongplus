@@ -23,10 +23,6 @@ func _get_last_target(me: Missile) -> Node2D:
 
 func visit_missile(me: Missile):
     var items: Array[Node2D]
-    ## BUG Cannot call method 'get_nodes_in_group' on a null value.
-    ## 1. ball destroys platform
-    ## 2. player moves and touches destroyed platform
-    ## 3. ERROR
     items.assign(me.get_tree().get_nodes_in_group(target_group))
     # filter: avoid targeting same node
     if avoid_repeat:
@@ -63,15 +59,21 @@ func visit_missile(me: Missile):
         var last_group = NodeGroup.get_group(last_target_same_group)
         if last_group:
             index = last_group.find(last_target_same_group)
-    match direction:
-        AimDirection.UP:
-            index -= 1
-        AimDirection.DOWN:
-            index += 1
-        AimDirection.RANDOM:
-            index = randi() % items.size()
+    _log.debug("index of last target: %d (%s)" % [index, last_target_same_group])
     index = clampi(index, 0, items.size()-1)
+    var next_target: Node2D
+    while true:
+        match direction:
+            AimDirection.UP:
+                index -= 1
+            AimDirection.DOWN:
+                index += 1
+            AimDirection.RANDOM:
+                index = randi() % items.size()
+        index = clampi(index, 0, items.size()-1)
+        next_target = items[index]
+        if not (not next_target and index > 0 and index < items.size()):
+            break
     # finally, path to it
-    var next_target = items[index]
-    _log.debug("set target: from %s to %s" % [me.target_history.back(), next_target])
+    _log.debug("index of %s target: %d (%s)" % [AimDirection.find_key(direction), index, next_target])
     me.path_to(next_target)

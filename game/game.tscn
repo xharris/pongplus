@@ -18,6 +18,7 @@ gameplay = ExtResource("2_qrgux")
 layer = -1
 
 [node name="ScoreOverlay" parent="CanvasLayer" instance=ExtResource("9_qrgux")]
+unique_name_in_owner = true
 
 [node name="Player1" parent="." instance=ExtResource("2_j054j")]
 position = Vector2(39, 57)

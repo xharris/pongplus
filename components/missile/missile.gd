@@ -1,7 +1,7 @@
 extends Node2D
 class_name Missile
 
-signal start_path_to(target: Node2D)
+signal started_path_to(target: Node2D)
 
 ## Seconds
 const MISSILE_DURATION_MIN: float = 3
@@ -49,6 +49,9 @@ func _ready() -> void:
     add_to_group(Groups.MISSILE)
           
 func path_to(target: Node2D):
+    if not target:
+        _log.warn("path to null target (%s)" % [self])
+        return
     target_history.append(target)
     var target_position = target.global_position
     var midpoint = (target_position + global_position) / 2
@@ -82,7 +85,7 @@ func path_to(target: Node2D):
         )
     )
     _log.debug("target %s" % [target])
-    start_path_to.emit(target)
+    started_path_to.emit(target)
 
 func stop_pathing():
     if _tween:

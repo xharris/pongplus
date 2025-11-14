@@ -1,15 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1p04oipvkp57"]
+[gd_scene load_steps=11 format=3 uid="uid://b1p04oipvkp57"]
 
 [ext_resource type="Script" uid="uid://cucl3fshjdn4b" path="res://levels/space/space.gd" id="1_ivyi0"]
 [ext_resource type="PackedScene" uid="uid://bs3v4d5sf6lgh" path="res://components/node_group/node_group.tscn" id="1_jraqu"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="2_118se"]
 [ext_resource type="Resource" uid="uid://dk1aywv3knvii" path="res://levels/space/platform_position_left.tres" id="2_ivyi0"]
 [ext_resource type="PackedScene" uid="uid://txbfw3lcfa6s" path="res://entities/player_platform/player_platform.tscn" id="3_jraqu"]
+[ext_resource type="Resource" uid="uid://bv84i5qwdvvxx" path="res://resources/score_overlay_visitors/score_increase_left_1.tres" id="3_lsebm"]
+[ext_resource type="Resource" uid="uid://coafnhretckcv" path="res://resources/score_overlay_visitors/score_reset_left.tres" id="3_rh3me"]
 [ext_resource type="Resource" uid="uid://chanhih3qbpux" path="res://levels/space/platform_position_right.tres" id="4_5qrbm"]
+[ext_resource type="Resource" uid="uid://d00vt5ru7mcn3" path="res://resources/score_overlay_visitors/score_reset_right.tres" id="4_o38fq"]
+[ext_resource type="Resource" uid="uid://cbmp66cfxokno" path="res://resources/score_overlay_visitors/score_increase_right_1.tres" id="4_rh3me"]
 
 [node name="Space" type="Node2D"]
 script = ExtResource("1_ivyi0")
+on_ready = Array[ExtResource("2_118se")]([ExtResource("3_rh3me"), ExtResource("4_o38fq")])
+on_player_left_take_damage = Array[ExtResource("2_118se")]([ExtResource("4_rh3me")])
+on_player_right_take_damage = Array[ExtResource("2_118se")]([ExtResource("3_lsebm")])
 
 [node name="Left" parent="." instance=ExtResource("1_jraqu")]
+unique_name_in_owner = true
 position_strategy = ExtResource("2_ivyi0")
 
 [node name="PlayerPlatform" parent="Left" instance=ExtResource("3_jraqu")]
@@ -19,6 +28,7 @@ position_strategy = ExtResource("2_ivyi0")
 [node name="PlayerPlatform3" parent="Left" instance=ExtResource("3_jraqu")]
 
 [node name="Right" parent="." instance=ExtResource("1_jraqu")]
+unique_name_in_owner = true
 position_strategy = ExtResource("4_5qrbm")
 
 [node name="PlayerPlatform" parent="Right" instance=ExtResource("3_jraqu")]

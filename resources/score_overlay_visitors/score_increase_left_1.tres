@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ScoreSet" load_steps=2 format=3 uid="uid://bv84i5qwdvvxx"]
+
+[ext_resource type="Script" uid="uid://cncqud3gt1o4o" path="res://ui/score_overlay/visitors/score_set.gd" id="1_ncwp4"]
+
+[resource]
+script = ExtResource("1_ncwp4")
+metadata/_custom_type_script = "uid://cncqud3gt1o4o"

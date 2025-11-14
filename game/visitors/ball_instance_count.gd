@@ -3,7 +3,7 @@ class_name BallInstanceCount
 
 enum Operation {Set, AtLeast}
 
-var _log = Logger.new("ball_instance_count", Logger.Level.DEBUG)
+var _log = Logger.new("ball_instance_count")#, Logger.Level.DEBUG)
 @export var operation: Operation
 @export var value: int
 

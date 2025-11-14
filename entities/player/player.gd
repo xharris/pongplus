@@ -102,6 +102,7 @@ func _on_hitbox_body_entered_once(body: Node2D):
             _log.debug("me hit %s, %d visitor(s)" % [parent, visitors.size()])
             Visitor.visit(self, visitors)
             Visitor.visit(parent, visitors)
+            aim_direction = AimDirection.STRAIGHT
 
 ## Is currently in the middle of an attack
 func is_attack_locked():

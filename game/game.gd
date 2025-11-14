@@ -3,6 +3,9 @@ class_name Game
 
 const ABILITY_BALL: Ability = preload("res://resources/abilities/ball.tres")
 
+@onready var level: Level = $Space
+@onready var score: ScoreOverlay = %ScoreOverlay
+
 @export var gameplay: Gameplay
 
 func accept(v: Visitor):
@@ -10,12 +13,15 @@ func accept(v: Visitor):
         return
     if v is GameVisitor:
         v.visit_game(self)
+    if v is ScoreOverlayVisitor:
+        v.visit_score_overlay(score)
 
 func _ready() -> void:
     add_to_group(Groups.GAME)
     EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
     EventBus.ball_destroyed.connect(_on_ball_destroyed)
     EventBus.player_health_current_changed.connect(_on_player_health_current_changed)
+    level.accepted_visitor.connect(accept)
     Visitor.visit(self, gameplay.on_start)
     
 func _process(delta: float) -> void:
