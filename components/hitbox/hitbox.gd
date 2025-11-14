@@ -19,6 +19,8 @@ func accept(v: Visitor):
         accepted_visitor.emit(v)
 
 func _ready() -> void:
+    if id.length() == 0:
+        _log.warn("id not set (%s)" % [get_path()])
     particles.amount_ratio = 0
     
     body_entered.connect(_on_body_entered)

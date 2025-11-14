@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_p3pga"]
 [ext_resource type="Resource" uid="uid://ctr26w3na3vvl" path="res://resources/missile_visitors/increase_speed.tres" id="6_8tc3a"]
 [ext_resource type="Resource" uid="uid://df5po4q22l4j1" path="res://resources/camera_visitors/camera_shake_small.tres" id="7_xjtyu"]
-[ext_resource type="Resource" uid="uid://cilyext635ffc" path="res://resources/character_visitors/flash_weapon_quick.tres" id="8_0qag6"]
+[ext_resource type="Resource" uid="uid://cilyext635ffc" path="res://resources/character_visitors/character_flash_weapon_quick.tres" id="8_0qag6"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="9_q2tj6"]
 [ext_resource type="Resource" uid="uid://cir2p0mlpq0jf" path="res://resources/missile_visitors/missile_path_to_platform_down.tres" id="9_r1t8y"]
 [ext_resource type="Resource" uid="uid://cisgigecxpi62" path="res://resources/missile_visitors/missile_path_to_platform_straight.tres" id="10_xyanm"]
@@ -11,7 +11,7 @@
 
 [resource]
 script = ExtResource("9_q2tj6")
-name = "player"
+name = &"player"
 on_ready = Array[ExtResource("1_p3pga")]([])
 on_me_hit_missile = Array[ExtResource("1_p3pga")]([ExtResource("6_8tc3a"), ExtResource("7_xjtyu"), ExtResource("8_0qag6")])
 on_me_hit_missile_straight = Array[ExtResource("1_p3pga")]([ExtResource("10_xyanm")])

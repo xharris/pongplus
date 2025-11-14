@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MissilePathTo" load_steps=2 format=3 uid="uid://d2hqa7b4jsgdk"]
+
+[ext_resource type="Script" uid="uid://cegw8o8f7yqjl" path="res://components/missile/visitors/missile_path_to.gd" id="1_xply4"]
+
+[resource]
+script = ExtResource("1_xply4")
+target = 1
+group = &""
+metadata/_custom_type_script = "uid://cegw8o8f7yqjl"

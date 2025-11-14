@@ -9,10 +9,12 @@ const SCENE = preload("res://entities/ball/ball.tscn")
 
 @export var abilities: Array[Ability]
 
+var _log = Logger.new("ball")#, Logger.Level.DEBUG)
 var next_missile_target: Node2D
 var squeeze_amount = 0.5
 var squeeze_duration = 1
 var sprite_scale = 3
+var _ability_ready_called: Array[StringName]
 
 func accept(v: Visitor):
     if v is BallVisitor:
@@ -29,19 +31,27 @@ func _ready() -> void:
     hitbox.body_entered_once.connect(_on_body_entered_once)
     missile.start_path_to.connect(_on_missile_start_path_to)
     sprite.scale = Vector2(sprite_scale, sprite_scale)
-    for a in abilities:
-        Visitor.visit(self, a.on_ready)
+    tree_exited.connect(_on_tree_exited)
+    _update()
+    _log.debug("created (%s)" % [get_instance_id()])
+        
+func _process(delta: float) -> void:
+    _update()
+
+func _on_tree_exited():
+    EventBus.ball_destroyed.emit(self)
+    _log.debug("left tree (%s)" % [get_instance_id()])
 
 func _on_body_entered_once(body: Node2D):
     if body is Hitbox:
         match body.id:
             Hitboxes.PLAYER_PLATFORM:
-                # BUG not being called?
                 for a in abilities:
                     Visitor.visit(self, a.on_me_hit_player_platform)
                     Visitor.visit(body, a.on_me_hit_player_platform)
             Hitboxes.PLAYER_HURTBOX:
                 for a in abilities:
+                    _log.debug("i hit player (%s)" % [get_instance_id()])
                     Visitor.visit(self, a.on_me_hit_player)
                     Visitor.visit(body, a.on_me_hit_player)
 
@@ -55,6 +65,8 @@ func _on_missile_start_path_to():
     tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
         .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
 
-func add_ability(ability: Ability):
-    abilities.append(ability)
-    Visitor.visit(self, ability.on_ready)
+func _update():
+    for a in abilities:
+        if not _ability_ready_called.has(a.name):
+            Visitor.visit(self, a.on_ready)
+            _ability_ready_called.append(a.name)

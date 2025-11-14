@@ -19,3 +19,9 @@ static func find_first_child_in_group(parent: Node, group: StringName) -> Node:
         if parent.is_ancestor_of(n):
             return n
     return
+    
+static func destroy_free(node: Node):
+    var parent = node.get_parent()
+    if parent:
+        parent.remove_child(node)
+    node.queue_free()

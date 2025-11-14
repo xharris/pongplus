@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MissilePathToDirection" load_steps=3 format=3 uid="uid://cfsxoueol1vuk"]
 
-[ext_resource type="Script" uid="uid://c6ganj6sqydie" path="res://entities/ball/visitors/missile_path_to_direction.gd" id="1_finvj"]
+[ext_resource type="Script" uid="uid://c6ganj6sqydie" path="res://components/missile/visitors/missile_path_to_direction.gd" id="1_finvj"]
 [ext_resource type="Resource" uid="uid://dn8iyanjx0p27" path="res://resources/platform_filter_strategies/filter_platform_enabled.tres" id="2_w8fa5"]
 
 [resource]

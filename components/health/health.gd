@@ -4,6 +4,7 @@ class_name Health
 signal died
 signal current_changed(amount: int)
 
+var _log = Logger.new("health")#, Logger.Level.DEBUG)
 @export var max: int
 var _current: int
 
@@ -18,6 +19,7 @@ func take_damage(amount: int):
     amount = -abs(amount)
     _current += amount
     _current = max(0, _current)
+    _log.debug("took damage: %d" % [amount])
     current_changed.emit(amount)
     if _current <= 0:
         died.emit()

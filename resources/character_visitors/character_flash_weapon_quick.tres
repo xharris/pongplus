@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CharacterFlashWeapon" load_steps=2 format=3 uid="uid://cilyext635ffc"]
 
-[ext_resource type="Script" uid="uid://ckn5h5jxkhcvg" path="res://components/character/visitors/flash_weapon.gd" id="1_y6nge"]
+[ext_resource type="Script" uid="uid://ckn5h5jxkhcvg" path="res://components/character/visitors/character_flash_weapon.gd" id="1_y6nge"]
 
 [resource]
 script = ExtResource("1_y6nge")

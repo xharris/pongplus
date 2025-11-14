@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="HealthTakeDamage" load_steps=2 format=3 uid="uid://c8462hpps06fd"]
 
-[ext_resource type="Script" uid="uid://cdke7qgrdbuiv" path="res://components/health/visitors/take_damage.gd" id="1_5s8gd"]
+[ext_resource type="Script" uid="uid://cdke7qgrdbuiv" path="res://components/health/visitors/health_take_damage.gd" id="1_5s8gd"]
 
 [resource]
 script = ExtResource("1_5s8gd")

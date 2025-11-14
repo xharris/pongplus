@@ -5,6 +5,12 @@ const ABILITY_BALL: Ability = preload("res://resources/abilities/ball.tres")
 
 @export var gameplay: Gameplay
 
+func accept(v: Visitor):
+    if not is_inside_tree():
+        return
+    if v is GameVisitor:
+        v.visit_game(self)
+
 func _ready() -> void:
     add_to_group(Groups.GAME)
     EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
@@ -22,7 +28,8 @@ func _on_player_health_current_changed(player: Player, amount: int):
     
 func _on_ball_created(ball: Ball):
     if not Ability.has_ability(ball.abilities, ABILITY_BALL):
-        ball.add_ability(ABILITY_BALL)
+        ball.abilities.append(ABILITY_BALL)
 
 func _on_ball_destroyed(ball: Ball):
-    pass
+    Visitor.visit(self, gameplay.on_ball_destroyed)
+    Visitor.visit(ball, gameplay.on_ball_destroyed)

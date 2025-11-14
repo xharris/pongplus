@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameVisitGroup" load_steps=4 format=3 uid="uid://cwpm7u4snq5le"]
+
+[ext_resource type="Script" uid="uid://dnw0vnfgbeykc" path="res://entities/game/visitors/game_visit_group.gd" id="1_vs04x"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="2_3v21j"]
+[ext_resource type="Resource" uid="uid://bbn7w0mlofsyh" path="res://resources/missile_visitors/missile_target_random_platform.tres" id="3_w8ey6"]
+
+[resource]
+script = ExtResource("1_vs04x")
+group = &"missile"
+visitors = Array[ExtResource("2_3v21j")]([ExtResource("3_w8ey6")])

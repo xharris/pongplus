@@ -18,6 +18,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
 var _platform_move_tween: Tween
 var aim_direction: AimDirection = AimDirection.STRAIGHT
+var _ability_ready_called: Array[StringName]
 
 func accept(v: Visitor):
     if v is CameraVisitor:
@@ -39,6 +40,7 @@ func _process(delta: float) -> void:
     # attack charge indicator
     if controller.is_charging:
         hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
+    _update()
 
 func _ready() -> void:
     add_to_group(Groups.PLAYER)
@@ -56,10 +58,12 @@ func _ready() -> void:
     character.attack_window_start.connect(_on_attack_window_start)
     character.attack_window_end.connect(_on_attack_window_end)
 
-    for a in abilities:
-        Visitor.visit(self, a.on_ready)
+    _update()
 
 func _on_health_current_changed(amount: int):
+    if amount < 0:
+        for a in abilities:
+            Visitor.visit(self, a.on_health_take_damage)
     EventBus.player_health_current_changed.emit(self, amount)
 
 func _on_attack_window_start():
@@ -83,8 +87,7 @@ func _on_release_attack():
 func _on_hitbox_body_entered_once(body: Node2D):
     if body is Hitbox:
         var parent = body.get_parent()
-        var missile: Missile = Util.find_child(parent, Missile)
-        if missile:
+        if parent:
             var visitors: Array[Visitor]
             match aim_direction:
                 AimDirection.UP:
@@ -96,9 +99,9 @@ func _on_hitbox_body_entered_once(body: Node2D):
                 AimDirection.STRAIGHT:
                     for a in abilities:
                         visitors.append_array(a.on_me_hit_missile_straight)
-            _log.debug("me hit %s's Missile, %d visitor(s)" % [parent, visitors.size()])
+            _log.debug("me hit %s, %d visitor(s)" % [parent, visitors.size()])
             Visitor.visit(self, visitors)
-            Visitor.visit(missile, visitors)
+            Visitor.visit(parent, visitors)
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
@@ -129,3 +132,9 @@ func _on_moved(platform: Platform):
         _platform_move_tween.stop()
     _platform_move_tween = create_tween()
     _platform_move_tween.tween_property(self, "global_position", platform.global_position, 0.1)
+
+func _update():
+    for a in abilities:
+        if not _ability_ready_called.has(a.name):
+            Visitor.visit(self, a.on_ready)
+            _ability_ready_called.append(a.name)

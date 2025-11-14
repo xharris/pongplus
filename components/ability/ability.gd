@@ -7,9 +7,7 @@ static func has_ability(abilities: Array[Ability], ability: Ability) -> bool:
             return true
     return false
 
-# TODO remove on_x_hit_me, source of event should handle outcome
-
-@export var name: String
+@export var name: StringName
 @export var on_ready: Array[Visitor]
 
 @export var on_me_hit_missile: Array[Visitor]
