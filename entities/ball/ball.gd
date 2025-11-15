@@ -27,18 +27,21 @@ func accept(v: Visitor):
 func _ready() -> void:
     hide()
     add_to_group(Groups.BALL)
+    
     EventBus.ball_created.emit.call_deferred(self)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_body_entered_once)
     missile.started_path_to.connect(_on_missile_started_path_to)
-    sprite.scale = Vector2(sprite_scale, sprite_scale)
     tree_exited.connect(_on_tree_exited)
+    
+    sprite.scale = Vector2(sprite_scale, sprite_scale)
     _update()
     show()
     _log.debug("created (%s)" % [get_instance_id()])
         
 func _process(delta: float) -> void:
-    _update()
+    if is_visible_in_tree():
+        _update()
 
 func _on_tree_exited():
     EventBus.ball_destroyed.emit(self)

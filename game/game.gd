@@ -20,9 +20,11 @@ func accept(v: Visitor):
 func _ready() -> void:
     Logger.global_level = log_level
     add_to_group(Groups.GAME)
+    
     EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
     EventBus.ball_destroyed.connect(_on_ball_destroyed)
     EventBus.player_health_current_changed.connect(_on_player_health_current_changed)
+    
     level.accepted_visitor.connect(accept)
     Visitor.visit(self, gameplay.on_start)
     

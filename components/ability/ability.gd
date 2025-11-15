@@ -31,7 +31,7 @@ static func visit_abilities(abilities: Array[Ability], node: Node, name: StringN
         # get visitors
         visitors.assign(a.get(name))
         if visitors.size() > 0:
-            await Visitor.visit(node, visitors)
+            Visitor.visit(node, visitors)
             match name:
                 ON_READY:
                     ready_called.append(a.name)

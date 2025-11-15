@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AnyWait" load_steps=2 format=3 uid="uid://by40sudh82sih"]
+
+[ext_resource type="Script" uid="uid://bp2nwx7nl4ua5" path="res://components/visitor/visitors/any_wait.gd" id="1_k68dc"]
+
+[resource]
+script = ExtResource("1_k68dc")
+seconds = 1.0
+metadata/_custom_type_script = "uid://bp2nwx7nl4ua5"

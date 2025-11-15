@@ -15,26 +15,30 @@ static func update_view(_delta: float):
     var root: Node2D = Engine.get_main_loop().current_scene
     if not root:
         return
-    var canvas_transform = Transform2D.IDENTITY
-    # get focal point
+    var canvas_xform = Transform2D.IDENTITY
     var total_position: Vector2
     var focal_points = 0
     for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
         if not c.is_visible_in_tree():
             continue
-        canvas_transform *= c._xform
+        # apply camera's calculated transform
+        canvas_xform *= c._xform
+        # use camera as a focal point
         if c.is_focal_point:
             focal_points += 1
             total_position += c.global_position
     var viewport = root.get_viewport()
+    var focal_xform = Transform2D.IDENTITY
     if focal_points > 0:
         var avg_position = total_position / focal_points
         var view_center = viewport.get_visible_rect().size / 2
         var adjusted_position = lerp(view_center, avg_position, focal_point_weight)
-        canvas_transform = canvas_transform.translated(-adjusted_position + view_center)
-    total_transform = total_transform.interpolate_with(canvas_transform, _delta)
+        focal_xform = focal_xform.translated(-adjusted_position + view_center)
+        
+    total_transform = total_transform.interpolate_with(focal_xform, _delta) * canvas_xform
     root.get_viewport().canvas_transform = total_transform
 
+@export var offset: float = 0
 @export var shake_duration: float = 1.5
 @export var shake_intensity: float = 30
 @export var is_focal_point: bool = false

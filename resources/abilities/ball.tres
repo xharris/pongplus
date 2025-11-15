@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=8 format=3 uid="uid://bxy2wh7iyefe6"]
+[gd_resource type="Resource" script_class="Ability" load_steps=9 format=3 uid="uid://bxy2wh7iyefe6"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_jyyjp"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_apd76"]
@@ -6,13 +6,14 @@
 [ext_resource type="Resource" uid="uid://bmtj5vfmhs08g" path="res://resources/platform_visitors/platform_disable.tres" id="2_wgwou"]
 [ext_resource type="Resource" uid="uid://scu8e60s7sjh" path="res://resources/ball_visitors/ball_destroy.tres" id="3_eh4wv"]
 [ext_resource type="Resource" uid="uid://d33uvp37ersrx" path="res://resources/missile_visitors/missile_path_to_platform_random.tres" id="3_msgjp"]
+[ext_resource type="Resource" uid="uid://by40sudh82sih" path="res://resources/any_visitors/wait_1s.tres" id="6_rvpfw"]
 [ext_resource type="Resource" uid="uid://8oevxr38rvm1" path="res://resources/ball_visitors/ball_center.tres" id="8_jyyjp"]
 
 [resource]
 script = ExtResource("2_apd76")
 name = &"ball"
 overrides = true
-on_ready = Array[ExtResource("1_jyyjp")]([ExtResource("8_jyyjp"), ExtResource("3_msgjp")])
+on_ready = Array[ExtResource("1_jyyjp")]([ExtResource("8_jyyjp"), ExtResource("6_rvpfw"), ExtResource("3_msgjp")])
 on_me_hit_missile = Array[ExtResource("1_jyyjp")]([])
 on_me_hit_missile_straight = Array[ExtResource("1_jyyjp")]([])
 on_me_hit_missile_up = Array[ExtResource("1_jyyjp")]([])
