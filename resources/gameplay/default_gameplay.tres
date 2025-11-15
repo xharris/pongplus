@@ -8,6 +8,6 @@
 [resource]
 script = ExtResource("2_dnd7h")
 on_start = Array[ExtResource("1_a65u5")]([ExtResource("5_iyg3j")])
-on_player_take_damage = Array[ExtResource("1_a65u5")]([ExtResource("2_yrlpe"), null])
+on_player_take_damage = Array[ExtResource("1_a65u5")]([ExtResource("2_yrlpe")])
 on_ball_destroyed = Array[ExtResource("1_a65u5")]([ExtResource("5_iyg3j")])
 metadata/_custom_type_script = "uid://dgk27trhnuo5i"

@@ -4,4 +4,8 @@
 
 [resource]
 script = ExtResource("1_ncwp4")
+side = 0
+operation = 1
+value = 1
+show = true
 metadata/_custom_type_script = "uid://cncqud3gt1o4o"

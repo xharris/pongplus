@@ -11,6 +11,7 @@
 [resource]
 script = ExtResource("2_apd76")
 name = &"ball"
+overrides = true
 on_ready = Array[ExtResource("1_jyyjp")]([ExtResource("8_jyyjp"), ExtResource("3_msgjp")])
 on_me_hit_missile = Array[ExtResource("1_jyyjp")]([])
 on_me_hit_missile_straight = Array[ExtResource("1_jyyjp")]([])

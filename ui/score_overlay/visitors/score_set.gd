@@ -8,7 +8,10 @@ enum Operation {SET, ADD, SUB}
 @export var value: int
 @export var show: bool = true
 
+var _log = Logger.new("score_set")#, Logger.Level.DEBUG)
+
 func visit_score_overlay(me: ScoreOverlay):
+    _log.debug("%s %d score %s" % [Operation.find_key(operation), value, ScoreOverlay.Side.find_key(side)])
     var score = me.get_score(side)
     match operation:
         Operation.SET:

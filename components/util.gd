@@ -21,7 +21,7 @@ static func find_first_child_in_group(parent: Node, group: StringName) -> Node:
     return
     
 static func destroy_free(node: Node):
-    var parent = node.get_parent()
-    if parent:
-        parent.remove_child(node)
+    #var parent = node.get_parent()
+    #if parent:
+        #parent.remove_child.call_deferred(node)
     node.queue_free()

@@ -1,13 +1,51 @@
 extends Resource
 class_name Ability
 
+static var _static_log = Logger.new("ability")#, Logger.Level.DEBUG)
+
 static func has_ability(abilities: Array[Ability], ability: Ability) -> bool:
     for a in abilities:
         if a.name == ability.name:
             return true
     return false
 
+static var _ability_ready_called: Dictionary
+
+
+static func visit_abilities(abilities: Array[Ability], node: Node, name: StringName):
+    var ready_called: Array[StringName]
+    ready_called.assign(_ability_ready_called.get(node, []))
+    # iter in reverse order to simulate overriding abilities
+    # (ability at end of array overrides visitors that come before it in array)
+    for i in range(abilities.size()-1, -1, -1):
+        var a: Ability = abilities[i]
+        if not a.get_property_list().any(func(pl: Dictionary): return pl.get("name", "") == name):
+            _static_log.warn("invalid ability property: %s" % [name])
+            break
+        var visitors: Array[Visitor]
+        # only call on_ready once
+        match name:
+            ON_READY when ready_called.has(a.name):
+                _static_log.debug("already called %s.on_ready" % [a.name])
+                continue
+        # get visitors
+        visitors.assign(a.get(name))
+        if visitors.size() > 0:
+            await Visitor.visit(node, visitors)
+            match name:
+                ON_READY:
+                    ready_called.append(a.name)
+            if a.overrides:
+                break # stop processing abilities
+    _ability_ready_called.set(node, ready_called)
+
+const ON_READY = &"on_ready"
+const ON_ME_HIT_PLAYER = &"on_me_hit_player"
+const ON_ME_HIT_PLAYER_PLATFORM = &"on_me_hit_player_platform"
+
 @export var name: StringName
+@export var overrides: bool = true
+
 @export var on_ready: Array[Visitor]
 
 @export var on_me_hit_missile: Array[Visitor]

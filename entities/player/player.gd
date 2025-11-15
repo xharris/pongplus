@@ -53,6 +53,7 @@ func _ready() -> void:
     controller.down.connect(_on_down)
     controller.charge_attack.connect(_on_charge_attack)
     controller.release_attack.connect(_on_release_attack)
+    hurtbox.accepted_visitor.connect(accept)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     character.attack_window_start.connect(_on_attack_window_start)
@@ -89,6 +90,8 @@ func _on_hitbox_body_entered_once(body: Node2D):
         var parent = body.get_parent()
         if parent:
             var visitors: Array[Visitor]
+            for a in abilities:
+                visitors.append_array(a.on_me_hit_missile)
             match aim_direction:
                 AimDirection.UP:
                     for a in abilities:

@@ -12,6 +12,7 @@
 [resource]
 script = ExtResource("9_q2tj6")
 name = &"player"
+overrides = true
 on_ready = Array[ExtResource("1_p3pga")]([])
 on_me_hit_missile = Array[ExtResource("1_p3pga")]([ExtResource("6_8tc3a"), ExtResource("7_xjtyu"), ExtResource("8_0qag6")])
 on_me_hit_missile_straight = Array[ExtResource("1_p3pga")]([ExtResource("10_xyanm")])

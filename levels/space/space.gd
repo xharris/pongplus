@@ -9,7 +9,7 @@ class_name Space
 @export var on_player_left_take_damage: Array[Visitor]
 @export var on_player_right_take_damage: Array[Visitor]
 
-var _log = Logger.new("space", Logger.Level.DEBUG)
+var _log = Logger.new("space")#, Logger.Level.DEBUG)
 
 func accept(v: Visitor):
     accepted_visitor.emit(v)

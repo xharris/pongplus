@@ -3,15 +3,14 @@ class_name Logger
 
 enum Level {NONE, ERROR, WARN, INFO, DEBUG}
 static var _max_prefix_length: int = 0
-static var _global_level = Level.INFO:
+static var global_level = Level.INFO:
+    set(v):
+        print_rich("[color=%s][b]set global log level %s[/b][/color]" % [Color.WHITE, Level.find_key(v)])
+        global_level = v
     get:
-        if not _global_level:
+        if not global_level:
             return Level.NONE
-        return _global_level
-
-static func set_global_level(level):
-    print_rich("[color=%s][b]set global log level %s[/b][/color]" % [Color.WHITE, Level.find_key(level)])
-    _global_level = level
+        return global_level
 
 @export var ignore_repeats = true
 var _level = Level.NONE
@@ -82,10 +81,10 @@ func _print(color: Color, level: String, msg: String) -> bool:
     return true
 
 func _is_level_enabled(level) -> bool:
+    if Logger.global_level != Level.NONE:
+        return Logger.global_level >= level
     if level != Level.NONE:
         return _level >= level
-    if Logger._global_level != Level.NONE:
-        return Logger._global_level >= level
     return false
 
 func info(msg: String):

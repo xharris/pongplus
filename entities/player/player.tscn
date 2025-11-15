@@ -31,7 +31,7 @@ id = &"player_hurtbox"
 shape = SubResource("CircleShape2D_8fjmc")
 
 [node name="Hitbox" parent="." instance=ExtResource("5_fkugw")]
-id = &"player"
+id = &"player_hitbox"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_qiwj3")

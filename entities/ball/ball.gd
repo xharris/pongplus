@@ -48,28 +48,22 @@ func _on_body_entered_once(body: Node2D):
     if body is Hitbox:
         match body.id:
             Hitboxes.PLAYER_PLATFORM:
-                for a in abilities:
-                    Visitor.visit(self, a.on_me_hit_player_platform)
-                    Visitor.visit(body, a.on_me_hit_player_platform)
+                Ability.visit_abilities(abilities, self, Ability.ON_ME_HIT_PLAYER_PLATFORM)
+                Ability.visit_abilities(abilities, body, Ability.ON_ME_HIT_PLAYER_PLATFORM)
             Hitboxes.PLAYER_HURTBOX:
-                for a in abilities:
-                    _log.debug("i hit player (%s)" % [get_instance_id()])
-                    Visitor.visit(self, a.on_me_hit_player)
-                    Visitor.visit(body, a.on_me_hit_player)
+                _log.debug("i hit player (%s)" % [get_instance_id()])
+                Ability.visit_abilities(abilities, self, Ability.ON_ME_HIT_PLAYER)
+                Ability.visit_abilities(abilities, body, Ability.ON_ME_HIT_PLAYER)
 
 func _physics_process(_delta: float) -> void:
     if missile.is_pathing:
         global_position = missile.missile_position
     sprite.rotation = missile.velocity.angle()
 
-func _on_missile_started_path_to():
+func _on_missile_started_path_to(_target: Node2D):
     var tween = sprite.create_tween()
     tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
         .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
 
 func _update():
-    for a in abilities:
-        if not _ability_ready_called.has(a.name):
-            await Visitor.visit(self, a.on_ready)
-            _ability_ready_called.append(a.name)
-    
+    Ability.visit_abilities(abilities, self, Ability.ON_READY)

@@ -7,6 +7,7 @@ const ABILITY_BALL: Ability = preload("res://resources/abilities/ball.tres")
 @onready var score: ScoreOverlay = %ScoreOverlay
 
 @export var gameplay: Gameplay
+@export var log_level: Logger.Level = Logger.Level.INFO
 
 func accept(v: Visitor):
     if not is_inside_tree():
@@ -17,6 +18,7 @@ func accept(v: Visitor):
         v.visit_score_overlay(score)
 
 func _ready() -> void:
+    Logger.global_level = log_level
     add_to_group(Groups.GAME)
     EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
     EventBus.ball_destroyed.connect(_on_ball_destroyed)
