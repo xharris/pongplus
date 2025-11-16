@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://slql4xgnuw4j"]
+
+[ext_resource type="Texture2D" uid="uid://ckwin7nuge50" path="res://components/vfx_impact/line-disappear.png" id="1_woao5"]
+[ext_resource type="Script" uid="uid://cxwoa0rneq1j0" path="res://components/vfx_impact/vfx_impact.gd" id="1_wum5h"]
+[ext_resource type="Material" uid="uid://dqq8l2gt53j6r" path="res://components/vfx_impact/circle_burst.tres" id="3_bxn7d"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wum5h"]
+light_mode = 1
+particles_animation = true
+particles_anim_h_frames = 15
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[node name="VfxImpact" type="Node2D"]
+script = ExtResource("1_wum5h")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
+material = SubResource("CanvasItemMaterial_wum5h")
+texture = ExtResource("1_woao5")
+lifetime = 2.0
+preprocess = 0.3
+explosiveness = 1.0
+process_material = ExtResource("3_bxn7d")

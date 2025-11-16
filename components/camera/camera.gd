@@ -3,12 +3,7 @@ class_name Camera
 
 static var _static_log = Logger.new("camera")#, Logger.Level.DEBUG)
 
-const FOCAL_POINT_OFFSET: int = 60
-## Midpoint to follow between center of screen and focal point.[br]
-## [code]0.0[/code] is locked to center (no movement)[br]
-## [code]0.5[/code] is halfway[br]
-## [code]1.0[/code] is exact average of all focal points[br]
-static var focal_point_weight: float = 0.2
+static var focal_speed: float = 2.0
 static var total_transform: Transform2D
 
 static func update_view(_delta: float):
@@ -16,8 +11,8 @@ static func update_view(_delta: float):
     if not root:
         return
     var canvas_xform = Transform2D.IDENTITY
-    var total_position: Vector2
-    var focal_points = 0
+    var view_center = root.get_viewport().get_visible_rect().size / 2
+    var focal_point_offset: Vector2
     for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
         if not c.is_visible_in_tree():
             continue
@@ -25,23 +20,21 @@ static func update_view(_delta: float):
         canvas_xform *= c._xform
         # use camera as a focal point
         if c.is_focal_point:
-            focal_points += 1
-            total_position += c.global_position
-    var viewport = root.get_viewport()
+            focal_point_offset -= lerp(Vector2.ZERO, c.global_position - view_center, c.focal_point_weight)
     var focal_xform = Transform2D.IDENTITY
-    if focal_points > 0:
-        var avg_position = total_position / focal_points
-        var view_center = viewport.get_visible_rect().size / 2
-        var adjusted_position = lerp(view_center, avg_position, focal_point_weight)
-        focal_xform = focal_xform.translated(-adjusted_position + view_center)
-        
-    total_transform = total_transform.interpolate_with(focal_xform, _delta) * canvas_xform
+    focal_xform = focal_xform.translated(focal_point_offset)
+    total_transform = total_transform.interpolate_with(focal_xform, _delta * focal_speed) * canvas_xform
     root.get_viewport().canvas_transform = total_transform
 
 @export var offset: float = 0
 @export var shake_duration: float = 1.5
 @export var shake_intensity: float = 30
 @export var is_focal_point: bool = false
+## Midpoint to follow between center of screen and focal point.[br]
+## [code]0.0[/code] is center of view (no camera offset)[br]
+## [code]0.5[/code] is halfway between both[br]
+## [code]1.0[/code] is camera node location[br]
+@export var focal_point_weight: float = 0.2
 
 var _log = Logger.new("camera")
 var _shake_t: float = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=13 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="PackedScene" uid="uid://du5nv34wqy0ef" path="res://entities/platform_movement/platform_movement.tscn" id="1_symyc"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="7_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="8_26q78"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="9_bectd"]
+[ext_resource type="PackedScene" uid="uid://slql4xgnuw4j" path="res://components/vfx_impact/vfx_impact.tscn" id="10_wvtmh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8fjmc"]
 radius = 16.0
@@ -42,3 +43,5 @@ shape = SubResource("CircleShape2D_qiwj3")
 
 [node name="Health" parent="." instance=ExtResource("9_bectd")]
 max = 3
+
+[node name="VfxImpact" parent="." instance=ExtResource("10_wvtmh")]

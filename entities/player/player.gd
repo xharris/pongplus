@@ -12,6 +12,7 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @onready var character: Character = $Character
 @onready var camera: Camera = $Camera
 @onready var health: Health = $Health
+@onready var vfx_impact: VfxImpact = $VfxImpact
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
@@ -88,7 +89,7 @@ func _on_release_attack():
 func _on_hitbox_body_entered_once(body: Node2D):
     if body is Hitbox:
         var parent = body.get_parent()
-        if parent:
+        if parent and Util.find_child(parent, Missile):
             var visitors: Array[Visitor]
             for a in abilities:
                 visitors.append_array(a.on_me_hit_missile)
@@ -106,6 +107,7 @@ func _on_hitbox_body_entered_once(body: Node2D):
             Visitor.visit(self, visitors)
             Visitor.visit(parent, visitors)
             aim_direction = AimDirection.STRAIGHT
+            vfx_impact.circle_burst(body.global_position)
 
 ## Is currently in the middle of an attack
 func is_attack_locked():
