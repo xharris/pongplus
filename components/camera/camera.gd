@@ -14,20 +14,19 @@ static func update_view(_delta: float):
     var canvas_xform = Transform2D.IDENTITY
     var view_center = root.get_viewport().get_visible_rect().size / 2
     # calculate focal point
-    var focal_xform = Transform2D.IDENTITY
+    var focal_point_offset: Vector2
+    for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
+        if not c.is_visible_in_tree():
+            continue
+        # apply camera's calculated transform
+        canvas_xform *= c._xform
+        # use camera as a focal point
+        if c.is_focal_point:
+            focal_point_offset -= lerp(Vector2.ZERO, c.global_position - view_center, c.focal_point_weight)
     if focal_point_enabled:
-        var focal_point_offset: Vector2
-        for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
-            if not c.is_visible_in_tree():
-                continue
-            # apply camera's calculated transform
-            canvas_xform *= c._xform
-            # use camera as a focal point
-            if c.is_focal_point:
-                focal_point_offset -= lerp(Vector2.ZERO, c.global_position - view_center, c.focal_point_weight)
-        
-        focal_xform = focal_xform.translated(focal_point_offset)
-    total_transform = total_transform.interpolate_with(focal_xform, _delta * focal_speed) * canvas_xform
+        var focal_xform = Transform2D.IDENTITY.translated(focal_point_offset)
+        total_transform = total_transform.interpolate_with(focal_xform, _delta * focal_speed)
+    total_transform *= canvas_xform
     root.get_viewport().canvas_transform = total_transform
 
 @export var offset: float = 0
