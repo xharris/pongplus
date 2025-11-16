@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bwew8b4odwmlt"
-path="res://.godot/imported/Letterblocks.ttf-7bb35d9d410ccd726db60a9958ee146c.fontdata"
+uid="uid://n3h4jf8qakp0"
+path="res://.godot/imported/rimouski sb.otf-2900d8eacf9774b79b4533db479a5070.fontdata"
 
 [deps]
 
-source_file="res://ui/Letterblocks.ttf"
-dest_files=["res://.godot/imported/Letterblocks.ttf-7bb35d9d410ccd726db60a9958ee146c.fontdata"]
+source_file="res://ui/fonts/rimouski sb.otf"
+dest_files=["res://.godot/imported/rimouski sb.otf-2900d8eacf9774b79b4533db479a5070.fontdata"]
 
 [params]
 

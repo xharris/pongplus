@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cb741g5t3iwb4"]
 
-[ext_resource type="FontFile" uid="uid://bwew8b4odwmlt" path="res://ui/Letterblocks.ttf" id="1_3b0wg"]
+[ext_resource type="FontFile" uid="uid://bwew8b4odwmlt" path="res://ui/fonts/Letterblocks.ttf" id="1_3b0wg"]
 [ext_resource type="Script" uid="uid://b4llk4sl0eiou" path="res://ui/score_overlay/score_overlay.gd" id="1_xokbm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xokbm"]

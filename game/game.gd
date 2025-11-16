@@ -2,8 +2,9 @@ extends Node2D
 class_name Game
 
 const ABILITY_BALL: Ability = preload("res://resources/abilities/ball.tres")
+const LEVEL_SPACE = preload("res://levels/space/space.tscn")
 
-@onready var level: Level = $Space
+@onready var level: Level = $Title
 @onready var score: ScoreOverlay = %ScoreOverlay
 
 @export var gameplay: Gameplay
