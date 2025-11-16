@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://uh23au0bmyqe"]
+
+[ext_resource type="Theme" uid="uid://qat4imsomiwb" path="res://ui/themes/godot.tres" id="1_droih"]
+
+[node name="GodotPreview" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_droih")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+current_tab = 0
+drag_to_rearrange_enabled = true
+use_hidden_tabs_for_min_size = true
+
+[node name="Label1" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+layout_mode = 2
+text = "taaaaaaaaaaaaaaaaaaaaaaab 1"
+metadata/_tab_index = 0
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "taaaaaaaaaaaaaaaaaaaaaaab 2"
+metadata/_tab_index = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "taaaaaaaaaaaaaaaaaaaaaaab 3"
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Menu Button"
+item_count = 1
+popup/item_0/text = "one"
+popup/item_0/id = 0
