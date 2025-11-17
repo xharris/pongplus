@@ -69,4 +69,6 @@ func _on_missile_started_path_to(_target: Node2D):
         .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
 
 func _update():
+    missile._log.set_prefix(name)
+    hitbox._log.set_prefix(name)
     Ability.visit_abilities(abilities, self, Ability.ON_READY)

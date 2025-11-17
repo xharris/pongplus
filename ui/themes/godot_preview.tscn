@@ -58,3 +58,6 @@ text = "Menu Button"
 item_count = 1
 popup/item_0/text = "one"
 popup/item_0/id = 0
+
+[node name="Tree" type="Tree" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer"]
+layout_mode = 2

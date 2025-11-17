@@ -140,6 +140,13 @@ func _on_moved(platform: Platform):
     _platform_move_tween.tween_property(self, "global_position", platform.global_position, 0.1)
 
 func _update():
+    health._log.set_prefix(name)
+    movement._log.set_prefix(name)
+    hitbox._log.set_prefix(name)
+    hurtbox._log.set_prefix(name)
+    character._log.set_prefix(name)
+    camera._log.set_prefix(name)
+    health._log.set_prefix(name)
     for a in abilities:
         if not _ability_ready_called.has(a.name):
             Visitor.visit(self, a.on_ready)

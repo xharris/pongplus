@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://ci17riofr5u1i"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_8rm36"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_21yny"]
+[ext_resource type="Resource" uid="uid://scu8e60s7sjh" path="res://resources/ball_visitors/ball_destroy.tres" id="2_medob"]
+
+[resource]
+script = ExtResource("2_21yny")
+name = &"ball_title"
+overrides = true
+on_ready = Array[ExtResource("1_8rm36")]([])
+on_me_hit_missile = Array[ExtResource("1_8rm36")]([])
+on_me_hit_missile_straight = Array[ExtResource("1_8rm36")]([])
+on_me_hit_missile_up = Array[ExtResource("1_8rm36")]([])
+on_me_hit_missile_down = Array[ExtResource("1_8rm36")]([])
+on_me_hit_player = Array[ExtResource("1_8rm36")]([])
+on_health_take_damage = Array[ExtResource("1_8rm36")]([])
+on_me_hit_player_platform = Array[ExtResource("1_8rm36")]([ExtResource("2_medob")])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"

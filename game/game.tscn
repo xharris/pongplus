@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://nwggbimfhwtc"]
+[gd_scene load_steps=7 format=3 uid="uid://nwggbimfhwtc"]
 
 [ext_resource type="Script" uid="uid://d4drjhi2ttmd7" path="res://game/game.gd" id="1_pxw13"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="2_j054j"]
-[ext_resource type="Resource" uid="uid://dfmaov33n1my" path="res://resources/gameplay/default_gameplay.tres" id="2_qrgux"]
 [ext_resource type="PackedScene" uid="uid://cmkbl3rf581y2" path="res://levels/title/title.tscn" id="3_u5opy"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="3_vjvwb"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="4_vbwj1"]
@@ -10,7 +9,7 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_pxw13")
-gameplay = ExtResource("2_qrgux")
+log_level = 4
 
 [node name="Title" parent="." instance=ExtResource("3_u5opy")]
 

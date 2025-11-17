@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
-[ext_resource type="PackedScene" uid="uid://du5nv34wqy0ef" path="res://entities/platform_movement/platform_movement.tscn" id="1_symyc"]
+[ext_resource type="PackedScene" uid="uid://du5nv34wqy0ef" path="res://components/platform/platform_movement/platform_movement.tscn" id="1_symyc"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_qiwj3"]
 [ext_resource type="Resource" uid="uid://dhd07b8guciwu" path="res://resources/abilities/player.tres" id="3_26q78"]
 [ext_resource type="PackedScene" uid="uid://ckj14pn1icvha" path="res://components/player_controller/player_controller.tscn" id="3_bls4j"]

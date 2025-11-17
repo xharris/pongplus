@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 EventBus="*res://entities/event_bus.gd"
 
+[debug]
+
+file_logging/enable_file_logging=true
+file_logging/log_path="logs/game.log"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

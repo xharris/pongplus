@@ -28,7 +28,7 @@ var _full_prefix: String = ""
 var _prev_msg: String
 var _lines: Array[String]
 
-func _init(id: String = "", level = Level.INFO, prefix: String = "") -> void:
+func _init(id: String = "", level = Level.NONE, prefix: String = "") -> void:
     _id = id
     _level = level
     _prefix = prefix
@@ -81,10 +81,10 @@ func _print(color: Color, level: String, msg: String) -> bool:
     return true
 
 func _is_level_enabled(level) -> bool:
+    if _level != Level.NONE:
+        return _level >= level
     if Logger.global_level != Level.NONE:
         return Logger.global_level >= level
-    if level != Level.NONE:
-        return _level >= level
     return false
 
 func info(msg: String):

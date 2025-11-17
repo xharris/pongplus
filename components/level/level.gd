@@ -2,3 +2,44 @@ extends Node2D
 class_name Level
 
 signal accepted_visitor(v: Visitor)
+
+var _log = Logger.new("level")
+@export var gameplay: Gameplay
+## Used for logging id
+@export var id: String
+
+func _ready() -> void:
+    if not id.is_empty():
+        _log.set_id(id)
+    EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
+    EventBus.ball_destroyed.connect(_on_ball_destroyed)
+    EventBus.player_health_current_changed.connect(_on_player_health_current_changed)
+
+    # set player abilities
+    if gameplay and not gameplay.player_abilties.is_empty():
+        for p in get_tree().get_nodes_in_group(Groups.PLAYER):
+            _log.debug("add player ability: %s" % [p.abilities])
+            p.abilities = gameplay.player_abilties.duplicate(true)
+
+    # set player abilities
+    if gameplay and not gameplay.player_abilties.is_empty():
+        for b in get_tree().get_nodes_in_group(Groups.BALL):
+            _log.debug("add ball ability: %s" % [b.abilities])
+            b.abilities = gameplay.ball_abilities.duplicate(true)
+    
+    _log.debug("start")
+    Visitor.visit(self, gameplay.on_start)
+
+func _on_player_health_current_changed(player: Player, amount: int):
+    if gameplay and amount < 0 and player.health.is_alive():
+        Visitor.visit(self, gameplay.on_player_take_damage)
+        Visitor.visit(player, gameplay.on_player_take_damage)
+
+func _on_ball_destroyed(ball: Ball):
+    Visitor.visit(self, gameplay.on_ball_destroyed)
+    Visitor.visit(ball, gameplay.on_ball_destroyed)
+
+func _on_ball_created(ball: Ball):
+    for a in gameplay.ball_abilities:
+        if not Ability.has_ability(ball.abilities, a):
+            ball.abilities.append(a)

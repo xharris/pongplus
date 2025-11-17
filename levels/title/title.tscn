@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=8 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
+[ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://levels/title/title_gameplay.tres" id="2_d1k64"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
 [ext_resource type="PackedScene" uid="uid://bs3v4d5sf6lgh" path="res://components/node_group/node_group.tscn" id="3_wtaml"]
 [ext_resource type="Resource" uid="uid://cvypemtce7q45" path="res://levels/title/title_left.tres" id="4_wtaml"]
@@ -9,6 +10,8 @@
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_vucde")
+gameplay = ExtResource("2_d1k64")
+id = "title"
 metadata/_custom_type_script = "uid://himp0c2dh4b1"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -33,6 +36,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 48
 text = "Pong+"
 uppercase = true
 
@@ -47,7 +51,11 @@ position_strategy = ExtResource("4_wtaml")
 
 [node name="PlayerPlatform" parent="Left" instance=ExtResource("5_b7l43")]
 
+[node name="PlayerPlatform2" parent="Left" instance=ExtResource("5_b7l43")]
+
 [node name="Right" parent="." instance=ExtResource("3_wtaml")]
 position_strategy = ExtResource("6_d1k64")
 
 [node name="PlayerPlatform" parent="Right" instance=ExtResource("5_b7l43")]
+
+[node name="PlayerPlatform2" parent="Right" instance=ExtResource("5_b7l43")]

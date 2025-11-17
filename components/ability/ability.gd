@@ -1,7 +1,7 @@
 extends Resource
 class_name Ability
 
-static var _static_log = Logger.new("ability")#, Logger.Level.DEBUG)
+static var _static_log = Logger.new("ability", Logger.Level.DEBUG)
 
 static func has_ability(abilities: Array[Ability], ability: Ability) -> bool:
     for a in abilities:
@@ -28,6 +28,7 @@ static func visit_abilities(abilities: Array[Ability], node: Node, name: StringN
             ON_READY when ready_called.has(a.name):
                 _static_log.debug("already called %s.on_ready" % [a.name])
                 continue
+        _static_log.debug("visit %s" % [a.name])
         # get visitors
         visitors.assign(a.get(name))
         if visitors.size() > 0:
@@ -35,7 +36,9 @@ static func visit_abilities(abilities: Array[Ability], node: Node, name: StringN
             match name:
                 ON_READY:
                     ready_called.append(a.name)
+            # BUG not working
             if a.overrides:
+                _static_log.debug("override, stop processing abilities")
                 break # stop processing abilities
     _ability_ready_called.set(node, ready_called)
 
@@ -44,6 +47,9 @@ const ON_ME_HIT_PLAYER = &"on_me_hit_player"
 const ON_ME_HIT_PLAYER_PLATFORM = &"on_me_hit_player_platform"
 
 @export var name: StringName
+## When [code]true[/code], if this ability is last in the list,
+## it's visitors will be called and abilities higher in the list will
+## be skipped. This will not happen though if the visitor array is empty.
 @export var overrides: bool = true
 
 @export var on_ready: Array[Visitor]
