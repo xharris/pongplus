@@ -5,7 +5,8 @@ enum Level {NONE, ERROR, WARN, INFO, DEBUG}
 static var _max_prefix_length: int = 0
 static var global_level = Level.INFO:
     set(v):
-        print_rich("[color=%s][b]set global log level %s[/b][/color]" % [Color.WHITE, Level.find_key(v)])
+        if v != global_level:
+            print_rich("[color=%s][b]set global log level %s[/b][/color]" % [Color.WHITE, Level.find_key(v)])
         global_level = v
     get:
         if not global_level:

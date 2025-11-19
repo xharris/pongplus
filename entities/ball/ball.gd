@@ -2,10 +2,12 @@ extends Node2D
 class_name Ball
 
 const SCENE = preload("res://entities/ball/ball.tscn")
+static var _i = 0
 
 @onready var missile: Missile = $Missile
 @onready var hitbox: Hitbox = $Hitbox
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var camera: Camera = $Camera
 
 @export var abilities: Array[Ability]
 
@@ -23,8 +25,13 @@ func accept(v: Visitor):
         missile.accept(v)
     elif v is HitboxVisitor:
         hitbox.accept(v)
+    elif v is CameraVisitor:
+        camera.accept(v)
 
 func _ready() -> void:
+    name = "Ball%d" % [_i]
+    _i += 1
+    _log.set_id(name)
     hide()
     add_to_group(Groups.BALL)
     

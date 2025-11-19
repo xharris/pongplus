@@ -1,7 +1,7 @@
 extends BallVisitor
 class_name BallAddAbility
 
-var _log = Logger.new("ball_add_ability", Logger.Level.DEBUG)
+var _log = Logger.new("ball_add_ability")#, Logger.Level.DEBUG)
 
 @export var ability: Ability
 

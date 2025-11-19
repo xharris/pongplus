@@ -29,8 +29,8 @@ func _ready() -> void:
     area_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D):
-    _log.debug("body entered: %s" % [body])
-    if not _entered.has(body):
+    if not _entered.has(body) and body.get_parent() != get_parent():
+        _log.debug("body entered: %s -> %s" % [body.name, body.get_parent()])
         _entered.append(body)
         body_entered_once.emit(body)
 

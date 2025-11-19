@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HealthInvincible" load_steps=2 format=3 uid="uid://dq24mii7667lq"]
+
+[ext_resource type="Script" uid="uid://b34xotgpb57yk" path="res://components/health/visitors/health_invincible.gd" id="1_esmqe"]
+
+[resource]
+script = ExtResource("1_esmqe")
+invincible = true
+metadata/_custom_type_script = "uid://b34xotgpb57yk"

@@ -5,7 +5,7 @@ class_name MissilePathToDirection
 
 enum AimDirection {STRAIGHT, UP, DOWN, RANDOM}
 
-var _log = Logger.new("ball_missile_path_to")#, Logger.Level.DEBUG)
+var _log = Logger.new("ball_missile_path_to_direction")#, Logger.Level.DEBUG)
 @export var direction: AimDirection
 @export var target_group: StringName
 @export var target_filter_strategy: FilterStrategy
@@ -49,7 +49,7 @@ func visit_missile(me: Missile):
     # filter: use filter strategy
     if target_filter_strategy:
         items = items.filter(target_filter_strategy.filter)
-    if _log.warn_if(items.size() == 0, "no targets"):
+    if _log.warn_if(items.is_empty(), "no targets"):
         me.stop_pathing()
         return
     # use aim direction
@@ -61,6 +61,7 @@ func visit_missile(me: Missile):
             index = last_group.find(last_target_same_group)
     _log.debug("index of last target: %d (%s)" % [index, last_target_same_group])
     index = clampi(index, 0, items.size()-1)
+    _log.debug("items: %s" % [items])
     var next_target: Node2D
     while true:
         match direction:
@@ -72,8 +73,8 @@ func visit_missile(me: Missile):
                 index = randi() % items.size()
         index = clampi(index, 0, items.size()-1)
         next_target = items[index]
-        if not (not next_target and index > 0 and index < items.size()):
+        if next_target or index < 0 or index >= items.size():
             break
     # finally, path to it
-    _log.debug("index of %s target: %d (%s)" % [AimDirection.find_key(direction), index, next_target])
+    _log.debug("index of next %s target: %d (%s)" % [AimDirection.find_key(direction), index, next_target])
     me.path_to(next_target)

@@ -2,6 +2,7 @@ extends Node2D
 class_name Player
 
 enum AimDirection {STRAIGHT, UP, DOWN}
+static var _i = 0
 
 var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
@@ -44,6 +45,9 @@ func _process(delta: float) -> void:
     _update()
 
 func _ready() -> void:
+    name = "Player%d" % [_i]
+    _i += 1
+    _log.set_id(name)
     add_to_group(Groups.PLAYER)
     controller.config = player_controller_config
     hitbox.disable()
@@ -103,9 +107,9 @@ func _on_hitbox_body_entered_once(body: Node2D):
                 AimDirection.STRAIGHT:
                     for a in abilities:
                         visitors.append_array(a.on_me_hit_missile_straight)
-            _log.debug("me hit %s, %d visitor(s)" % [parent, visitors.size()])
+            _log.debug("me hit %s (%s), %d visitor(s)" % [parent, AimDirection.find_key(aim_direction), visitors.size()])
             Visitor.visit(self, visitors)
-            Visitor.visit(parent, visitors)
+            Visitor.visit(body, visitors)
             aim_direction = AimDirection.STRAIGHT
             vfx_impact.circle_burst(body.global_position)
 

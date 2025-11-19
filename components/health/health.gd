@@ -6,6 +6,11 @@ signal current_changed(amount: int)
 
 var _log = Logger.new("health")#, Logger.Level.DEBUG)
 @export var max: int
+@export var invincible: bool:
+    set(v):
+        if invincible != v:
+            _log.debug("invincible: %s" % [v])
+        invincible = v
 var _current: int
 
 func accept(v: Visitor):
@@ -17,6 +22,8 @@ func _ready() -> void:
 
 func take_damage(amount: int):
     amount = -abs(amount)
+    if invincible:
+        return
     _current += amount
     _current = max(0, _current)
     _log.debug("took damage: %d" % [amount])

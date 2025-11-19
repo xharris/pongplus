@@ -2,7 +2,8 @@
 
 ## Debug Logs
 
-- Logs of the latest run are written to `logs/game.log`
+- ALWAYS check the logs if they are available.
+- Logs of the latest run are written to `logs/game.log`.
 
 ## Project Overview
 

@@ -1,7 +1,7 @@
 extends Resource
 class_name Ability
 
-static var _static_log = Logger.new("ability", Logger.Level.DEBUG)
+static var _static_log = Logger.new("ability")#, Logger.Level.DEBUG)
 
 static func has_ability(abilities: Array[Ability], ability: Ability) -> bool:
     for a in abilities:
@@ -26,7 +26,6 @@ static func visit_abilities(abilities: Array[Ability], node: Node, name: StringN
         # only call on_ready once
         match name:
             ON_READY when ready_called.has(a.name):
-                _static_log.debug("already called %s.on_ready" % [a.name])
                 continue
         _static_log.debug("visit %s" % [a.name])
         # get visitors
@@ -38,7 +37,7 @@ static func visit_abilities(abilities: Array[Ability], node: Node, name: StringN
                     ready_called.append(a.name)
             # BUG not working
             if a.overrides:
-                _static_log.debug("override, stop processing abilities")
+                _static_log.debug("override at %s.%s, stop processing abilities" % [a.name, name])
                 break # stop processing abilities
     _ability_ready_called.set(node, ready_called)
 
