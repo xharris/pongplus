@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c748xn105dplb"]
+
+[ext_resource type="Script" uid="uid://js4ho8wjn0e2" path="res://components/vfx_speedy/vfx_speedy.gd" id="1_273kw"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="2_6hdgq"]
+
+[node name="VfxSpeedy" type="Node2D"]
+script = ExtResource("1_273kw")
+
+[node name="TestSprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_6hdgq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

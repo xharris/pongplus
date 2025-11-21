@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cd6xno3u30o4r"]
+[gd_scene load_steps=8 format=3 uid="uid://cd6xno3u30o4r"]
 
 [ext_resource type="PackedScene" uid="uid://df5xis8hnkamb" path="res://components/missile/missile.tscn" id="1_61umk"]
 [ext_resource type="Script" uid="uid://dwjmlg6e8aiyq" path="res://entities/ball/ball.gd" id="1_jyt08"]
 [ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="3_w5wpn"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="4_we1t7"]
 [ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="5_6mrx1"]
+[ext_resource type="PackedScene" uid="uid://slql4xgnuw4j" path="res://components/vfx_impact/vfx_impact.tscn" id="6_thfbu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w5wpn"]
 radius = 16.0
@@ -14,10 +15,6 @@ script = ExtResource("1_jyt08")
 
 [node name="Missile" parent="." instance=ExtResource("1_61umk")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
-texture = ExtResource("3_w5wpn")
-
 [node name="Hitbox" parent="." instance=ExtResource("4_we1t7")]
 id = &"ball"
 
@@ -26,3 +23,10 @@ shape = SubResource("CircleShape2D_w5wpn")
 
 [node name="Camera" parent="." instance=ExtResource("5_6mrx1")]
 is_focal_point = true
+
+[node name="VfxImpact" parent="." instance=ExtResource("6_thfbu")]
+
+[node name="Sprite2D" type="Sprite2D" parent="VfxImpact"]
+unique_name_in_owner = true
+scale = Vector2(3, 3)
+texture = ExtResource("3_w5wpn")

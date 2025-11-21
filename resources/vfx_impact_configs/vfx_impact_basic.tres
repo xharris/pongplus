@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="VfxImpactConfig" load_steps=2 format=3 uid="uid://c1a2q7mxev3qo"]
+
+[ext_resource type="Script" uid="uid://foxcjmmtslkg" path="res://components/vfx_impact/vfx_impact_config.gd" id="1_0vufb"]
+
+[resource]
+script = ExtResource("1_0vufb")
+circle_burst_enabled = true
+circle_burst_offset = Vector2(0, 0)
+circle_burst_color = Color(0, 0, 0, 1)
+circle_burst_amount = 3
+squeeze_enabled = true
+squeeze_amount = 2.0
+metadata/_custom_type_script = "uid://foxcjmmtslkg"

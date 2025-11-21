@@ -5,9 +5,11 @@ const SCENE = preload("res://entities/ball/ball.tscn")
 static var _i = 0
 
 @onready var missile: Missile = $Missile
+## Um, akshually it's a hurtbox
 @onready var hitbox: Hitbox = $Hitbox
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: Sprite2D = %Sprite2D
 @onready var camera: Camera = $Camera
+@onready var vfx_impact: VfxImpact = $VfxImpact
 
 @export var abilities: Array[Ability]
 
@@ -27,6 +29,8 @@ func accept(v: Visitor):
         hitbox.accept(v)
     elif v is CameraVisitor:
         camera.accept(v)
+    elif v is VfxImpactVisitor:
+        vfx_impact.accept(v)
 
 func _ready() -> void:
     name = "Ball%d" % [_i]

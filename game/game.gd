@@ -23,7 +23,7 @@ func _ready() -> void:
     add_to_group(Groups.GAME)
     update()
     _log.debug("start")
-    
+
 func _process(delta: float) -> void:
     Camera.update_view(delta)
     
