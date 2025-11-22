@@ -6,6 +6,7 @@ static var _static_log = Logger.new("camera")#, Logger.Level.DEBUG)
 static var focal_speed: float = 2.0
 static var total_transform: Transform2D
 static var focal_point_enabled: bool = true
+static var avg_time_scale: float = 1.0
 
 static func update_view(_delta: float):
     var root: Node2D = Engine.get_main_loop().current_scene
@@ -29,9 +30,9 @@ static func update_view(_delta: float):
             total_time_scale += c.time_scale
             time_scale_count += 1
     if time_scale_count > 0:
-        Engine.time_scale = total_time_scale / time_scale_count
+        Camera.avg_time_scale = total_time_scale / time_scale_count
     else:
-        Engine.time_scale = 1
+        Camera.avg_time_scale = 1
     if focal_point_enabled:
         var focal_xform = Transform2D.IDENTITY.translated(focal_point_offset)
         total_transform = total_transform.interpolate_with(focal_xform, _delta * focal_speed)

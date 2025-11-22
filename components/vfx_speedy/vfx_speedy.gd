@@ -18,9 +18,9 @@ func _process(delta: float) -> void:
         config = VfxSpeedyConfig.new()
     if Engine.is_editor_hint() or (_last_position != Vector2.ZERO and global_position != Vector2.ZERO):
         # calculate velocity
-        _velocity = _last_position - global_position
+        _velocity = (_last_position - global_position)
         # squeeze based on velocity
-        var velocity_amt = _velocity.length() / (_velocity.length() + config.squeeze_rate_of_change)
+        var velocity_amt: float = Util.diminishing(_velocity.length(), config.squeeze_rate_of_change)
         scale =  lerp(
             Vector2.ONE, Vector2(config.squeeze_amount, 1/config.squeeze_amount), 
             velocity_amt

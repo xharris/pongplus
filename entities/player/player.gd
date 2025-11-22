@@ -16,9 +16,11 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
+var aim_direction: AimDirection = AimDirection.STRAIGHT
+var coyote_distance = 140
+var coyote_rate_of_change = 120
 
 var _platform_move_tween: Tween
-var aim_direction: AimDirection = AimDirection.STRAIGHT
 var _ability_ready_called: Array[StringName]
 
 func accept(v: Visitor):
@@ -41,6 +43,30 @@ func _process(delta: float) -> void:
     # attack charge indicator
     if controller.is_charging:
         hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
+    # attack charge coyote time when ball is nearby
+    if is_charge_attack_locked():
+        var closest: Missile
+        var gp = global_position
+        var coyote_distance_squared = coyote_distance ** 2
+        for m: Missile in get_tree().get_nodes_in_group(Groups.MISSILE):
+            var dist = gp.distance_squared_to(m.global_position)
+            if dist < coyote_distance_squared and (
+                not closest or \
+                dist < gp.distance_squared_to(closest.global_position)\
+            ):
+                closest = m
+        if closest:
+            var charge_amount = Util.diminishing(
+                controller.charge_duration / controller.max_charge_duration,
+                coyote_rate_of_change
+            )
+            var dist_amount = Util.diminishing(
+                max(0, coyote_distance - global_position.distance_to(closest.global_position)),
+                coyote_rate_of_change
+            )
+            camera.time_scale = lerpf(1, 0, dist_amount) * lerpf(1, 0, charge_amount)
+    else:
+        camera.time_scale = 1.0
     _update()
 
 func _ready() -> void:
@@ -124,12 +150,14 @@ func is_movement_locked():
     return controller.is_charging or character.is_attacking()
 
 func _on_up():
+    ## TODO double tap to force move
     if is_charge_attack_locked():
         aim_direction = AimDirection.UP
     if not is_movement_locked():
         movement.move_up()
 
 func _on_down():
+    ## TODO double tap to force move
     if is_charge_attack_locked():
         aim_direction = AimDirection.DOWN
     if not is_movement_locked():

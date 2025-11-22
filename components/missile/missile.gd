@@ -13,7 +13,7 @@ const DRAW_DEBUG: bool = false
 
 var _log = Logger.new("missile")
 var _current_curve: Curve2D
-var _tween: Tween
+var tween: Tween
 
 var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
 var target_history: Array[Node2D]
@@ -25,7 +25,7 @@ var duration_curve_position: float:
         duration_curve_position = clampf(v, 0, 1)
 var is_pathing: bool:
     get:
-        return _tween and _tween.is_running()
+        return tween and tween.is_running()
 var _last_position: Vector2
 var velocity: Vector2
 var _debug_midpoint: Vector2
@@ -84,11 +84,11 @@ func path_to(target: Node2D):
     # create curve between ball and target
     curve.set_point_out(0, control_point - global_position)
     curve.set_point_in(1, control_point - target_position)
-    _tween = create_tween()
-    _tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-    _tween.set_trans(Tween.TRANS_SINE)
-    _tween.set_ease(Tween.EASE_OUT)
-    _tween.tween_method(
+    tween = create_tween()
+    tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
+    tween.set_trans(Tween.TRANS_SINE)
+    tween.set_ease(Tween.EASE_OUT)
+    tween.tween_method(
         func(p):
             missile_position = curve.sample(0, p),
         0.0, 1.0,
@@ -102,6 +102,6 @@ func path_to(target: Node2D):
     started_path_to.emit(target)
 
 func stop_pathing():
-    if _tween:
-        _tween.stop()
-        _tween = null
+    if tween:
+        tween.stop()
+        tween = null

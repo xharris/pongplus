@@ -25,3 +25,9 @@ static func destroy_free(node: Node):
     #if parent:
         #parent.remove_child.call_deferred(node)
     node.queue_free()
+
+## Returns value between [0, 1]
+static func diminishing(value, rate_of_change = 0):
+    if value + rate_of_change == 0:
+        return 0
+    return value / (value + rate_of_change)
