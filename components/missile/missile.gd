@@ -32,7 +32,7 @@ var _debug_midpoint: Vector2
 var _debug_control_point: Vector2
 var curve: Curve2D
 var curve_side: CurveSide = CurveSide.TOP
-var curve_angle_offset: float = 35
+var curve_angle_offset: float = 50
 var _curve_dir_sign: int = 1
 
 func accept(v: Visitor):
@@ -72,7 +72,7 @@ func path_to(target: Node2D):
         CurveSide.BOT:
             dir_sign = (1 if global_position < target_position else -1) * -1
         CurveSide.MID:
-            new_curve_distance = clampf(new_curve_distance, -10, 10)
+            new_curve_distance /= 2
     var control_angle = angle_to - \
         deg_to_rad(dir_sign * (90 + curve_angle_offset))
     var control_point = midpoint + \

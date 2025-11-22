@@ -13,8 +13,9 @@ static func update_view(_delta: float):
         return
     var canvas_xform = Transform2D.IDENTITY
     var view_center = root.get_viewport().get_visible_rect().size / 2
-    # calculate focal point
     var focal_point_offset: Vector2
+    var total_time_scale: float
+    var time_scale_count: int
     for c: Camera in root.get_tree().get_nodes_in_group(Groups.CAMERA):
         if not c.is_visible_in_tree():
             continue
@@ -23,6 +24,14 @@ static func update_view(_delta: float):
         # use camera as a focal point
         if c.is_focal_point:
             focal_point_offset -= lerp(Vector2.ZERO, c.global_position - view_center, c.focal_point_weight)
+        # only include cameras that want to modify time scale
+        if c.time_scale != 1:
+            total_time_scale += c.time_scale
+            time_scale_count += 1
+    if time_scale_count > 0:
+        Engine.time_scale = total_time_scale / time_scale_count
+    else:
+        Engine.time_scale = 1
     if focal_point_enabled:
         var focal_xform = Transform2D.IDENTITY.translated(focal_point_offset)
         total_transform = total_transform.interpolate_with(focal_xform, _delta * focal_speed)
@@ -38,6 +47,7 @@ static func update_view(_delta: float):
 ## [code]0.5[/code] is halfway between both[br]
 ## [code]1.0[/code] is camera node location[br]
 @export var focal_point_weight: float = 0.2
+var time_scale: float = 1.0
 
 var _log = Logger.new("camera")
 var _shake_t: float = 0

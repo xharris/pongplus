@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bmwmfll804yiy"]
 
-[ext_resource type="Script" uid="uid://dxc7pgfn6an5k" path="res://resources/vfx_test/vfx_test.gd" id="1_b3e4w"]
+[ext_resource type="Script" uid="uid://dxc7pgfn6an5k" path="res://entities/vfx_test/vfx_test.gd" id="1_b3e4w"]
 [ext_resource type="PackedScene" uid="uid://c748xn105dplb" path="res://components/vfx_speedy/vfx_speedy.tscn" id="2_yaurb"]
 [ext_resource type="Script" uid="uid://c170bwxxiw32g" path="res://components/vfx_speedy/vfx_speedy_config.gd" id="3_21m5m"]
 [ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="3_d2hm8"]
@@ -14,8 +14,8 @@ squeeze_rate_of_change = 60.0
 script = ExtResource("1_b3e4w")
 
 [node name="VfxSpeedy" parent="." instance=ExtResource("2_yaurb")]
-position = Vector2(-38.0624, 0)
-scale = Vector2(1.15213, 0.972341)
+position = Vector2(-53.5084, 0)
+scale = Vector2(2.23571, 0.775326)
 config = SubResource("Resource_d2hm8")
 
 [node name="Sprite2D" type="Sprite2D" parent="VfxSpeedy"]
