@@ -6,7 +6,7 @@ class_name VfxImpact
 @onready var _test_sprite: Sprite2D = $TestSprite2D
 
 @export var show_editor_sprite: bool = true
-var _log = Logger.new("vfx_impact", Logger.Level.DEBUG)
+var _log = Logger.new("vfx_impact")#, Logger.Level.DEBUG)
 var _editor_squeeze_t: float = 0
 var _original_scale: Vector2
 
@@ -17,8 +17,6 @@ func accept(v: Visitor):
 func _ready() -> void:
     particles.emitting = false
     particles.one_shot = false
-    for c in get_children():
-        print(c)
     if not Engine.is_editor_hint() or not show_editor_sprite:
         Util.destroy_free(_test_sprite)
 

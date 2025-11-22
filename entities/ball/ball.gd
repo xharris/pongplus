@@ -2,14 +2,16 @@ extends Node2D
 class_name Ball
 
 const SCENE = preload("res://entities/ball/ball.tscn")
+## Used for ball name
 static var _i = 0
 
-@onready var missile: Missile = $Missile
+@onready var missile: Missile = %Missile
 ## Um, akshually it's a hurtbox
-@onready var hitbox: Hitbox = $Hitbox
+@onready var hitbox: Hitbox = %Hitbox
 @onready var sprite: Sprite2D = %Sprite2D
-@onready var camera: Camera = $Camera
-@onready var vfx_impact: VfxImpact = $VfxImpact
+@onready var sprite_container: Node2D = %SpriteContainer
+@onready var camera: Camera = %Camera
+@onready var vfx_impact: VfxImpact = %VfxImpact
 
 @export var abilities: Array[Ability]
 
@@ -17,7 +19,6 @@ var _log = Logger.new("ball")#, Logger.Level.DEBUG)
 var next_missile_target: Node2D
 var squeeze_amount = 0.5
 var squeeze_duration = 1
-var sprite_scale = 3
 var _ability_ready_called: Array[StringName]
 
 func accept(v: Visitor):
@@ -42,10 +43,8 @@ func _ready() -> void:
     EventBus.ball_created.emit.call_deferred(self)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_body_entered_once)
-    missile.started_path_to.connect(_on_missile_started_path_to)
     tree_exited.connect(_on_tree_exited)
     
-    sprite.scale = Vector2(sprite_scale, sprite_scale)
     _update()
     show()
     _log.debug("created (%s)" % [get_instance_id()])
@@ -72,12 +71,7 @@ func _on_body_entered_once(body: Node2D):
 func _physics_process(_delta: float) -> void:
     if missile.is_pathing:
         global_position = missile.missile_position
-    sprite.rotation = missile.velocity.angle()
-
-func _on_missile_started_path_to(_target: Node2D):
-    var tween = sprite.create_tween()
-    tween.tween_property(sprite, "scale", Vector2(sprite_scale, sprite_scale), squeeze_duration)\
-        .from(Vector2(sprite_scale+squeeze_amount, sprite_scale-squeeze_amount))
+    sprite_container.rotation = missile.velocity.angle()
 
 func _update():
     missile._log.set_prefix(name)

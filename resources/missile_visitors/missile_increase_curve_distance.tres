@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MissileCurveDistance" load_steps=2 format=3 uid="uid://bh1pui6c35f6t"]
+
+[ext_resource type="Script" uid="uid://di5s5ahlyt13y" path="res://components/missile/visitors/missile_curve_distance.gd" id="1_s2nmq"]
+
+[resource]
+script = ExtResource("1_s2nmq")
+operation = 0
+value = 30.0
+metadata/_custom_type_script = "uid://di5s5ahlyt13y"

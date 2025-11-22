@@ -1,6 +1,8 @@
 extends Node2D
 class_name Missile
 
+enum CurveSide {TOP, MID, BOT}
+
 signal started_path_to(target: Node2D)
 
 ## Seconds
@@ -29,6 +31,9 @@ var velocity: Vector2
 var _debug_midpoint: Vector2
 var _debug_control_point: Vector2
 var curve: Curve2D
+var curve_side: CurveSide = CurveSide.TOP
+var curve_angle_offset: float = 35
+var _curve_dir_sign: int = 1
 
 func accept(v: Visitor):
     if v is MissileVisitor:
@@ -59,11 +64,19 @@ func path_to(target: Node2D):
     # get tangent to direction
     var direction_to = global_position.direction_to(target_position)
     var angle_to = global_position.angle_to_point(target_position)
+    var dir_sign = (1 if global_position < target_position else -1)
+    var new_curve_distance = curve_distance
+    match curve_side:
+        CurveSide.TOP:
+            dir_sign = (1 if global_position < target_position else -1)
+        CurveSide.BOT:
+            dir_sign = (1 if global_position < target_position else -1) * -1
+        CurveSide.MID:
+            new_curve_distance = clampf(new_curve_distance, -10, 10)
     var control_angle = angle_to - \
-        deg_to_rad(90)
-    ## TODO add parameter control_point_target to get angle instead of hardcoded 90?
+        deg_to_rad(dir_sign * (90 + curve_angle_offset))
     var control_point = midpoint + \
-        (Vector2.from_angle(control_angle) * curve_distance)
+        (Vector2.from_angle(control_angle) * new_curve_distance)
     # create curve
     curve = Curve2D.new()
     curve.add_point(global_position)
@@ -73,7 +86,8 @@ func path_to(target: Node2D):
     curve.set_point_in(1, control_point - target_position)
     _tween = create_tween()
     _tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-    _tween.set_trans(Tween.TRANS_LINEAR)
+    _tween.set_trans(Tween.TRANS_SINE)
+    _tween.set_ease(Tween.EASE_OUT)
     _tween.tween_method(
         func(p):
             missile_position = curve.sample(0, p),

@@ -21,23 +21,30 @@ squeeze_rate_of_change = 60.0
 script = ExtResource("1_jyt08")
 
 [node name="Missile" parent="." instance=ExtResource("1_61umk")]
+unique_name_in_owner = true
 
 [node name="Hitbox" parent="." instance=ExtResource("4_we1t7")]
+unique_name_in_owner = true
 id = &"ball"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_w5wpn")
 
 [node name="Camera" parent="." instance=ExtResource("5_6mrx1")]
+unique_name_in_owner = true
 is_focal_point = true
 
-[node name="VfxImpact" parent="." instance=ExtResource("6_thfbu")]
+[node name="SpriteContainer" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="VfxImpact" parent="SpriteContainer" instance=ExtResource("6_thfbu")]
+unique_name_in_owner = true
 show_editor_sprite = false
 
-[node name="VfxSpeedy" parent="VfxImpact" instance=ExtResource("6_fcn6e")]
+[node name="VfxSpeedy" parent="SpriteContainer/VfxImpact" instance=ExtResource("6_fcn6e")]
 config = SubResource("Resource_xp25g")
 
-[node name="Sprite2D" type="Sprite2D" parent="VfxImpact/VfxSpeedy"]
+[node name="Sprite2D" type="Sprite2D" parent="SpriteContainer/VfxImpact/VfxSpeedy"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
 texture = ExtResource("3_w5wpn")
