@@ -1,13 +1,62 @@
-[gd_scene load_steps=3 format=3 uid="uid://c748xn105dplb"]
+[gd_scene load_steps=8 format=3 uid="uid://c748xn105dplb"]
 
 [ext_resource type="Script" uid="uid://js4ho8wjn0e2" path="res://components/vfx_speedy/vfx_speedy.gd" id="1_273kw"]
+[ext_resource type="Script" uid="uid://c170bwxxiw32g" path="res://components/vfx_speedy/vfx_speedy_config.gd" id="2_2i2xt"]
 [ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="2_6hdgq"]
+
+[sub_resource type="Resource" id="Resource_4vwiy"]
+script = ExtResource("2_2i2xt")
+squeeze_amount = 2.0
+squeeze_rate_of_change = 30.0
+
+[sub_resource type="Animation" id="Animation_4vwiy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2i2xt"]
+resource_name = "move"
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(2.46229, 2.46, 1),
+"update": 0,
+"values": [Vector2(-100, 0), Vector2(100, 0), Vector2(-100, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4vwiy"]
+_data = {
+&"RESET": SubResource("Animation_4vwiy"),
+&"move": SubResource("Animation_2i2xt")
+}
 
 [node name="VfxSpeedy" type="Node2D"]
 script = ExtResource("1_273kw")
+config = SubResource("Resource_4vwiy")
 
 [node name="TestSprite2D" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
 texture = ExtResource("2_6hdgq")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+&"": SubResource("AnimationLibrary_4vwiy")
+}

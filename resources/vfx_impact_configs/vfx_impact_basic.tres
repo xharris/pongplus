@@ -10,4 +10,5 @@ circle_burst_color = Color(0, 0, 0, 1)
 circle_burst_amount = 3
 squeeze_enabled = true
 squeeze_amount = 2.0
+squeeze_rotation = 0.0
 metadata/_custom_type_script = "uid://foxcjmmtslkg"
