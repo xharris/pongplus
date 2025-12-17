@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://js4ho8wjn0e2" path="res://components/vfx_speedy/vfx_speedy.gd" id="1_273kw"]
 [ext_resource type="Script" uid="uid://c170bwxxiw32g" path="res://components/vfx_speedy/vfx_speedy_config.gd" id="2_2i2xt"]
-[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="2_6hdgq"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/magic_missile/ball.png" id="2_6hdgq"]
 
 [sub_resource type="Resource" id="Resource_4vwiy"]
 script = ExtResource("2_2i2xt")

@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=18 format=3 uid="uid://dhd07b8guciwu"]
+[gd_resource type="Resource" script_class="Ability" load_steps=20 format=3 uid="uid://dhd07b8guciwu"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_p3pga"]
 [ext_resource type="Resource" uid="uid://ctr26w3na3vvl" path="res://resources/missile_visitors/missile_increase_speed.tres" id="2_p3pga"]
+[ext_resource type="Resource" uid="uid://dp8ku6jds1mxo" path="res://resources/movement_visitors/normal_gravity.tres" id="2_q2tj6"]
+[ext_resource type="Resource" uid="uid://ck8oujeycpmpw" path="res://resources/movement_visitors/normal_directional.tres" id="3_ghmh0"]
 [ext_resource type="Resource" uid="uid://c1a2q7mxev3qo" path="res://resources/vfx_impact_configs/vfx_impact_basic.tres" id="5_6kxed"]
 [ext_resource type="Script" uid="uid://foxcjmmtslkg" path="res://components/vfx_impact/vfx_impact_config.gd" id="5_r1t8y"]
 [ext_resource type="Script" uid="uid://bec5ut0on6weo" path="res://components/vfx_impact/visitors/vfx_impact_do.gd" id="6_r1t8y"]
@@ -27,11 +29,13 @@ script = ExtResource("9_q2tj6")
 name = &"player"
 overrides = true
 on_ready = Array[ExtResource("1_p3pga")]([ExtResource("8_ny5iu")])
+on_process = Array[ExtResource("1_p3pga")]([])
 on_me_hit_missile = Array[ExtResource("1_p3pga")]([ExtResource("2_p3pga"), ExtResource("7_xjtyu"), ExtResource("8_0qag6"), SubResource("Resource_xyanm"), ExtResource("8_xyanm")])
 on_me_hit_missile_straight = Array[ExtResource("1_p3pga")]([ExtResource("11_q2tj6"), ExtResource("10_xyanm")])
 on_me_hit_missile_up = Array[ExtResource("1_p3pga")]([ExtResource("13_ghmh0"), ExtResource("11_8tc3a")])
 on_me_hit_missile_down = Array[ExtResource("1_p3pga")]([ExtResource("9_0qag6"), ExtResource("9_r1t8y")])
 on_me_hit_player = Array[ExtResource("1_p3pga")]([])
-on_health_take_damage = Array[ExtResource("1_p3pga")]([])
 on_me_hit_player_platform = Array[ExtResource("1_p3pga")]([])
+on_health_take_damage = Array[ExtResource("1_p3pga")]([])
+movement = Array[ExtResource("1_p3pga")]([ExtResource("2_q2tj6"), ExtResource("3_ghmh0")])
 metadata/_custom_type_script = "uid://2ap2s3ni6oid"

@@ -4,9 +4,9 @@ class_name Player
 enum AimDirection {STRAIGHT, UP, DOWN}
 static var _i = 0
 
-var _log = Logger.new("player")#, Logger.Level.DEBUG)
+var _log = Logger.new("player", Logger.Level.DEBUG)
 
-@onready var movement: PlatformMovement = $PlatformMovement
+@onready var movement: Movement = $Movement
 @onready var controller: PlayerController = $PlayerController
 @onready var hitbox: Hitbox = $Hitbox
 @onready var hurtbox: Hitbox = $Hurtbox
@@ -17,14 +17,20 @@ var _log = Logger.new("player")#, Logger.Level.DEBUG)
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
 var aim_direction: AimDirection = AimDirection.STRAIGHT
+## TODO move coyote to separate vfx node?
 var coyote_distance = 140
 var coyote_rate_of_change = 120
+var coyote_time_scale = 1
 
 var _platform_move_tween: Tween
 var _ability_ready_called: Array[StringName]
+var visitor_state: PlayerVisitor.State
+var _delta: float = 0
 
 func accept(v: Visitor):
-    if v is CameraVisitor:
+    if v is PlayerVisitor:
+        v.visit_player(self)
+    elif v is CameraVisitor:
         camera.accept(v)
     elif v is CharacterVisitor:
         character.accept(v)
@@ -32,14 +38,19 @@ func accept(v: Visitor):
         hitbox.accept(v)
     elif v is HealthVisitor:
         health.accept(v)
+    elif v is MovementVisitor:
+        movement.accept(v)
 
 func _process(delta: float) -> void:
-    # face direction
-    var view_center = get_viewport_rect().get_center()
-    if global_position.x > view_center.x:
-        character.face_left()
-    else:
-        character.face_right()
+    _delta = delta
+    for a in abilities:
+        visitor_state = PlayerVisitor.State.PROCESS
+        Visitor.visit(self, a.on_process)
+        visitor_state = PlayerVisitor.State.NONE
+    movement.move = controller.move_direction
+    if controller.move_direction != Vector2.ZERO:
+        _log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
+    global_position += movement.velocity * delta
     # attack charge indicator
     if controller.is_charging:
         hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
@@ -64,12 +75,15 @@ func _process(delta: float) -> void:
                 max(0, coyote_distance - global_position.distance_to(closest.global_position)),
                 coyote_rate_of_change
             )
-            camera.time_scale = lerpf(1, 0, dist_amount) * lerpf(1, 0, charge_amount)
+            camera.time_scale = lerpf(1, coyote_time_scale, dist_amount) * lerpf(1, coyote_time_scale, charge_amount)
     else:
         camera.time_scale = 1.0
     _update()
 
 func _ready() -> void:
+    # Ensure player updates movement.move before Movement._process runs
+    #process_priority = -1
+    
     name = "Player%d" % [_i]
     _i += 1
     _log.set_id(name)
@@ -78,9 +92,7 @@ func _ready() -> void:
     hitbox.disable()
     
     health.current_changed.connect(_on_health_current_changed)
-    movement.moved.connect(_on_moved)
-    controller.up.connect(_on_up)
-    controller.down.connect(_on_down)
+    movement.accepted_visitor.connect(accept)
     controller.charge_attack.connect(_on_charge_attack)
     controller.release_attack.connect(_on_release_attack)
     hurtbox.accepted_visitor.connect(accept)
@@ -90,7 +102,7 @@ func _ready() -> void:
     character.attack_window_end.connect(_on_attack_window_end)
 
     _update()
-
+    
 func _on_health_current_changed(amount: int):
     if amount < 0:
         for a in abilities:
@@ -147,27 +159,20 @@ func is_charge_attack_locked():
 
 ## Is locked out of moving
 func is_movement_locked():
-    return controller.is_charging or character.is_attacking()
-
-func _on_up():
-    ## TODO double tap to force move
-    if is_charge_attack_locked():
-        aim_direction = AimDirection.UP
-    if not is_movement_locked():
-        movement.move_up()
-
-func _on_down():
-    ## TODO double tap to force move
-    if is_charge_attack_locked():
-        aim_direction = AimDirection.DOWN
-    if not is_movement_locked():
-        movement.move_down()
-
-func _on_moved(platform: Platform):
-    if _platform_move_tween:
-        _platform_move_tween.stop()
-    _platform_move_tween = create_tween()
-    _platform_move_tween.tween_property(self, "global_position", platform.global_position, 0.1)
+    return character.is_attacking()
+#
+#func _on_up():
+    #if is_charge_attack_locked():
+        #aim_direction = AimDirection.UP
+    #if not is_movement_locked():
+        #movement.move = Vector2(0, -1)
+#
+#func _on_down():
+    ### TODO double tap to force move
+    #if is_charge_attack_locked():
+        #aim_direction = AimDirection.DOWN
+    #if not is_movement_locked():
+        #movement.move = Vector2(0, 1)
 
 func _update():
     health._log.set_prefix(name)
@@ -179,5 +184,9 @@ func _update():
     health._log.set_prefix(name)
     for a in abilities:
         if not _ability_ready_called.has(a.name):
+            # new ability added
+            visitor_state = PlayerVisitor.State.READY
             Visitor.visit(self, a.on_ready)
+            visitor_state = PlayerVisitor.State.NONE
+            movement.visitors.append_array(a.movement)
             _ability_ready_called.append(a.name)

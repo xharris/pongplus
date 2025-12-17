@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dxc7pgfn6an5k" path="res://entities/vfx_test/vfx_test.gd" id="1_b3e4w"]
 [ext_resource type="PackedScene" uid="uid://c748xn105dplb" path="res://components/vfx_speedy/vfx_speedy.tscn" id="2_yaurb"]
 [ext_resource type="Script" uid="uid://c170bwxxiw32g" path="res://components/vfx_speedy/vfx_speedy_config.gd" id="3_21m5m"]
-[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/ball/ball.png" id="3_d2hm8"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/magic_missile/ball.png" id="3_d2hm8"]
 
 [sub_resource type="Resource" id="Resource_d2hm8"]
 script = ExtResource("3_21m5m")
@@ -14,8 +14,8 @@ squeeze_rate_of_change = 60.0
 script = ExtResource("1_b3e4w")
 
 [node name="VfxSpeedy" parent="." instance=ExtResource("2_yaurb")]
-position = Vector2(-53.5084, 0)
-scale = Vector2(2.23571, 0.775326)
+position = Vector2(165.297, 0)
+scale = Vector2(1.69471, 0.873689)
 config = SubResource("Resource_d2hm8")
 
 [node name="Sprite2D" type="Sprite2D" parent="VfxSpeedy"]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnknwnsgysl40"]
+
+[ext_resource type="Script" uid="uid://b0fvvg3vmad6p" path="res://entities/magic_missile/magic_missile.gd" id="1_17dko"]
+[ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="2_824he"]
+[ext_resource type="PackedScene" uid="uid://df5xis8hnkamb" path="res://components/missile/missile.tscn" id="3_waybi"]
+[ext_resource type="PackedScene" uid="uid://c748xn105dplb" path="res://components/vfx_speedy/vfx_speedy.tscn" id="4_2am0j"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/magic_missile/ball.png" id="5_hbc8b"]
+[ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="6_waybi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_haady"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rjhp6"]
+radius = 14.0
+
+[node name="MagicMissile" type="Node2D"]
+script = ExtResource("1_17dko")
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_824he")]
+id = &"magic_missile"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_haady")
+
+[node name="Missile" parent="." instance=ExtResource("3_waybi")]
+unique_name_in_owner = true
+
+[node name="Hitbox" parent="." instance=ExtResource("2_824he")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_rjhp6")
+
+[node name="VfxSpeedy" parent="." instance=ExtResource("4_2am0j")]
+
+[node name="Sprite2D" type="Sprite2D" parent="VfxSpeedy"]
+scale = Vector2(3, 3)
+texture = ExtResource("5_hbc8b")
+
+[node name="Health" parent="." instance=ExtResource("6_waybi")]
+max = 1

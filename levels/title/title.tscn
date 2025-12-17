@@ -1,12 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=4 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
 [ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://resources/gameplay/title_gameplay.tres" id="2_d1k64"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
-[ext_resource type="PackedScene" uid="uid://bs3v4d5sf6lgh" path="res://components/node_group/node_group.tscn" id="3_wtaml"]
-[ext_resource type="Resource" uid="uid://cvypemtce7q45" path="res://resources/grid_position_strategy/title_left.tres" id="4_wtaml"]
-[ext_resource type="PackedScene" uid="uid://txbfw3lcfa6s" path="res://entities/player_platform/player_platform.tscn" id="5_b7l43"]
-[ext_resource type="Resource" uid="uid://dadklc71l4lr2" path="res://resources/grid_position_strategy/title_right.tres" id="6_d1k64"]
 
 [node name="Title" type="Node2D"]
 script = ExtResource("1_vucde")
@@ -37,25 +33,15 @@ layout_mode = 2
 [node name="Title" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-text = "Pong+"
+text = "Magic Missiles"
 uppercase = true
 
 [node name="HowToPlay" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "each player has 3 HP
-the ball does 1 DMG
-last player standing wins"
+text = "E: shoot missile
+A: defend
+A + E: defend
+D: use abillity (uses mana)
+S + D: use strong ability
 
-[node name="Left" parent="." instance=ExtResource("3_wtaml")]
-position_strategy = ExtResource("4_wtaml")
-
-[node name="PlayerPlatform" parent="Left" instance=ExtResource("5_b7l43")]
-
-[node name="PlayerPlatform2" parent="Left" instance=ExtResource("5_b7l43")]
-
-[node name="Right" parent="." instance=ExtResource("3_wtaml")]
-position_strategy = ExtResource("6_d1k64")
-
-[node name="PlayerPlatform" parent="Right" instance=ExtResource("5_b7l43")]
-
-[node name="PlayerPlatform2" parent="Right" instance=ExtResource("5_b7l43")]
+"

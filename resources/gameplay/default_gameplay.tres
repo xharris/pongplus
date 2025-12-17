@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="Gameplay" load_steps=8 format=3 uid="uid://dfmaov33n1my"]
+[gd_resource type="Resource" script_class="Gameplay" load_steps=7 format=3 uid="uid://dfmaov33n1my"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_a65u5"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="1_dwqvo"]
 [ext_resource type="Script" uid="uid://dgk27trhnuo5i" path="res://components/gameplay.gd" id="2_dnd7h"]
-[ext_resource type="Resource" uid="uid://bxy2wh7iyefe6" path="res://resources/abilities/ball.tres" id="2_giuo6"]
 [ext_resource type="Resource" uid="uid://cdnj1j4p2le0t" path="res://resources/game_visitors/ball_all_destroy.tres" id="2_yrlpe"]
 [ext_resource type="Resource" uid="uid://30hvjqepbnub" path="res://resources/game_visitors/ball_at_least_one.tres" id="5_iyg3j"]
 [ext_resource type="Resource" uid="uid://dhd07b8guciwu" path="res://resources/abilities/player.tres" id="7_xaw41"]
@@ -11,9 +10,9 @@
 [resource]
 script = ExtResource("2_dnd7h")
 name = &"default"
-ball_abilities = Array[ExtResource("1_dwqvo")]([ExtResource("2_giuo6")])
+ball_abilities = Array[ExtResource("1_dwqvo")]([])
 player_abilties = Array[ExtResource("1_dwqvo")]([ExtResource("7_xaw41")])
-on_start = Array[ExtResource("1_a65u5")]([ExtResource("5_iyg3j")])
+on_start = Array[ExtResource("1_a65u5")]([])
 on_player_take_damage = Array[ExtResource("1_a65u5")]([ExtResource("2_yrlpe")])
 on_ball_destroyed = Array[ExtResource("1_a65u5")]([ExtResource("5_iyg3j")])
 on_exit = Array[ExtResource("1_a65u5")]([])

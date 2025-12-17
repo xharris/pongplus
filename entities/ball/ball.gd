@@ -52,8 +52,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
     if is_visible_in_tree():
         _update()
-        if missile.tween:
-            missile.tween.set_speed_scale(Camera.avg_time_scale)
 
 func _on_tree_exited():
     EventBus.ball_destroyed.emit(self)

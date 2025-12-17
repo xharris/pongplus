@@ -20,9 +20,9 @@ layer = -1
 unique_name_in_owner = true
 
 [node name="Player1" parent="." instance=ExtResource("2_j054j")]
-position = Vector2(39, 57)
+position = Vector2(128, 512)
 player_controller_config = ExtResource("3_vjvwb")
 
 [node name="Player2" parent="." instance=ExtResource("2_j054j")]
-position = Vector2(1116, 45)
+position = Vector2(1024, 512)
 player_controller_config = ExtResource("4_vbwj1")

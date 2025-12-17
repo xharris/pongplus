@@ -21,6 +21,7 @@ damping_min = 50.0
 damping_max = 50.0
 scale_min = 3.0
 scale_max = 3.0
+color = Color(0.933333, 0.933333, 0.933333, 1)
 alpha_curve = SubResource("CurveTexture_7thud")
 anim_speed_min = 2.0
 anim_speed_max = 5.0

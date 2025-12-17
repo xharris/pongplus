@@ -6,7 +6,7 @@
 script = ExtResource("1_0vufb")
 circle_burst_enabled = true
 circle_burst_offset = Vector2(0, 0)
-circle_burst_color = Color(0, 0, 0, 1)
+circle_burst_color = Color(0.933333, 0.933333, 0.933333, 1)
 circle_burst_amount = 3
 squeeze_enabled = true
 squeeze_amount = 2.0

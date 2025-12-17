@@ -5,5 +5,7 @@
 [resource]
 script = ExtResource("1_s2nmq")
 operation = 0
-value = 30.0
+value = 3.0
+min = 50.0
+max = 70.0
 metadata/_custom_type_script = "uid://di5s5ahlyt13y"

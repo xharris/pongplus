@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
     Camera.update_view(delta)
-    
+
 func update():
     Logger.global_level = log_level
     if level and not level.accepted_visitor.is_connected(accept):

@@ -9,6 +9,7 @@ script = ExtResource("2_8dbtv")
 name = &"invincible"
 overrides = true
 on_ready = Array[ExtResource("1_ljml4")]([ExtResource("2_7ui44")])
+on_process = Array[ExtResource("1_ljml4")]([])
 on_me_hit_missile = Array[ExtResource("1_ljml4")]([])
 on_me_hit_missile_straight = Array[ExtResource("1_ljml4")]([])
 on_me_hit_missile_up = Array[ExtResource("1_ljml4")]([])

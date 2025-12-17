@@ -2,6 +2,8 @@
 extends Node2D
 class_name VfxImpact
 
+const _tool_config: VfxImpactConfig = preload("res://components/vfx_impact/vfx_impact_tool_config.tres")
+
 @onready var particles: GPUParticles2D = %GPUParticles2D
 @onready var _test_sprite: Sprite2D = $TestSprite2D
 
@@ -26,9 +28,7 @@ func _process(delta: float) -> void:
         _editor_squeeze_t += delta
         if _editor_squeeze_t > 2:
             _editor_squeeze_t = 0
-            var config = VfxImpactConfig.new()
-            config.squeeze_rotation = deg_to_rad(90)
-            do(config)
+            do(_tool_config)
 
 func do(config: VfxImpactConfig):
     _log.debug("do %s" % [config.resource_path.get_file()])
@@ -38,6 +38,7 @@ func do(config: VfxImpactConfig):
         xform = xform.translated(config.circle_burst_offset)
         xform = xform.translated(global_position)
         particles.emitting = true
+        particles.process_material["color"] = config.circle_burst_color
         for _i in config.circle_burst_amount:
             particles.emit_particle(
                 xform, Vector2.ZERO, config.circle_burst_color, config.circle_burst_color, 

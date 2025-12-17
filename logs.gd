@@ -27,6 +27,7 @@ var _id: String = "":
         _update_full_prefix()
 var _full_prefix: String = ""
 var _prev_msg: String
+var _ellipsis_printed = false
 var _lines: Array[String]
 
 func _init(id: String = "", level = Level.NONE, prefix: String = "") -> void:
@@ -67,15 +68,25 @@ func _strip_bbcode(source: String) -> String:
     regex.compile("\\[.+?\\]")
     return regex.sub(source, "", true)
 
+const FORMAT = "[color=%s][b]%s[/b][/color] \t[b]%s[/b] %s %s"
+
 func _print(color: Color, level: String, msg: String) -> bool:
     var pad = max(0, Logger._max_prefix_length - _full_prefix.length())
-    var formatted = "[color=%s][b]%s[/b][/color] \t[b]%s[/b] %s %s" % [
+    var formatted = FORMAT % [
         color.to_html(), level,
         _full_prefix, " ".repeat(pad),
         msg
     ]
     if formatted == _prev_msg and ignore_repeats:
+        if not _ellipsis_printed:
+            print_rich(FORMAT % [
+                color.to_html(), level,
+                _full_prefix, " ".repeat(pad),
+                "[color=DIM_GRAY]...[/color]"
+            ])
+            _ellipsis_printed = true
         return false # avoid printing same message twice
+    _ellipsis_printed = false
     _prev_msg = formatted
     print_rich(formatted)
     _lines.append(_strip_bbcode(formatted))

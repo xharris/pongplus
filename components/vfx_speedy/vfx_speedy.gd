@@ -25,5 +25,6 @@ func _process(delta: float) -> void:
             Vector2.ONE, Vector2(config.squeeze_amount, 1/config.squeeze_amount), 
             velocity_amt
         )
+        rotation = _velocity.angle()
     _last_position = global_position
         

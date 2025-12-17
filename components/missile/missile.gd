@@ -1,5 +1,6 @@
 extends Node2D
 class_name Missile
+## TODO use manual velocity instead of tween
 
 enum CurveSide {TOP, MID, BOT}
 
@@ -11,35 +12,47 @@ const MISSILE_DURATION_MIN: float = 3
 const MISSILE_DURATION_MAX: float = 1
 const DRAW_DEBUG: bool = false
 
+@export var speed_curve: Curve = preload("res://components/missile/missile_curve.tres")
+
 var _log = Logger.new("missile")
 var _current_curve: Curve2D
 var tween: Tween
-
-var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
 var target_history: Array[Node2D]
 var curve_distance: float = 50
 var missile_position: Vector2
+var is_pathing: bool:
+    get:
+        return curve != null
+
 ## [0, 1]
 var duration_curve_position: float:
     set(v):
         duration_curve_position = clampf(v, 0, 1)
-var is_pathing: bool:
-    get:
-        return tween and tween.is_running()
-var _last_position: Vector2
-var velocity: Vector2
-var _debug_midpoint: Vector2
-var _debug_control_point: Vector2
+var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
+var delta_rate: float = 1.0
 var curve: Curve2D
 var curve_side: CurveSide = CurveSide.TOP
 var curve_angle_offset: float = 50
+var velocity: Vector2
+
+var _curve_progress: float = 0
+var _debug_midpoint: Vector2
+var _debug_control_point: Vector2
 var _curve_dir_sign: int = 1
+var _last_position: Vector2
 
 func accept(v: Visitor):
     if v is MissileVisitor:
         v.visit_missile(self)
 
 func _process(delta: float) -> void:
+    if curve:
+        _curve_progress += delta * delta_rate * duration_curve.sample(duration_curve_position)
+        # get position from curve
+        missile_position = curve.sample(0, _curve_progress)
+    if _curve_progress >= 1:
+        stop_pathing()
+    # calculate velocity cause why not
     velocity = (global_position - _last_position).normalized()
     _last_position = global_position
     
@@ -57,11 +70,12 @@ func path_to(target: Node2D):
     if not target:
         _log.warn("path to null target (%s)" % [self])
         return
+    stop_pathing()
     target_history.append(target)
     var target_position = target.global_position
     var midpoint = (target_position + global_position) / 2
     _debug_midpoint = midpoint
-    # get tangent to direction
+    # calculate control point
     var direction_to = global_position.direction_to(target_position)
     var angle_to = global_position.angle_to_point(target_position)
     var dir_sign = (1 if global_position < target_position else -1)
@@ -84,24 +98,8 @@ func path_to(target: Node2D):
     # create curve between ball and target
     curve.set_point_out(0, control_point - global_position)
     curve.set_point_in(1, control_point - target_position)
-    tween = create_tween()
-    tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
-    tween.set_trans(Tween.TRANS_SINE)
-    tween.set_ease(Tween.EASE_OUT)
-    tween.tween_method(
-        func(p):
-            missile_position = curve.sample(0, p),
-        0.0, 1.0,
-        lerp(
-            MISSILE_DURATION_MIN,
-            MISSILE_DURATION_MAX,
-            duration_curve.sample(duration_curve_position),
-        )
-    )
-    _log.debug("target %s" % [target])
     started_path_to.emit(target)
 
 func stop_pathing():
-    if tween:
-        tween.stop()
-        tween = null
+    _curve_progress = 0
+    curve = null

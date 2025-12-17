@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://uh23au0bmyqe"]
+[gd_scene load_steps=6 format=3 uid="uid://uh23au0bmyqe"]
 
 [ext_resource type="Theme" uid="uid://qat4imsomiwb" path="res://ui/themes/godot.tres" id="1_droih"]
+[ext_resource type="Script" uid="uid://b7gr273lq8bu8" path="res://ui/themes/godot_preview.gd" id="1_u1joe"]
+[ext_resource type="Texture2D" uid="uid://djl7l2fdqsybp" path="res://components/hitbox/circle.png" id="3_ittdr"]
+[ext_resource type="Texture2D" uid="uid://ce2mmd7lsaa1b" path="res://components/platform/x.png" id="4_ittdr"]
+[ext_resource type="Texture2D" uid="uid://di4ydcu36yrj2" path="res://components/platform/circle.png" id="4_l31d6"]
 
-[node name="GodotPreview" type="Node2D"]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +14,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_droih")
+script = ExtResource("1_u1joe")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,41 +24,99 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="CanvasLayer/Control/HBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 current_tab = 0
 drag_to_rearrange_enabled = true
 use_hidden_tabs_for_min_size = true
 
-[node name="Label1" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+[node name="ItemList" type="ItemList" parent="HBoxContainer/TabContainer"]
 layout_mode = 2
-text = "taaaaaaaaaaaaaaaaaaaaaaab 1"
+item_count = 3
+item_0/text = "woah"
+item_1/text = "not woah"
+item_2/text = "okay"
 metadata/_tab_index = 0
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+[node name="Label2" type="Label" parent="HBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 text = "taaaaaaaaaaaaaaaaaaaaaaab 2"
 metadata/_tab_index = 1
 
-[node name="Label3" type="Label" parent="CanvasLayer/Control/HBoxContainer/TabContainer"]
+[node name="Label3" type="Label" parent="HBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 text = "taaaaaaaaaaaaaaaaaaaaaaab 3"
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "YOOOO"
+icon = ExtResource("3_ittdr")
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MenuButton" type="MenuButton" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer/PanelContainer"]
+[node name="MenuButton" type="MenuButton" parent="HBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 text = "Menu Button"
 item_count = 1
 popup/item_0/text = "one"
 popup/item_0/id = 0
 
-[node name="Tree" type="Tree" parent="CanvasLayer/Control/HBoxContainer/VBoxContainer"]
+[node name="Tree" type="Tree" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_ittdr")
+
+[node name="Button2" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_l31d6")
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_ittdr")
+
+[node name="TabBar" type="TabBar" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+current_tab = 0
+tab_close_display_policy = 2
+drag_to_rearrange_enabled = true
+tab_count = 6
+tab_0/title = "tab1"
+tab_1/title = "tab2"
+tab_1/icon = ExtResource("3_ittdr")
+tab_2/title = "tab3"
+tab_2/tooltip = "jhkhjx"
+tab_2/icon = ExtResource("4_ittdr")
+tab_2/disabled = true
+tab_3/title = "tab4"
+tab_4/title = "tab5"
+tab_5/title = "tab6"
