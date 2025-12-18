@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MagicMissileConfig" load_steps=6 format=3 uid="uid://byhopp4c78g7w"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_kcyhb"]
+[ext_resource type="Script" uid="uid://4hagmndnft8j" path="res://components/command.gd" id="2_ga225"]
+[ext_resource type="Resource" uid="uid://cmivains5yny3" path="res://resources/movement_commands/weak_knockback.tres" id="3_xcimv"]
+[ext_resource type="Resource" uid="uid://bi3dttxpoqqde" path="res://resources/missile_visitors/missile_target_random_opponent.tres" id="4_rewfl"]
+[ext_resource type="Script" uid="uid://1culyjbe0ab7" path="res://entities/magic_missile/magic_missile_config.gd" id="5_5er6d"]
+
+[resource]
+script = ExtResource("5_5er6d")
+on_ready = Array[ExtResource("1_kcyhb")]([ExtResource("4_rewfl")])
+on_hit = Array[ExtResource("1_kcyhb")]([])
+on_hit_visit_self = Array[ExtResource("1_kcyhb")]([])
+on_hit_commands = Array[ExtResource("2_ga225")]([ExtResource("3_xcimv")])
+metadata/_custom_type_script = "uid://1culyjbe0ab7"

@@ -25,7 +25,10 @@ func accept(v: Visitor):
 func handle(cmd: Command):
     if cmd is MovementKnockback:
         _log.info("knocked back: %s" % [cmd.direction * cmd.strength])
-        velocity += cmd.direction * cmd.strength
+        var dir = Vector2(sign(cmd.direction.x), 0) * cmd.strength
+        dir = dir.rotated(-deg_to_rad(cmd.angle) * sign(dir.x))
+        # cmd.direction * cmd.strength
+        velocity += dir
 
 func _process(delta: float) -> void:
     dt = delta

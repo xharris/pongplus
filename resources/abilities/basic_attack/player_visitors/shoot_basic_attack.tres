@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CreateMagicMissile" load_steps=3 format=3 uid="uid://bg73re11bsdno"]
 
 [ext_resource type="Script" uid="uid://duv4dqs3h6m4d" path="res://entities/player/visitors/create_magic_missile.gd" id="1_6d3o8"]
-[ext_resource type="Resource" uid="uid://byhopp4c78g7w" path="res://resources/abilities/basic_attack/basic_attack_missile.tres" id="1_iyoy1"]
+[ext_resource type="Resource" uid="uid://byhopp4c78g7w" path="res://resources/abilities/basic_attack/magic_missile_configs/basic_attack_missile.tres" id="1_iyoy1"]
 
 [resource]
 script = ExtResource("1_6d3o8")

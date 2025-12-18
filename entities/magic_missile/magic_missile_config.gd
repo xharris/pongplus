@@ -7,4 +7,4 @@ class_name MagicMissileConfig
 ## Hitbox hits a Hurtbox, but apply visitors to me
 @export var on_hit_visit_self: Array[Visitor]
 
-@export var knockback_strength: float = 3
+@export var on_hit_commands: Array[Command]

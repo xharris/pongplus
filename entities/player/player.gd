@@ -50,8 +50,7 @@ func accept(v: Visitor):
         accepted_visitor.emit(v)
 
 func handle(cmd: Command):
-    if cmd is MovementCommand:
-        movement.handle(cmd)
+    super.handle(cmd)
 
 func _init() -> void:
     _log.set_prefix("player")

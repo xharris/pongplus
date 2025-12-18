@@ -19,15 +19,17 @@ func _ready() -> void:
 
     hurtbox.accepted_visitor.connect(accept)
     hitbox.accepted_visitor.connect(accept)
+    hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
 
 func _on_hitbox_body_entered_once(body: Node2D):
-    var other = body as Hitbox
-    
+    var my_team = Groups.get_team(self)
+    var other_team = Groups.get_team(body)
+    if my_team == other_team:
+        return
     Visitor.visit(self, config.on_hit_visit_self)
     Visitor.visit(body, config.on_hit)
-    # apply knockback
-    _log.info("apply knockback")
-    var knockback = MovementKnockback.new()
-    knockback.direction = velocity.normalized()
-    knockback.strength = config.knockback_strength
-    Command.handle(body, knockback)
+    for c in config.on_hit_commands:
+        if c is MovementKnockback:
+            c = c.duplicate()
+            c.direction = velocity.normalized()
+        Command.handle(body, c)

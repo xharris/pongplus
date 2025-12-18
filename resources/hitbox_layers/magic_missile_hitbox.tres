@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HitboxLayer" load_steps=2 format=3 uid="uid://b4xxkvpeqno1w"]
+
+[ext_resource type="Script" uid="uid://dw8ni5rbacm3h" path="res://components/hitbox_layers.gd" id="1_i63rr"]
+
+[resource]
+script = ExtResource("1_i63rr")
+layer = 2
+collide_with = Array[int]([3])
+metadata/_custom_type_script = "uid://dw8ni5rbacm3h"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MovementKnockback" load_steps=2 format=3 uid="uid://cmivains5yny3"]
+
+[ext_resource type="Script" uid="uid://cly1jjya0uwt1" path="res://components/movement/movement_command/movement_knockback.gd" id="1_2ed6a"]
+
+[resource]
+script = ExtResource("1_2ed6a")
+strength = 200.0
+angle = 20.0
+metadata/_custom_type_script = "uid://cly1jjya0uwt1"
