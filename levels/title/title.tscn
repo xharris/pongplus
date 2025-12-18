@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=10 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="4_wtaml"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="5_d1k64"]
 [ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="6_b7l43"]
+[ext_resource type="PackedScene" uid="uid://dyk5whjmx8yfq" path="res://components/floor/floor.tscn" id="7_d1k64"]
+[ext_resource type="Resource" uid="uid://6dh4g64e55c6" path="res://resources/hitbox_layers/title_floor.tres" id="8_b7l43"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ros5a"]
 size = Vector2(1180.5, 73)
@@ -52,12 +54,6 @@ L: defend
 
 "
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(576.75, 620.5)
-shape = SubResource("RectangleShape2D_ros5a")
-
 [node name="Player1" parent="." instance=ExtResource("4_wtaml")]
 position = Vector2(128, 512)
 player_controller_config = ExtResource("5_d1k64")
@@ -66,3 +62,10 @@ player_controller_config = ExtResource("5_d1k64")
 position = Vector2(1024, 512)
 player_controller_config = ExtResource("6_b7l43")
 team = 1
+
+[node name="Floor" parent="." instance=ExtResource("7_d1k64")]
+layer = ExtResource("8_b7l43")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(576.75, 620.5)
+shape = SubResource("RectangleShape2D_ros5a")

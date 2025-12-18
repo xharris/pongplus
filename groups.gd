@@ -36,7 +36,7 @@ static func TEAM(me: Node, index: int, prev_index: int = 0) -> StringName:
 ## Returns -1 if no team found
 static func get_team(node: Node) -> StringName:
     var groups = node.get_groups()
-    _log.info("%s groups: %s" % [node, groups])
+    _log.debug("%s groups: %s" % [node, groups])
     for g in teams:
         if node.is_in_group(g):
             return g

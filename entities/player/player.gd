@@ -20,6 +20,8 @@ static var _i = 0
     set(v):
         Groups.TEAM(self, v, team)
         team = v
+@export var layer: HitboxLayer
+        
 var aim_direction: AimDirection = AimDirection.STRAIGHT
 ## TODO move coyote to separate vfx node?
 var coyote_distance = 140
@@ -46,6 +48,10 @@ func accept(v: Visitor):
         v.visit_movement(self)
     else:
         accepted_visitor.emit(v)
+
+func handle(cmd: Command):
+    if cmd is MovementCommand:
+        movement.handle(cmd)
 
 func _init() -> void:
     _log.set_prefix("player")
@@ -106,7 +112,9 @@ func _ready() -> void:
     controller.release_attack.connect(_on_release_attack)
     controller.up.connect(_on_up)
     hurtbox.accepted_visitor.connect(accept)
+    hurtbox.handled_command.connect(handle)
     hitbox.accepted_visitor.connect(accept)
+    hitbox.handled_command.connect(handle)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     character.attack_window_start.connect(_on_attack_window_start)
     character.attack_window_end.connect(_on_attack_window_end)
@@ -206,3 +214,4 @@ func _update():
             visitor_state = PlayerVisitor.State.NONE
             movement.visitors.append_array(a.movement)
             _ability_ready_called.append(a.name)
+    layer.update(self)

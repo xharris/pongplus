@@ -4,8 +4,8 @@
 
 [sub_resource type="InputEventKey" id="InputEventKey_kb17b"]
 device = -1
-keycode = 32
-unicode = 32
+keycode = 74
+unicode = 106
 
 [sub_resource type="InputEventKey" id="InputEventKey_yjewl"]
 device = -1

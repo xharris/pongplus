@@ -5,10 +5,13 @@ const INDICATOR_AMOUNT_RATIO: float = 1.0
 
 signal body_entered_once(body: Node2D)
 signal accepted_visitor(v: Visitor)
+signal handled_command(cmd: Command)
 
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 @export var id: StringName
+@export var layer: HitboxLayer
+
 var _log = Logger.new("hitbox")
 var _entered: Array[Node2D]
 
@@ -17,6 +20,9 @@ func accept(v: Visitor):
         v.visit_hitbox(self)
     else:
         accepted_visitor.emit(v)
+
+func handle(cmd: Command):
+    handled_command.emit(cmd)
 
 func _ready() -> void:
     if id.length() == 0:
@@ -27,6 +33,8 @@ func _ready() -> void:
     body_exited.connect(_on_body_exited)
     area_entered.connect(_on_body_entered)
     area_exited.connect(_on_body_exited)
+    
+    update()
 
 func _on_body_entered(body: Node2D):
     if not _entered.has(body) and body.get_parent() != get_parent():
@@ -62,3 +70,6 @@ func update_indicator(amount_ratio: float = INDICATOR_AMOUNT_RATIO):
                         particles_mat.emission_ring_radius = shape.radius
                         particles_mat.emission_ring_inner_radius = shape.radius
                         
+func update():
+    if layer:
+        layer.update(self)

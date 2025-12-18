@@ -22,6 +22,11 @@ func accept(v: Visitor):
     else:
         accepted_visitor.emit(v)
 
+func handle(cmd: Command):
+    if cmd is MovementKnockback:
+        _log.info("knocked back: %s" % [cmd.direction * cmd.strength])
+        velocity += cmd.direction * cmd.strength
+
 func _process(delta: float) -> void:
     dt = delta
     state = Movement.State.PROCESS

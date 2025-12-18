@@ -29,5 +29,5 @@ func get_target(me: Node2D = null) -> Node2D:
         _log.warn("nobody on other team: %s" % [target_team])
         return
     var target = nodes.pick_random()
-    _log.info("target %s (%s)" % [target, Type.find_key(type)])
+    _log.debug("target %s (%s)" % [target, Type.find_key(type)])
     return target

@@ -1,0 +1,2 @@
+extends Command
+class_name MovementCommand

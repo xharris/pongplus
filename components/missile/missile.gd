@@ -49,10 +49,9 @@ func _process(delta: float) -> void:
         _curve_progress += delta * delta_rate * duration_curve.sample(duration_curve_position)
         # get position from curve
         _last_position = global_position
-        global_position = curve.sample(0, _curve_progress)
+        var next_position = curve.sample(0, _curve_progress)
+        velocity = next_position - _last_position
     if _curve_progress >= 1:
-        # Preserve direction and speed when path ends
-        velocity = (global_position - _last_position) / delta
         stop_pathing()
     move_and_slide()
     
