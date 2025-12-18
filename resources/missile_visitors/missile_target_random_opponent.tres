@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MissilePathTo" load_steps=3 format=3 uid="uid://bi3dttxpoqqde"]
+
+[ext_resource type="Script" uid="uid://cegw8o8f7yqjl" path="res://components/missile/visitors/missile_path_to.gd" id="1_apjc8"]
+[ext_resource type="Resource" uid="uid://b4q30oecmfhjr" path="res://resources/target_strategies/target_enemy.tres" id="2_gc30a"]
+
+[resource]
+script = ExtResource("1_apjc8")
+target = 0
+group = &""
+target_strategy = ExtResource("2_gc30a")
+metadata/_custom_type_script = "uid://c6ganj6sqydie"

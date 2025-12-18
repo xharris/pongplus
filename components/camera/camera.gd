@@ -1,7 +1,7 @@
 extends Node2D
 class_name Camera
 
-static var _static_log = Logger.new("camera")#, Logger.Level.DEBUG)
+static var _static_log = Logger.new("camera", Logger.Level.DEBUG)
 
 static var focal_speed: float = 2.0
 static var total_transform: Transform2D
@@ -23,6 +23,7 @@ static func update_view(_delta: float):
         # apply camera's calculated transform
         canvas_xform *= c._xform
         # use camera as a focal point
+        var parent = c.get_parent()
         if c.is_focal_point:
             focal_point_offset -= lerp(Vector2.ZERO, c.global_position - view_center, c.focal_point_weight)
         # only include cameras that want to modify time scale

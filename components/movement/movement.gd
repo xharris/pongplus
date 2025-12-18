@@ -18,13 +18,13 @@ var is_falling: bool:
 
 func accept(v: Visitor):
     if v is MovementVisitor:
-        state = State.ACCEPT
         v.visit_movement(self)
     else:
-        state = State.ACCEPT
         accepted_visitor.emit(v)
 
 func _process(delta: float) -> void:
-    state = State.PROCESS
     dt = delta
+    state = Movement.State.PROCESS
     Visitor.visit(self, visitors)
+    state = Movement.State.ACCEPT
+    move_and_slide()

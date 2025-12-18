@@ -1,21 +1,25 @@
-extends Node2D
+extends Movement
 class_name Player
 
 enum AimDirection {STRAIGHT, UP, DOWN}
 static var _i = 0
 
-var _log = Logger.new("player", Logger.Level.DEBUG)
-
-@onready var movement: Movement = $Movement
-@onready var controller: PlayerController = $PlayerController
-@onready var hitbox: Hitbox = $Hitbox
-@onready var hurtbox: Hitbox = $Hurtbox
-@onready var character: Character = $Character
-@onready var camera: Camera = $Camera
-@onready var health: Health = $Health
+@onready var movement: Movement:
+    get:
+        return self
+@onready var controller: PlayerController = %PlayerController
+@onready var hitbox: Hitbox = %Hitbox
+@onready var hurtbox: Hitbox = %Hurtbox
+@onready var character: Character = %Character
+@onready var camera: Camera = %Camera
+@onready var health: Health = %Health
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
+@export var team: int:
+    set(v):
+        Groups.TEAM(self, v, team)
+        team = v
 var aim_direction: AimDirection = AimDirection.STRAIGHT
 ## TODO move coyote to separate vfx node?
 var coyote_distance = 140
@@ -39,18 +43,23 @@ func accept(v: Visitor):
     elif v is HealthVisitor:
         health.accept(v)
     elif v is MovementVisitor:
-        movement.accept(v)
+        v.visit_movement(self)
+    else:
+        accepted_visitor.emit(v)
+
+func _init() -> void:
+    _log.set_prefix("player")
 
 func _process(delta: float) -> void:
+    super._process(delta)
     _delta = delta
     for a in abilities:
         visitor_state = PlayerVisitor.State.PROCESS
         Visitor.visit(self, a.on_process)
         visitor_state = PlayerVisitor.State.NONE
     movement.move = controller.move_direction
-    if controller.move_direction != Vector2.ZERO:
-        _log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
-    global_position += movement.velocity * delta
+    #if controller.move_direction != Vector2.ZERO:
+        #_log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
     # attack charge indicator
     if controller.is_charging:
         hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
@@ -83,18 +92,19 @@ func _process(delta: float) -> void:
 func _ready() -> void:
     # Ensure player updates movement.move before Movement._process runs
     #process_priority = -1
-    
     name = "Player%d" % [_i]
     _i += 1
     _log.set_id(name)
     add_to_group(Groups.PLAYER)
+    team = team # trigger setter
     controller.config = player_controller_config
     hitbox.disable()
     
     health.current_changed.connect(_on_health_current_changed)
-    movement.accepted_visitor.connect(accept)
+    #movement.accepted_visitor.connect(accept)
     controller.charge_attack.connect(_on_charge_attack)
     controller.release_attack.connect(_on_release_attack)
+    controller.up.connect(_on_up)
     hurtbox.accepted_visitor.connect(accept)
     hitbox.accepted_visitor.connect(accept)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
@@ -102,6 +112,10 @@ func _ready() -> void:
     character.attack_window_end.connect(_on_attack_window_end)
 
     _update()
+    
+func _on_up():
+    for a in abilities:
+        Visitor.visit(self, a.on_press_up)
     
 func _on_health_current_changed(amount: int):
     if amount < 0:
@@ -112,6 +126,8 @@ func _on_health_current_changed(amount: int):
 func _on_attack_window_start():
     hitbox.enable()
     character.set_weapon_color(Color.WHITE, 0.8)
+    for a in abilities:
+        Visitor.visit(self, a.on_attack_window_start)
 
 func _on_attack_window_end():
     hitbox.disable()

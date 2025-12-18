@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 class_name Missile
 ## TODO use manual velocity instead of tween
 
@@ -14,7 +14,7 @@ const DRAW_DEBUG: bool = false
 
 @export var speed_curve: Curve = preload("res://components/missile/missile_curve.tres")
 
-var _log = Logger.new("missile")
+var _log = Logger.new("missile", Logger.Level.DEBUG)
 var _current_curve: Curve2D
 var tween: Tween
 var target_history: Array[Node2D]
@@ -31,9 +31,8 @@ var duration_curve_position: float:
 var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
 var delta_rate: float = 1.0
 var curve: Curve2D
-var curve_side: CurveSide = CurveSide.TOP
+var curve_side: CurveSide = CurveSide.MID
 var curve_angle_offset: float = 50
-var velocity: Vector2
 
 var _curve_progress: float = 0
 var _debug_midpoint: Vector2
@@ -49,12 +48,13 @@ func _process(delta: float) -> void:
     if curve:
         _curve_progress += delta * delta_rate * duration_curve.sample(duration_curve_position)
         # get position from curve
-        missile_position = curve.sample(0, _curve_progress)
+        _last_position = global_position
+        global_position = curve.sample(0, _curve_progress)
     if _curve_progress >= 1:
+        # Preserve direction and speed when path ends
+        velocity = (global_position - _last_position) / delta
         stop_pathing()
-    # calculate velocity cause why not
-    velocity = (global_position - _last_position).normalized()
-    _last_position = global_position
+    move_and_slide()
     
 func _draw() -> void:
     if DRAW_DEBUG:
@@ -66,7 +66,7 @@ func _draw() -> void:
 func _ready() -> void:
     add_to_group(Groups.MISSILE)
           
-func path_to(target: Node2D):
+func path_to(target: Node2D, speed: float = 10):
     if not target:
         _log.warn("path to null target (%s)" % [self])
         return

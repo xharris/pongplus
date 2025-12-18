@@ -3,7 +3,7 @@ class_name Level
 
 signal accepted_visitor(v: Visitor)
 
-var _log = Logger.new("level")
+var _log = Logger.new("level", Logger.Level.DEBUG)
 @export var gameplay: Gameplay
 ## Used for logging id
 @export var id: String
@@ -20,7 +20,8 @@ func _ready() -> void:
     
     _log.debug("start")
     update()
-    Visitor.visit.call_deferred(self, gameplay.on_start)
+    if not _log.warn_if(not gameplay, "gameplay not set"):
+        Visitor.visit.call_deferred(self, gameplay.on_start)
 
 func _on_player_health_current_changed(player: Player, amount: int):
     if gameplay and amount < 0 and player.health.is_alive():
@@ -41,7 +42,7 @@ func update():
             _log.debug("add player ability: %s" % [p.abilities.map(func(a:Ability): return a.name)])
             p.abilities = gameplay.player_abilties.duplicate(true)
 
-    # set player abilities
+    # set ball abilities
     if gameplay and not gameplay.player_abilties.is_empty():
         for b in get_tree().get_nodes_in_group(Groups.BALL):
             _log.debug("add ball ability: %s" % [b.abilities.map(func(a:Ability): return a.name)])

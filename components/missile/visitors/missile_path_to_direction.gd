@@ -5,7 +5,7 @@ class_name MissilePathToDirection
 
 enum AimDirection {STRAIGHT, UP, DOWN, RANDOM}
 
-var _log = Logger.new("ball_missile_path_to_direction")#, Logger.Level.DEBUG)
+var _log = Logger.new("ball_missile_path_to_direction", Logger.Level.DEBUG)
 @export var direction: AimDirection
 @export var target_group: StringName
 @export var target_filter_strategy: FilterStrategy
@@ -32,8 +32,8 @@ func visit_missile(me: Missile):
     # filter: only target in different NodeGroup
     if different_node_group:
         var last_target = _get_last_target(me)
-        if last_target:
-            var last_group = NodeGroup.get_group(last_target)
+        var last_group = last_target if NodeGroup.get_group(last_target) else null
+        if last_target and last_group:
             # get all groups that are not the last one
             var other_groups: Array[NodeGroup]
             for item in items:

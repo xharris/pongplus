@@ -4,7 +4,7 @@ class_name PlayerController
 ## Seconds
 const MAX_CHARGE_DURATION: float = 1
 
-var _log = Logger.new("player_controller", Logger.Level.DEBUG)
+var _log = Logger.new("player_controller")#, Logger.Level.DEBUG)
 
 @export var config: PlayerControllerConfig
 var is_charging: bool = false
@@ -55,8 +55,7 @@ func _process(delta: float) -> void:
             is_charging = false
 
     # Debug output
-    if up_pressed or down_pressed or left_pressed or right_pressed:
-        _log.debug("Keys: up=%s down=%s left=%s right=%s move=%v" % [up_pressed, down_pressed, left_pressed, right_pressed, move_direction])
+    _log.debug("Keys: up=%s down=%s left=%s right=%s move=%v" % [up_pressed, down_pressed, left_pressed, right_pressed, move_direction])
     
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_pressed():

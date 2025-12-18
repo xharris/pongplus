@@ -1,41 +1,27 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=20 format=3 uid="uid://dhd07b8guciwu"]
+[gd_resource type="Resource" script_class="Ability" load_steps=7 format=3 uid="uid://dhd07b8guciwu"]
 
-[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_p3pga"]
-[ext_resource type="Resource" uid="uid://ctr26w3na3vvl" path="res://resources/missile_visitors/missile_increase_speed.tres" id="2_p3pga"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_i480r"]
+[ext_resource type="Resource" uid="uid://ck8oujeycpmpw" path="res://resources/movement_visitors/horizontal_movement.tres" id="2_ghmh0"]
 [ext_resource type="Resource" uid="uid://dp8ku6jds1mxo" path="res://resources/movement_visitors/normal_gravity.tres" id="2_q2tj6"]
-[ext_resource type="Resource" uid="uid://ck8oujeycpmpw" path="res://resources/movement_visitors/normal_directional.tres" id="3_ghmh0"]
-[ext_resource type="Resource" uid="uid://c1a2q7mxev3qo" path="res://resources/vfx_impact_configs/vfx_impact_basic.tres" id="5_6kxed"]
-[ext_resource type="Script" uid="uid://foxcjmmtslkg" path="res://components/vfx_impact/vfx_impact_config.gd" id="5_r1t8y"]
-[ext_resource type="Script" uid="uid://bec5ut0on6weo" path="res://components/vfx_impact/visitors/vfx_impact_do.gd" id="6_r1t8y"]
-[ext_resource type="Resource" uid="uid://df5po4q22l4j1" path="res://resources/camera_visitors/camera_shake_small.tres" id="7_xjtyu"]
-[ext_resource type="Resource" uid="uid://cilyext635ffc" path="res://resources/character_visitors/character_flash_weapon_quick.tres" id="8_0qag6"]
 [ext_resource type="Resource" uid="uid://c6jg0ai4nui1m" path="res://resources/health_visitors/health_vincible.tres" id="8_ny5iu"]
-[ext_resource type="Resource" uid="uid://bh1pui6c35f6t" path="res://resources/missile_visitors/missile_increase_curve_distance.tres" id="8_xyanm"]
-[ext_resource type="Resource" uid="uid://dvte7hg3jl6te" path="res://resources/missile_visitors/missile_curve_side_bot.tres" id="9_0qag6"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="9_q2tj6"]
-[ext_resource type="Resource" uid="uid://cir2p0mlpq0jf" path="res://resources/missile_visitors/missile_path_to_platform_down.tres" id="9_r1t8y"]
-[ext_resource type="Resource" uid="uid://cisgigecxpi62" path="res://resources/missile_visitors/missile_path_to_platform_straight.tres" id="10_xyanm"]
-[ext_resource type="Resource" uid="uid://cfsxoueol1vuk" path="res://resources/missile_visitors/missile_path_to_platform_up.tres" id="11_8tc3a"]
-[ext_resource type="Resource" uid="uid://dwmnx2natdkn3" path="res://resources/missile_visitors/missile_curve_side_mid.tres" id="11_q2tj6"]
-[ext_resource type="Resource" uid="uid://cokbryubh2t2e" path="res://resources/missile_visitors/missile_curve_side_top.tres" id="13_ghmh0"]
-
-[sub_resource type="Resource" id="Resource_xyanm"]
-script = ExtResource("6_r1t8y")
-configs = Array[ExtResource("5_r1t8y")]([ExtResource("5_6kxed")])
-metadata/_custom_type_script = "uid://bec5ut0on6weo"
+[ext_resource type="Resource" uid="uid://d1xgfrq2ybqm4" path="res://resources/movement_visitors/normal_jump.tres" id="17_i480r"]
 
 [resource]
 script = ExtResource("9_q2tj6")
 name = &"player"
 overrides = true
-on_ready = Array[ExtResource("1_p3pga")]([ExtResource("8_ny5iu")])
-on_process = Array[ExtResource("1_p3pga")]([])
-on_me_hit_missile = Array[ExtResource("1_p3pga")]([ExtResource("2_p3pga"), ExtResource("7_xjtyu"), ExtResource("8_0qag6"), SubResource("Resource_xyanm"), ExtResource("8_xyanm")])
-on_me_hit_missile_straight = Array[ExtResource("1_p3pga")]([ExtResource("11_q2tj6"), ExtResource("10_xyanm")])
-on_me_hit_missile_up = Array[ExtResource("1_p3pga")]([ExtResource("13_ghmh0"), ExtResource("11_8tc3a")])
-on_me_hit_missile_down = Array[ExtResource("1_p3pga")]([ExtResource("9_0qag6"), ExtResource("9_r1t8y")])
-on_me_hit_player = Array[ExtResource("1_p3pga")]([])
-on_me_hit_player_platform = Array[ExtResource("1_p3pga")]([])
-on_health_take_damage = Array[ExtResource("1_p3pga")]([])
-movement = Array[ExtResource("1_p3pga")]([ExtResource("2_q2tj6"), ExtResource("3_ghmh0")])
+on_ready = Array[ExtResource("1_i480r")]([ExtResource("8_ny5iu")])
+on_process = Array[ExtResource("1_i480r")]([])
+on_me_hit_missile = Array[ExtResource("1_i480r")]([])
+on_me_hit_missile_straight = Array[ExtResource("1_i480r")]([])
+on_me_hit_missile_up = Array[ExtResource("1_i480r")]([])
+on_me_hit_missile_down = Array[ExtResource("1_i480r")]([])
+on_me_hit_player = Array[ExtResource("1_i480r")]([])
+on_me_hit_player_platform = Array[ExtResource("1_i480r")]([])
+on_health_take_damage = Array[ExtResource("1_i480r")]([])
+on_press_up = Array[ExtResource("1_i480r")]([ExtResource("17_i480r")])
+on_attack_charge = Array[ExtResource("1_i480r")]([])
+on_attack_window_start = Array[ExtResource("1_i480r")]([])
+movement = Array[ExtResource("1_i480r")]([ExtResource("2_ghmh0"), ExtResource("2_q2tj6")])
 metadata/_custom_type_script = "uid://2ap2s3ni6oid"

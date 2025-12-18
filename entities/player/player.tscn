@@ -1,14 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=10 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
-[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_qiwj3"]
-[ext_resource type="Resource" uid="uid://dhd07b8guciwu" path="res://resources/abilities/player.tres" id="3_26q78"]
 [ext_resource type="PackedScene" uid="uid://ckj14pn1icvha" path="res://components/player_controller/player_controller.tscn" id="3_bls4j"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="5_fkugw"]
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="7_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="8_26q78"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="9_bectd"]
-[ext_resource type="PackedScene" uid="uid://lrsl1nr8i7sw" path="res://components/movement/movement.tscn" id="9_wvtmh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bectd"]
+height = 57.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8fjmc"]
 radius = 16.0
@@ -16,29 +16,36 @@ radius = 16.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_qiwj3"]
 radius = 70.0
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_abrql")
-abilities = Array[ExtResource("2_qiwj3")]([ExtResource("3_26q78")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bectd")
 
 [node name="PlayerController" parent="." instance=ExtResource("3_bls4j")]
+unique_name_in_owner = true
 
 [node name="Hurtbox" parent="." instance=ExtResource("5_fkugw")]
+unique_name_in_owner = true
 id = &"player_hurtbox"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_8fjmc")
 
 [node name="Hitbox" parent="." instance=ExtResource("5_fkugw")]
+unique_name_in_owner = true
 id = &"player_hitbox"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_qiwj3")
 
 [node name="Character" parent="." instance=ExtResource("7_qiwj3")]
+unique_name_in_owner = true
 
 [node name="Camera" parent="." instance=ExtResource("8_26q78")]
+unique_name_in_owner = true
+is_focal_point = true
 
 [node name="Health" parent="." instance=ExtResource("9_bectd")]
+unique_name_in_owner = true
 max = 3
-
-[node name="Movement" parent="." instance=ExtResource("9_wvtmh")]

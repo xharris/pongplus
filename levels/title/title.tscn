@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=8 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
-[ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://resources/gameplay/title_gameplay.tres" id="2_d1k64"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
+[ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://resources/gameplay/title_gameplay.tres" id="2_ros5a"]
+[ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="4_wtaml"]
+[ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="5_d1k64"]
+[ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="6_b7l43"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ros5a"]
+size = Vector2(1180.5, 73)
 
 [node name="Title" type="Node2D"]
+position = Vector2(1, 0)
 script = ExtResource("1_vucde")
-gameplay = ExtResource("2_d1k64")
+gameplay = ExtResource("2_ros5a")
 id = "title"
 metadata/_custom_type_script = "uid://himp0c2dh4b1"
 
@@ -38,10 +45,24 @@ uppercase = true
 
 [node name="HowToPlay" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "E: shoot missile
-A: defend
-A + E: defend
-D: use abillity (uses mana)
-S + D: use strong ability
+text = "WAD: move left/right, jump
+J: shoot missile (hold to charge)
+K: use ability (hold to charge)
+L: defend
 
 "
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(576.75, 620.5)
+shape = SubResource("RectangleShape2D_ros5a")
+
+[node name="Player1" parent="." instance=ExtResource("4_wtaml")]
+position = Vector2(128, 512)
+player_controller_config = ExtResource("5_d1k64")
+
+[node name="Player2" parent="." instance=ExtResource("4_wtaml")]
+position = Vector2(1024, 512)
+player_controller_config = ExtResource("6_b7l43")
+team = 1

@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="Gameplay" load_steps=6 format=3 uid="uid://b46odssrt7exj"]
+[gd_resource type="Resource" script_class="Gameplay" load_steps=7 format=3 uid="uid://b46odssrt7exj"]
 
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="1_sadfb"]
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="4_t0nii"]
+[ext_resource type="Resource" uid="uid://dfwpv8dyquqpf" path="res://resources/abilities/basic_attack/basic_attack.tres" id="5_ietbh"]
+[ext_resource type="Script" uid="uid://dgk27trhnuo5i" path="res://components/level/gameplay.gd" id="6_ietbh"]
 [ext_resource type="Resource" uid="uid://cddof11brjtp" path="res://resources/abilities/invincible.tres" id="6_v0dka"]
 [ext_resource type="Resource" uid="uid://dhd07b8guciwu" path="res://resources/abilities/player.tres" id="7_4jfnc"]
-[ext_resource type="Script" uid="uid://dgk27trhnuo5i" path="res://components/gameplay.gd" id="8_hon8s"]
 
 [resource]
-script = ExtResource("8_hon8s")
+script = ExtResource("6_ietbh")
 name = &"title"
-player_abilties = Array[ExtResource("1_sadfb")]([ExtResource("6_v0dka"), ExtResource("7_4jfnc")])
+player_abilties = Array[ExtResource("1_sadfb")]([ExtResource("6_v0dka"), ExtResource("7_4jfnc"), ExtResource("5_ietbh")])
 on_start = Array[ExtResource("4_t0nii")]([])
 on_player_take_damage = Array[ExtResource("4_t0nii")]([])
 on_exit = Array[ExtResource("4_t0nii")]([])
