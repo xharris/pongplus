@@ -1,13 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=11 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
 [ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://resources/gameplay/title_gameplay.tres" id="2_ros5a"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="4_wtaml"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="5_d1k64"]
-[ext_resource type="Resource" uid="uid://bjvscjrt5oohf" path="res://resources/player_controller_configs/player2.tres" id="6_b7l43"]
+[ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="6_b7l43"]
 [ext_resource type="PackedScene" uid="uid://dyk5whjmx8yfq" path="res://components/floor/floor.tscn" id="7_d1k64"]
 [ext_resource type="Resource" uid="uid://6dh4g64e55c6" path="res://resources/hitbox_layers/title_floor.tres" id="8_b7l43"]
+
+[sub_resource type="Resource" id="Resource_yk36c"]
+script = ExtResource("6_b7l43")
+metadata/_custom_type_script = "uid://dgxxs0f1ucqi0"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ros5a"]
 size = Vector2(1180.5, 73)
@@ -60,7 +64,7 @@ player_controller_config = ExtResource("5_d1k64")
 
 [node name="Player2" parent="." instance=ExtResource("4_wtaml")]
 position = Vector2(1024, 512)
-player_controller_config = ExtResource("6_b7l43")
+player_controller_config = SubResource("Resource_yk36c")
 team = 1
 
 [node name="Floor" parent="." instance=ExtResource("7_d1k64")]

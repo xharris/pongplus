@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MovementHorizontal" load_steps=2 format=3 uid="uid://ck8oujeycpmpw"]
 
-[ext_resource type="Script" uid="uid://fuqldin8k1hs" path="res://components/movement/movement_visitor/movement_horizontal.gd" id="1_3luxk"]
+[ext_resource type="Script" uid="uid://fuqldin8k1hs" path="res://components/movement/visitors/movement_horizontal.gd" id="1_3luxk"]
 
 [resource]
 script = ExtResource("1_3luxk")

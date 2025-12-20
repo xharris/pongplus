@@ -6,10 +6,6 @@ enum CurveSide {TOP, MID, BOT}
 
 signal started_path_to(target: Node2D)
 
-## Seconds
-const MISSILE_DURATION_MIN: float = 3
-## Seconds
-const MISSILE_DURATION_MAX: float = 1
 const DRAW_DEBUG: bool = false
 
 @export var speed_curve: Curve = preload("res://components/missile/missile_curve.tres")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MovementGravity" load_steps=2 format=3 uid="uid://dp8ku6jds1mxo"]
 
-[ext_resource type="Script" uid="uid://cfbuxdh1v67b8" path="res://components/movement/movement_visitor/movement_gravity.gd" id="1_a2t6k"]
+[ext_resource type="Script" uid="uid://cfbuxdh1v67b8" path="res://components/movement/visitors/movement_gravity.gd" id="1_a2t6k"]
 
 [resource]
 script = ExtResource("1_a2t6k")

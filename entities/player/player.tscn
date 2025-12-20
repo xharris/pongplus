@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=13 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Resource" uid="uid://b8sm2xgcgfsqu" path="res://resources/hitbox_layers/player_movement.tres" id="2_26q78"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="7_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="8_26q78"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="9_bectd"]
+[ext_resource type="PackedScene" uid="uid://cvmuttenp57jn" path="res://components/status_effect/status_effect_manager.tscn" id="9_wvtmh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bectd"]
 height = 57.0
@@ -53,3 +54,6 @@ is_focal_point = true
 [node name="Health" parent="." instance=ExtResource("9_bectd")]
 unique_name_in_owner = true
 max = 3
+
+[node name="StatusEffectManager" parent="." instance=ExtResource("9_wvtmh")]
+unique_name_in_owner = true

@@ -1,17 +1,9 @@
 extends Controller
 class_name PlayerController
 
-## Seconds
-const MAX_CHARGE_DURATION: float = 1
-
 var _log = Logger.new("player_controller")#, Logger.Level.DEBUG)
 
 @export var config: PlayerControllerConfig
-var is_charging: bool = false
-var charge_duration: float = 0
-## Seconds
-var max_charge_duration: float = MAX_CHARGE_DURATION
-var disable_charge_attack: bool = false
     
 var _move_vectors: Dictionary = {
     "up":      Vector2(0, -1),
@@ -26,7 +18,6 @@ func _is_key_pressed(event: InputEvent) -> bool:
 func _process(delta: float) -> void:
     # Reset move direction each frame
     move_direction = Vector2.ZERO
-    
     # Read input and accumulate movement
     var up_pressed = config.up and _is_key_pressed(config.up)
     var down_pressed = config.down and _is_key_pressed(config.down)
@@ -45,14 +36,6 @@ func _process(delta: float) -> void:
     # Normalize diagonal movement to prevent faster diagonal speed
     if move_direction.length() > 1:
         move_direction = move_direction.normalized()
-    
-    # charge attack
-    if is_charging:
-        charge_duration += delta
-        if max_charge_duration > 0 and charge_duration >= max_charge_duration:
-            # reached charge time limit
-            release_attack.emit()
-            is_charging = false
 
     # Debug output
     _log.debug("Keys: up=%s down=%s left=%s right=%s move=%v" % [up_pressed, down_pressed, left_pressed, right_pressed, move_direction])
@@ -65,17 +48,20 @@ func _unhandled_input(event: InputEvent) -> void:
             config.left: left,
             config.right: right,
         }
+        # 4 direction movement
         for e: InputEvent in eventToSignal:
             var sig: Signal = eventToSignal[e]
             if e and sig and event.is_match(e):
                 sig.emit()
-            
-        if not is_charging and not disable_charge_attack and config.attack and event.is_match(config.attack):
-            charge_attack.emit()
-            charge_duration = 0
-            is_charging = true
+        # charge attack
+        if not is_charging and config.attack and event.is_match(config.attack):
+            attack_charge.emit()
+        # block
+        if not is_blocking and config.block and event.is_match(config.block):
+            block_start.emit()
     
     if event.is_released():
         if is_charging and config.attack and event.is_match(config.attack):
-            release_attack.emit()
-            is_charging = false
+            attack_release.emit()
+        if is_blocking and config.block and event.is_match(config.block):
+            block_stop.emit()

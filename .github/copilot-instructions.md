@@ -1,5 +1,9 @@
 # Copilot Instructions for pongplus
 
+## Rules
+
+- Avoid modifying a node's process mode
+
 ## Debug & Logging
 
 - **ALWAYS** check `logs/game.log` first when debugging - file logging is enabled via `project.godot`.

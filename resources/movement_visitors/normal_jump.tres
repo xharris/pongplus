@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MovementJump" load_steps=2 format=3 uid="uid://d1xgfrq2ybqm4"]
 
-[ext_resource type="Script" uid="uid://dxnv86t24avyg" path="res://components/movement/movement_visitor/movement_jump.gd" id="1_adyrs"]
+[ext_resource type="Script" uid="uid://dxnv86t24avyg" path="res://components/movement/visitors/movement_jump.gd" id="1_adyrs"]
 
 [resource]
 script = ExtResource("1_adyrs")

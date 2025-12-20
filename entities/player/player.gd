@@ -13,6 +13,7 @@ static var _i = 0
 @onready var character: Character = %Character
 @onready var camera: Camera = %Camera
 @onready var health: Health = %Health
+@onready var status_effects: StatusEffectManager = %StatusEffectManager
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
@@ -50,10 +51,8 @@ func accept(v: Visitor):
         accepted_visitor.emit(v)
 
 func handle(cmd: Command):
+    cmd = status_effects.handle(cmd)
     super.handle(cmd)
-
-func _init() -> void:
-    _log.set_prefix("player")
 
 func _process(delta: float) -> void:
     super._process(delta)
@@ -65,11 +64,8 @@ func _process(delta: float) -> void:
     movement.move = controller.move_direction
     #if controller.move_direction != Vector2.ZERO:
         #_log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
-    # attack charge indicator
-    if controller.is_charging:
-        hitbox.update_indicator(controller.charge_duration / controller.max_charge_duration)
-    # attack charge coyote time when ball is nearby
-    if is_charge_attack_locked():
+    if is_charge_locked():
+        # attack charge coyote time when ball is nearby
         var closest: Missile
         var gp = global_position
         var coyote_distance_squared = coyote_distance ** 2
@@ -82,7 +78,7 @@ func _process(delta: float) -> void:
                 closest = m
         if closest:
             var charge_amount = Util.diminishing(
-                controller.charge_duration / controller.max_charge_duration,
+                0, # TODO controller.charge_duration / controller.max_charge_duration,
                 coyote_rate_of_change
             )
             var dist_amount = Util.diminishing(
@@ -94,12 +90,15 @@ func _process(delta: float) -> void:
         camera.time_scale = 1.0
     _update()
 
+func _init() -> void:
+    _log.set_id("player")
+
 func _ready() -> void:
     # Ensure player updates movement.move before Movement._process runs
     #process_priority = -1
     name = "Player%d" % [_i]
     _i += 1
-    _log.set_id(name)
+    _log.set_prefix(name)
     add_to_group(Groups.PLAYER)
     team = team # trigger setter
     controller.config = player_controller_config
@@ -107,18 +106,40 @@ func _ready() -> void:
     
     health.current_changed.connect(_on_health_current_changed)
     #movement.accepted_visitor.connect(accept)
-    controller.charge_attack.connect(_on_charge_attack)
-    controller.release_attack.connect(_on_release_attack)
+    controller.attack_charge.connect(_on_attack_charge)
+    controller.attack_release.connect(_on_attack_release)
+    controller.block_start.connect(_on_block_start)
+    controller.block_stop.connect(_on_block_stop)
     controller.up.connect(_on_up)
     hurtbox.accepted_visitor.connect(accept)
     hurtbox.handled_command.connect(handle)
     hitbox.accepted_visitor.connect(accept)
     hitbox.handled_command.connect(handle)
     hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
-    character.attack_window_start.connect(_on_attack_window_start)
-    character.attack_window_end.connect(_on_attack_window_end)
+    character.animation_step_changed.connect(_on_character_animation_step_changed)
 
     _update()
+    
+func _on_block_start():
+    if not is_animation_locked():
+        character.play_animation(Character.AnimationName.BLOCK)
+
+func _on_block_stop():
+    if is_block_locked():
+        character.release_hold()
+    
+func _on_character_animation_step_changed(step: Character.AnimationStep):
+    match character.current_animation:
+        Character.AnimationName.ATTACK:
+            match step:
+                Character.AnimationStep.ACTIVE:
+                    hitbox.enable()
+                    character.set_weapon_color(Color.WHITE, 0.8)
+                    for a in abilities:
+                        Visitor.visit(self, a.on_attack_active)
+                Character.AnimationStep.RECOVERY:
+                    hitbox.disable()
+                    character.set_weapon_color(Color.WHITE, 0)
     
 func _on_up():
     for a in abilities:
@@ -130,25 +151,14 @@ func _on_health_current_changed(amount: int):
             Visitor.visit(self, a.on_health_take_damage)
     EventBus.player_health_current_changed.emit(self, amount)
 
-func _on_attack_window_start():
-    hitbox.enable()
-    character.set_weapon_color(Color.WHITE, 0.8)
-    for a in abilities:
-        Visitor.visit(self, a.on_attack_window_start)
+func _on_attack_charge():
+    if not is_block_locked() and not is_attack_locked():
+        character.play_animation(Character.AnimationName.ATTACK)
 
-func _on_attack_window_end():
-    hitbox.disable()
-    character.set_weapon_color(Color.WHITE, 0)
-
-func _on_charge_attack():
-    if not is_attack_locked():
-        character.charge_attack()
-
-func _on_release_attack():
-    # play swing animation
-    character.attack()
-    # hide indicator
-    hitbox.update_indicator(0)
+func _on_attack_release():
+    if is_charge_locked() and is_attack_locked():
+        # continue attack animation
+        character.release_hold()
 
 func _on_hitbox_body_entered_once(body: Node2D):
     if body is Hitbox:
@@ -172,32 +182,27 @@ func _on_hitbox_body_entered_once(body: Node2D):
             Visitor.visit(body, visitors)
             aim_direction = AimDirection.STRAIGHT
 
+func is_animation_locked():
+    return character.current_animation != Character.AnimationName.NONE
+
 ## Is currently in the middle of an attack
 func is_attack_locked():
-    return controller.is_charging or character.is_attacking()
+    return \
+        character.current_animation == Character.AnimationName.ATTACK
 
 ## Is currently charging an attack
-func is_charge_attack_locked():
-    return controller.is_charging
+func is_charge_locked():
+    return character.is_holding()
+
+func is_block_locked():
+    return character.current_animation == Character.AnimationName.BLOCK
 
 ## Is locked out of moving
 func is_movement_locked():
-    return character.is_attacking()
-#
-#func _on_up():
-    #if is_charge_attack_locked():
-        #aim_direction = AimDirection.UP
-    #if not is_movement_locked():
-        #movement.move = Vector2(0, -1)
-#
-#func _on_down():
-    ### TODO double tap to force move
-    #if is_charge_attack_locked():
-        #aim_direction = AimDirection.DOWN
-    #if not is_movement_locked():
-        #movement.move = Vector2(0, 1)
+    return false
 
 func _update():
+    _log.set_prefix(name)
     health._log.set_prefix(name)
     movement._log.set_prefix(name)
     hitbox._log.set_prefix(name)

@@ -6,3 +6,4 @@ class_name PlayerControllerConfig
 @export var left: InputEvent
 @export var right: InputEvent
 @export var attack: InputEvent
+@export var block: InputEvent

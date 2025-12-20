@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjkuareenbkbr"]
+[gd_scene load_steps=12 format=3 uid="uid://bjkuareenbkbr"]
 
 [ext_resource type="Script" uid="uid://bgdma65cv48rr" path="res://components/character/character.gd" id="1_5xa0e"]
 [ext_resource type="Texture2D" uid="uid://4kv4y3se5d1p" path="res://components/character/blank.png" id="1_335n2"]
@@ -47,7 +47,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Weapon/WeaponSprite:z_index")
+tracks/3/path = NodePath("Weapon:z_index")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -107,7 +107,7 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id="Animation_p1osb"]
 resource_name = "attack"
-length = 5.0
+length = 6.0
 step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -116,10 +116,10 @@ tracks/0/path = NodePath("Sprite/ArmR:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.785398]
+"values": [0.785398, 0.785398]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -128,10 +128,10 @@ tracks/1/path = NodePath("Sprite/ArmL:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-2.61799, 0.785398]
+"values": [-2.61799, -2.61799, 0.785398]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -140,22 +140,22 @@ tracks/2/path = NodePath("Sprite/ArmL/HandL/HandLSprite:z_index")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 2.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [-2, 2]
+"values": [-2, -2, 2]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Weapon/WeaponSprite:z_index")
+tracks/3/path = NodePath("Weapon:z_index")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [-1, 1]
+"values": [-1, -1, 1]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -164,10 +164,10 @@ tracks/4/path = NodePath("Sprite/ArmL/HandL:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [1.5708, 4.71239]
+"values": [1.5708, 1.5708, 4.71239]
 }
 tracks/5/type = "method"
 tracks/5/imported = false
@@ -176,20 +176,26 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(1, 2.75),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
-"method": &"_attack_window_start"
+"method": &"_step_anticipation"
 }, {
 "args": [],
-"method": &"_attack_window_end"
+"method": &"_hold"
+}, {
+"args": [],
+"method": &"_step_active"
+}, {
+"args": [],
+"method": &"_step_recovery"
 }]
 }
 
 [sub_resource type="Animation" id="Animation_uqrhf"]
 resource_name = "hit"
-length = 5.0
+length = 2.0
 step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -227,11 +233,105 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(1, 1), Vector2(0.9, 0.9), Vector2(1, 1)]
 }
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_step_active"
+}, {
+"args": [],
+"method": &"_step_recovery"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_cxvbt"]
+resource_name = "block"
+length = 5.0
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite/ArmL:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-1.5708, -0.523599, -1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite/ArmL/HandL:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.5708, 5.49779, 1.5708]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3, 4, 4.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"_step_anticipation"
+}, {
+"args": [],
+"method": &"_step_active"
+}, {
+"args": [],
+"method": &"_hold"
+}, {
+"args": [],
+"method": &"_step_recovery"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite/ArmL/HandL/HandLSprite:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.25, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 2, 0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapon:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.25, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uqrhf"]
 _data = {
 &"RESET": SubResource("Animation_5pm8e"),
 &"attack": SubResource("Animation_p1osb"),
+&"block": SubResource("Animation_cxvbt"),
 &"hit": SubResource("Animation_uqrhf")
 }
 
@@ -245,10 +345,10 @@ shader_parameter/flash_value = 0.0
 script = ExtResource("1_5xa0e")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+callback_mode_process = 0
 libraries = {
 &"": SubResource("AnimationLibrary_uqrhf")
 }
-speed_scale = 20.0
 
 [node name="Sprite" type="Node2D" parent="."]
 unique_name_in_owner = true
