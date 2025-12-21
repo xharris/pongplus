@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=6 format=3 uid="uid://b64tm3x3dgpw6"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_wa3rf"]
+[ext_resource type="Resource" uid="uid://dp8ku6jds1mxo" path="res://resources/movement_visitors/normal_gravity.tres" id="2_0r610"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_awcfi"]
+[ext_resource type="Resource" uid="uid://ck8oujeycpmpw" path="res://resources/movement_visitors/horizontal_movement.tres" id="3_rc57v"]
+[ext_resource type="Resource" uid="uid://d1xgfrq2ybqm4" path="res://resources/movement_visitors/normal_jump.tres" id="4_rc57v"]
+
+[resource]
+script = ExtResource("2_awcfi")
+name = &"platformer_movement"
+overrides = true
+on_ready = Array[ExtResource("1_wa3rf")]([])
+on_process = Array[ExtResource("1_wa3rf")]([])
+on_health_take_damage = Array[ExtResource("1_wa3rf")]([])
+on_press_up = Array[ExtResource("1_wa3rf")]([ExtResource("4_rc57v")])
+on_attack_active = Array[ExtResource("1_wa3rf")]([])
+on_block_active = Array[ExtResource("1_wa3rf")]([])
+on_block_recovery = Array[ExtResource("1_wa3rf")]([])
+movement = Array[ExtResource("1_wa3rf")]([ExtResource("2_0r610"), ExtResource("3_rc57v")])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"

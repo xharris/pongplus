@@ -1,7 +1,9 @@
 extends MovementStatusEffect
-class_name MovementKnockbackResist
+class_name MovementKnockbackMultiplier
+
+@export var multiplier: float
 
 func handle(cmd: MovementCommand) -> Command:
     if cmd is MovementKnockback:
-        cmd.strength /= 2
+        cmd.strength *= multiplier
     return cmd

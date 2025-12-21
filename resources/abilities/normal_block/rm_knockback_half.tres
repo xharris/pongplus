@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RemoveStatusEffect" load_steps=2 format=3 uid="uid://dhbjswet51e5o"]
+
+[ext_resource type="Script" uid="uid://cms0so1hxkvcd" path="res://components/status_effect/status_effect_visitors/remove_status_effect.gd" id="1_237bg"]
+
+[resource]
+script = ExtResource("1_237bg")
+id = &"knockback_half"
+all = true
+metadata/_custom_type_script = "uid://cms0so1hxkvcd"

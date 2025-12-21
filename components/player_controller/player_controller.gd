@@ -59,6 +59,9 @@ func _unhandled_input(event: InputEvent) -> void:
         # block
         if not is_blocking and config.block and event.is_match(config.block):
             block_start.emit()
+        # next ability
+        if config.next and event.is_match(config.next):
+            next.emit()
     
     if event.is_released():
         if is_charging and config.attack and event.is_match(config.attack):

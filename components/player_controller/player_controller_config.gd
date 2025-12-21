@@ -7,3 +7,4 @@ class_name PlayerControllerConfig
 @export var right: InputEvent
 @export var attack: InputEvent
 @export var block: InputEvent
+@export var next: InputEvent

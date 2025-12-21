@@ -10,6 +10,7 @@
 - Use the `Logger` class (`logs.gd`) for all logging. Create instances with `Logger.new(id, level, prefix)`.
 - Set global log level via `Logger.global_level = Logger.Level.DEBUG/INFO/WARN/ERROR`.
 - Components typically have `var _log = Logger.new("component_name")` for instance-level logging.
+- Logs that are repeated, print this instead: `...`
 
 ## Project Overview
 

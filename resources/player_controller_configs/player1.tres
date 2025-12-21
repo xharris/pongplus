@@ -9,8 +9,8 @@ unicode = 106
 
 [sub_resource type="InputEventKey" id="InputEventKey_l1ein"]
 device = -1
-keycode = 76
-unicode = 108
+keycode = 75
+unicode = 107
 
 [sub_resource type="InputEventKey" id="InputEventKey_yjewl"]
 device = -1

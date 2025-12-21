@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
+[ext_resource type="Resource" uid="uid://dfmaov33n1my" path="res://resources/gameplay/default_gameplay.tres" id="2_b7l43"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
-[ext_resource type="Resource" uid="uid://b46odssrt7exj" path="res://resources/gameplay/title_gameplay.tres" id="2_ros5a"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="4_wtaml"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="5_d1k64"]
 [ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="6_b7l43"]
@@ -19,7 +19,7 @@ size = Vector2(1180.5, 73)
 [node name="Title" type="Node2D"]
 position = Vector2(1, 0)
 script = ExtResource("1_vucde")
-gameplay = ExtResource("2_ros5a")
+gameplay = ExtResource("2_b7l43")
 id = "title"
 metadata/_custom_type_script = "uid://himp0c2dh4b1"
 

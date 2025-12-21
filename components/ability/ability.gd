@@ -54,16 +54,11 @@ const ON_ME_HIT_PLAYER_PLATFORM = &"on_me_hit_player_platform"
 @export var on_ready: Array[Visitor]
 @export var on_process: Array[Visitor]
 
-@export var on_me_hit_missile: Array[Visitor]
-@export var on_me_hit_missile_straight: Array[Visitor]
-@export var on_me_hit_missile_up: Array[Visitor]
-@export var on_me_hit_missile_down: Array[Visitor]
-@export var on_me_hit_player: Array[Visitor]
-@export var on_me_hit_player_platform: Array[Visitor]
-
 @export var on_health_take_damage: Array[Visitor]
 @export var on_press_up: Array[Visitor]
 
 @export var on_attack_active: Array[Visitor]
+@export var on_block_active: Array[Visitor]
+@export var on_block_recovery: Array[Visitor]
 
 @export var movement: Array[Visitor]

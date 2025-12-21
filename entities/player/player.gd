@@ -47,6 +47,8 @@ func accept(v: Visitor):
         health.accept(v)
     elif v is MovementVisitor:
         v.visit_movement(self)
+    elif v is StatusEffectManagerVisitor:
+        status_effects.accept(v)
     else:
         accepted_visitor.emit(v)
 
@@ -130,6 +132,15 @@ func _on_block_stop():
     
 func _on_character_animation_step_changed(step: Character.AnimationStep):
     match character.current_animation:
+        Character.AnimationName.BLOCK:
+            match step:
+                Character.AnimationStep.ACTIVE:
+                    for a in abilities:
+                        Visitor.visit(self, a.on_block_active)
+                Character.AnimationStep.RECOVERY:
+                    for a in abilities:
+                        Visitor.visit(self, a.on_block_recovery)
+        
         Character.AnimationName.ATTACK:
             match step:
                 Character.AnimationStep.ACTIVE:
@@ -210,6 +221,7 @@ func _update():
     character._log.set_prefix(name)
     camera._log.set_prefix(name)
     health._log.set_prefix(name)
+    status_effects._log.set_prefix(name)
     for a in abilities:
         if not _ability_ready_called.has(a.name):
             # new ability added

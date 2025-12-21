@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=5 format=3 uid="uid://cquy04epiwv03"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_4d5nr"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_6vv7e"]
+[ext_resource type="Resource" uid="uid://uf2oyp1i3c6r" path="res://resources/abilities/normal_block/add_knockback_half.tres" id="2_lwko2"]
+[ext_resource type="Resource" uid="uid://dhbjswet51e5o" path="res://resources/abilities/normal_block/rm_knockback_half.tres" id="3_fxrd5"]
+
+[resource]
+script = ExtResource("2_6vv7e")
+name = &"normal_block"
+overrides = true
+on_ready = Array[ExtResource("1_4d5nr")]([])
+on_process = Array[ExtResource("1_4d5nr")]([])
+on_health_take_damage = Array[ExtResource("1_4d5nr")]([])
+on_press_up = Array[ExtResource("1_4d5nr")]([])
+on_attack_active = Array[ExtResource("1_4d5nr")]([])
+on_block_active = Array[ExtResource("1_4d5nr")]([ExtResource("2_lwko2")])
+on_block_recovery = Array[ExtResource("1_4d5nr")]([ExtResource("3_fxrd5")])
+movement = Array[ExtResource("1_4d5nr")]([])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"

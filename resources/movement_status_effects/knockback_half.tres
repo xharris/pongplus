@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MovementKnockbackMultiplier" load_steps=2 format=3 uid="uid://blcjtu75bwho"]
+
+[ext_resource type="Script" uid="uid://dfs2d8gmpn1wf" path="res://components/movement/status_effects/movement_knockback_multiplier.gd" id="1_tr4s0"]
+
+[resource]
+script = ExtResource("1_tr4s0")
+multiplier = 0.5
+id = &"knockback_half"
+type = 1
+duration = -1.0
+metadata/_custom_type_script = "uid://dfs2d8gmpn1wf"

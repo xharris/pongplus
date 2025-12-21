@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AddStatusEffect" load_steps=3 format=3 uid="uid://uf2oyp1i3c6r"]
+
+[ext_resource type="Resource" uid="uid://blcjtu75bwho" path="res://resources/movement_status_effects/knockback_half.tres" id="1_7s1ax"]
+[ext_resource type="Script" uid="uid://du5cedbruj7yg" path="res://components/status_effect/status_effect_visitors/add_status_effect.gd" id="1_lvhdr"]
+
+[resource]
+script = ExtResource("1_lvhdr")
+effect = ExtResource("1_7s1ax")
+metadata/_custom_type_script = "uid://du5cedbruj7yg"

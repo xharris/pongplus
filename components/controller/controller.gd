@@ -17,6 +17,8 @@ signal attack_charge
 signal attack_release
 signal block_start
 signal block_stop
+## next ability
+signal next
 
 func _ready() -> void:
     attack_charge.connect(_on_attack_charge)
