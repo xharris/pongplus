@@ -6,11 +6,13 @@ enum Layer {NONE=0, ANY=1, HITBOX=2, HURTBOX=3, SURFACE=4}
 var _log = Logger.new("hitbox_layer")
 @export var layer: Layer
 @export var collide_with: Array[Layer]
+## Will only be called for Area2D
+@export var on_collide: Array[Visitor]
 
 var _last_layer: Layer
 
 func update(me: CollisionObject2D):
-    # detect collisions with OTHER layers
+    # enable collision detection with other layers
     for l in Layer.values():
         if l == Layer.NONE:
             continue
@@ -28,3 +30,4 @@ func update(me: CollisionObject2D):
         Layer.find_key(layer),
         collide_with.map(func (l: Layer): return Layer.find_key(l))
     ])
+    

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerOutOfBounds" load_steps=2 format=3 uid="uid://bdu1q2r80asrh"]
+
+[ext_resource type="Script" uid="uid://cbichqhv7j08e" path="res://entities/player/visitors/player_set_bounds.gd" id="1_y6nru"]
+
+[resource]
+script = ExtResource("1_y6nru")
+bounds = 1
+metadata/_custom_type_script = "uid://cbichqhv7j08e"

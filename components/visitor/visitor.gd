@@ -5,6 +5,8 @@ const ACCEPTED_VISITOR = &"accepted_visitor"
 static var _static_log = Logger.new("visitor")
 
 static func visit(me: Node, visitors: Array[Visitor]):
+    if not visitors:
+        return
     for v in visitors:
         if me.has_method("accept"):
             await me.call("accept", v)

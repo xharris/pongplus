@@ -1,7 +1,11 @@
 extends Movement
 class_name Player
 
+signal bounds_changed(bounds: Bounds)
+
 enum AimDirection {STRAIGHT, UP, DOWN}
+enum Bounds {IN, OUT}
+
 static var _i = 0
 
 @onready var movement: Movement:
@@ -33,6 +37,7 @@ var _platform_move_tween: Tween
 var _ability_ready_called: Array[StringName]
 var visitor_state: PlayerVisitor.State
 var _delta: float = 0
+var _bounds: Bounds = Bounds.IN
 
 func accept(v: Visitor):
     if v is PlayerVisitor:
@@ -66,6 +71,17 @@ func _process(delta: float) -> void:
     movement.move = controller.move_direction
     #if controller.move_direction != Vector2.ZERO:
         #_log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
+    if character.is_holding():
+        # vibrate
+        var v: float
+        match character.current_animation:
+            Character.AnimationName.ATTACK:
+                v = lerpf(0.1, 0.5, min(1, controller.charge_duration / controller.max_charge_duration))
+            Character.AnimationName.BLOCK:
+                v = 0.1
+        Input.start_joy_vibration(
+            controller.config.device, v, 0, delta
+        )
     if is_charge_locked():
         # attack charge coyote time when ball is nearby
         var closest: Missile
@@ -169,6 +185,7 @@ func _on_attack_charge():
 func _on_attack_release():
     if is_charge_locked() and is_attack_locked():
         # continue attack animation
+        Input.start_joy_vibration(controller.config.device, 0.7, 0, 0.1)
         character.release_hold()
 
 func _on_hitbox_body_entered_once(body: Node2D):
@@ -211,6 +228,12 @@ func is_block_locked():
 ## Is locked out of moving
 func is_movement_locked():
     return false
+
+func set_bounds(bounds: Bounds):
+    if bounds == _bounds:
+        return
+    bounds = _bounds
+    bounds_changed.emit(bounds)
 
 func _update():
     _log.set_prefix(name)

@@ -40,5 +40,12 @@ func update():
         level.accepted_visitor.connect(accept_with_source.bind(level))
     if is_inside_tree():
         for p: Player in get_tree().get_nodes_in_group(Groups.PLAYER):
-            if not p.accepted_visitor.is_connected(accept):
-                p.accepted_visitor.connect(accept_with_source.bind(p))
+            Util.connect_once(
+                p.accepted_visitor,
+                accept_with_source.bind(p))
+            Util.connect_once(
+                p.bounds_changed,
+                _on_player_bounds_changed.bind(p))
+
+func _on_player_bounds_changed(bounds: Player.Bounds, me: Player):
+    _log.info("%s bounds changed: %s" % [me.name, Player.Bounds.find_key(bounds)])

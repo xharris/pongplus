@@ -6,6 +6,7 @@ var is_blocking: bool = false
 
 ## normal vector of direction to move (ie. joystick movement)
 var move_direction: Vector2
+var charge_duration: float
 
 signal up
 signal down
@@ -25,15 +26,20 @@ func _ready() -> void:
     attack_release.connect(_on_attack_release)
     block_start.connect(_on_block_start)
     block_stop.connect(_on_block_stop)
-    
+
 func _on_block_start():
     is_blocking = true
-    
+
 func _on_block_stop():
     is_blocking = false
-    
+
 func _on_attack_charge():
     is_charging = true
-    
+
 func _on_attack_release():
     is_charging = false
+    charge_duration = 0
+
+func _process(delta: float) -> void:
+    if is_charging:
+        charge_duration += delta

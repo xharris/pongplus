@@ -3,7 +3,7 @@ class_name Level
 
 signal accepted_visitor(v: Visitor)
 
-var _log = Logger.new("level", Logger.Level.DEBUG)
+var _log = Logger.new("level")#, Logger.Level.DEBUG)
 @export var gameplay: Gameplay
 ## Used for logging id
 @export var id: String

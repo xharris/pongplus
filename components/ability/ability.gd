@@ -58,6 +58,7 @@ const ON_ME_HIT_PLAYER_PLATFORM = &"on_me_hit_player_platform"
 @export var on_press_up: Array[Visitor]
 
 @export var on_attack_active: Array[Visitor]
+@export var on_charged_attack_active: Array[Visitor]
 @export var on_block_active: Array[Visitor]
 @export var on_block_recovery: Array[Visitor]
 

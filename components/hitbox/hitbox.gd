@@ -3,6 +3,7 @@ class_name Hitbox
 
 const INDICATOR_AMOUNT_RATIO: float = 1.0
 
+## TODO is this even necessary??
 signal body_entered_once(body: Node2D)
 signal accepted_visitor(v: Visitor)
 signal handled_command(cmd: Command)
@@ -12,7 +13,7 @@ signal handled_command(cmd: Command)
 @export var id: StringName
 @export var layer: HitboxLayer
 
-var _log = Logger.new("hitbox")
+var _log = Logger.new("hitbox")#, Logger.Level.DEBUG)
 var _entered: Array[Node2D]
 
 func accept(v: Visitor):
@@ -27,6 +28,8 @@ func handle(cmd: Command):
 func _ready() -> void:
     if id.length() == 0:
         _log.warn("id not set (%s)" % [get_path()])
+    else:
+        _log.set_prefix(str(id))
     particles.amount_ratio = 0
     
     body_entered.connect(_on_body_entered)
@@ -35,12 +38,18 @@ func _ready() -> void:
     area_exited.connect(_on_body_exited)
     
     update()
+    _log.debug("ready, monitoring=%s, monitorable=%s, layer=%d, mask=%d" % [monitoring, monitorable, collision_layer, collision_mask])
 
 func _on_body_entered(body: Node2D):
+    _log.debug("body entered: %s (parent: %s)" % [body.name, body.get_parent()])
+    # body entered ONCE
     if not _entered.has(body) and body.get_parent() != get_parent():
         _log.debug("body entered: %s -> %s" % [body.name, body.get_parent()])
         _entered.append(body)
         body_entered_once.emit(body)
+    if layer:
+        Visitor.visit(body, layer.on_collide)
+        
 
 func _on_body_exited(body: Node2D):
     _entered.erase(body)

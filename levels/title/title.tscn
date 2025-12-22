@@ -1,20 +1,20 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=12 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
 [ext_resource type="Resource" uid="uid://dfmaov33n1my" path="res://resources/gameplay/default_gameplay.tres" id="2_b7l43"]
 [ext_resource type="Theme" uid="uid://dle0vhtydjqxv" path="res://ui/themes/base.tres" id="2_i4hfk"]
 [ext_resource type="PackedScene" uid="uid://df1ed1c6hg78a" path="res://entities/player/player.tscn" id="4_wtaml"]
 [ext_resource type="Resource" uid="uid://d243gfh81ut2o" path="res://resources/player_controller_configs/player1.tres" id="5_d1k64"]
-[ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="6_b7l43"]
 [ext_resource type="PackedScene" uid="uid://dyk5whjmx8yfq" path="res://components/floor/floor.tscn" id="7_d1k64"]
-[ext_resource type="Resource" uid="uid://6dh4g64e55c6" path="res://resources/hitbox_layers/title_floor.tres" id="8_b7l43"]
-
-[sub_resource type="Resource" id="Resource_yk36c"]
-script = ExtResource("6_b7l43")
-metadata/_custom_type_script = "uid://dgxxs0f1ucqi0"
+[ext_resource type="Resource" uid="uid://6dh4g64e55c6" path="res://resources/hitbox_layers/floor.tres" id="8_b7l43"]
+[ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="9_yk36c"]
+[ext_resource type="Resource" uid="uid://ds4msv0sl3g4j" path="res://resources/hitbox_layers/floor_out_of_bounds.tres" id="10_46ysu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ros5a"]
 size = Vector2(1180.5, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b7l43"]
+size = Vector2(1792.5, 45)
 
 [node name="Title" type="Node2D"]
 position = Vector2(1, 0)
@@ -64,12 +64,23 @@ player_controller_config = ExtResource("5_d1k64")
 
 [node name="Player2" parent="." instance=ExtResource("4_wtaml")]
 position = Vector2(1024, 512)
-player_controller_config = SubResource("Resource_yk36c")
 team = 1
 
 [node name="Floor" parent="." instance=ExtResource("7_d1k64")]
 layer = ExtResource("8_b7l43")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+[node name="Stage" type="CollisionShape2D" parent="Floor"]
 position = Vector2(576.75, 620.5)
 shape = SubResource("RectangleShape2D_ros5a")
+
+[node name="Room" type="CollisionShape2D" parent="Floor"]
+position = Vector2(575, 640)
+shape = SubResource("RectangleShape2D_b7l43")
+
+[node name="OutOfBounds" parent="." instance=ExtResource("9_yk36c")]
+id = &"out_of_bounds"
+layer = ExtResource("10_46ysu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2(575, 637)
+shape = SubResource("RectangleShape2D_b7l43")

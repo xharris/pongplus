@@ -2,5 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cmx30pfmxske1" path="res://components/floor/floor.gd" id="1_floor"]
 
-[node name="Floor" type="StaticBody2D"]
+[node name="Floor" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_floor")

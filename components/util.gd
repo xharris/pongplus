@@ -31,3 +31,7 @@ static func diminishing(value, rate_of_change = 0):
     if value + rate_of_change == 0:
         return 0
     return value / (value + rate_of_change)
+
+static func connect_once(sig: Signal, fn: Callable, flags: int = 0):
+    if not sig.is_connected(fn):
+        sig.connect(fn, flags)
