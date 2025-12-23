@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="MagicMissileConfig" load_steps=7 format=3 uid="uid://g623ytv2tvep"]
+[gd_resource type="Resource" script_class="MagicMissileConfig" load_steps=8 format=3 uid="uid://g623ytv2tvep"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_2m3n7"]
 [ext_resource type="Script" uid="uid://4hagmndnft8j" path="res://components/command.gd" id="2_es2wg"]
 [ext_resource type="Resource" uid="uid://cjt1gto8p615d" path="res://resources/movement_commands/knockback_high.tres" id="3_2m3n7"]
+[ext_resource type="Resource" uid="uid://bgdbdgnucno5y" path="res://resources/magic_missile_visitors/destroy_magic_missile.tres" id="4_es2wg"]
 [ext_resource type="Resource" uid="uid://bi3dttxpoqqde" path="res://resources/missile_visitors/missile_target_random_opponent.tres" id="4_pafju"]
 [ext_resource type="Resource" uid="uid://bdaixadu0wgjd" path="res://resources/missile_visitors/missile_speed_high.tres" id="5_2m3n7"]
 [ext_resource type="Script" uid="uid://1culyjbe0ab7" path="res://entities/magic_missile/magic_missile_config.gd" id="6_bvdjs"]
@@ -11,6 +12,6 @@
 script = ExtResource("6_bvdjs")
 on_ready = Array[ExtResource("1_2m3n7")]([ExtResource("4_pafju"), ExtResource("5_2m3n7")])
 on_hit = Array[ExtResource("1_2m3n7")]([])
-on_hit_visit_self = Array[ExtResource("1_2m3n7")]([])
+on_hit_visit_self = Array[ExtResource("1_2m3n7")]([ExtResource("4_es2wg")])
 on_hit_commands = Array[ExtResource("2_es2wg")]([ExtResource("3_2m3n7")])
 metadata/_custom_type_script = "uid://1culyjbe0ab7"

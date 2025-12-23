@@ -19,4 +19,7 @@ func visit_movement(me: Movement):
             # speed limit
             me.velocity.x = clampf(me.velocity.x, -abs(speed), abs(speed))
             # apply friction
-            me.velocity.x = lerpf(me.velocity.x, 0, me.dt * friction)
+            if me.is_on_floor():
+                me.velocity.x = lerpf(me.velocity.x, 0, me.dt * friction)
+            else:
+                me.velocity.x = lerpf(me.velocity.x, 0, me.dt * (friction/3))

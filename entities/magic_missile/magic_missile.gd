@@ -33,3 +33,5 @@ func _on_hitbox_body_entered_once(body: Node2D):
             c = c.duplicate()
             c.direction = velocity.normalized()
         Command.handle(body, c)
+    # destroy self?
+    

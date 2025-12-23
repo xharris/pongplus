@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DestroyMagicMissile" load_steps=2 format=3 uid="uid://bgdbdgnucno5y"]
+
+[ext_resource type="Script" uid="uid://bri1ys4hf6u8y" path="res://entities/magic_missile/visitors/destroy_magic_missile.gd" id="1_u40tb"]
+
+[resource]
+script = ExtResource("1_u40tb")
+metadata/_custom_type_script = "uid://bri1ys4hf6u8y"
