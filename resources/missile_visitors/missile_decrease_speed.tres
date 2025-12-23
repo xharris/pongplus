@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MissileDurationCurvePosition" load_steps=2 format=3 uid="uid://d4cnr852b21v3"]
 
-[ext_resource type="Script" uid="uid://cohsym8o6rdq8" path="res://components/missile/visitors/missile_duration_curve_position.gd" id="1_cea2m"]
+[ext_resource type="Script" uid="uid://cohsym8o6rdq8" path="res://components/missile/visitors/missile_speed.gd" id="1_cea2m"]
 
 [resource]
 script = ExtResource("1_cea2m")

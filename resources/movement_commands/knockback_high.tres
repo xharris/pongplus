@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MovementKnockback" load_steps=3 format=3 uid="uid://cjt1gto8p615d"]
+
+[ext_resource type="Script" uid="uid://cly1jjya0uwt1" path="res://components/movement/commands/movement_knockback.gd" id="1_8o8kt"]
+[ext_resource type="Curve" uid="uid://sqtrefrn6cen" path="res://resources/knockback_strength.tres" id="2_3388l"]
+
+[resource]
+script = ExtResource("1_8o8kt")
+strength = 1.0
+angle = 45.0
+strength_curve = ExtResource("2_3388l")
+metadata/_custom_type_script = "uid://cly1jjya0uwt1"

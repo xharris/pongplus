@@ -1,7 +1,7 @@
 extends MissileVisitor
-class_name MissileDurationCurvePosition
+class_name MissileSpeed
 
-enum Type {ADD, SUB}
+enum Type {ADD, SUB, SET}
 
 @export var type: Type
 @export var amount: float = 0.05
@@ -9,6 +9,8 @@ enum Type {ADD, SUB}
 func visit_missile(me: Missile):
     match type:
         Type.ADD:
-            me.duration_curve_position += amount
+            me.speed += amount
         Type.SUB:
-            me.duration_curve_position -= amount
+            me.speed -= amount
+        Type.SET:
+            me.speed = amount

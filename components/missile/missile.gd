@@ -1,6 +1,5 @@
 extends CharacterBody2D
 class_name Missile
-## TODO use manual velocity instead of tween
 
 enum CurveSide {TOP, MID, BOT}
 
@@ -8,33 +7,25 @@ signal started_path_to(target: Node2D)
 
 const DRAW_DEBUG: bool = false
 
-@export var speed_curve: Curve = preload("res://components/missile/missile_curve.tres")
+@export var speed_curve: Curve = preload("res://resources/missile_speed.tres")
+@export var speed: float = 0:
+    set(v):
+        speed = clampf(v, 0, 1)
 
 var _log = Logger.new("missile", Logger.Level.DEBUG)
-var _current_curve: Curve2D
-var tween: Tween
 var target_history: Array[Node2D]
 var curve_distance: float = 50
-var missile_position: Vector2
 var is_pathing: bool:
     get:
         return curve != null
-
-## [0, 1]
-var duration_curve_position: float:
-    set(v):
-        duration_curve_position = clampf(v, 0, 1)
-var duration_curve: Curve = preload("res://components/missile/default_duration_curve.tres")
-var delta_rate: float = 1.0
+## Curve that missile follows while pathing to target position
 var curve: Curve2D
+## Which direction to bend curve in (MID = no curve)
 var curve_side: CurveSide = CurveSide.MID
 var curve_angle_offset: float = 50
-
-var _curve_progress: float = 0
+var _progress: float = 0
 var _debug_midpoint: Vector2
 var _debug_control_point: Vector2
-var _curve_dir_sign: int = 1
-var _last_position: Vector2
 
 func accept(v: Visitor):
     if v is MissileVisitor:
@@ -42,12 +33,11 @@ func accept(v: Visitor):
 
 func _process(delta: float) -> void:
     if curve:
-        _curve_progress += delta * delta_rate * duration_curve.sample(duration_curve_position)
+        _progress += delta * speed_curve.sample(speed)
         # get position from curve
-        _last_position = global_position
-        var next_position = curve.sample(0, _curve_progress)
-        velocity = next_position - _last_position
-    if _curve_progress >= 1:
+        var next_position = curve.sample(0, _progress)
+        velocity = next_position - global_position
+    if _progress >= 1:
         stop_pathing()
     move_and_slide()
     
@@ -96,5 +86,5 @@ func path_to(target: Node2D, speed: float = 10):
     started_path_to.emit(target)
 
 func stop_pathing():
-    _curve_progress = 0
+    _progress = 0
     curve = null

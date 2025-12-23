@@ -12,7 +12,7 @@ static var _i = 0
     get:
         return self
 @onready var controller: PlayerController = %PlayerController
-@onready var hitbox: Hitbox = %Hitbox
+@onready var block_hitbox: Hitbox = %BlockHitbox
 @onready var hurtbox: Hitbox = %Hurtbox
 @onready var character: Character = %Character
 @onready var camera: Camera = %Camera
@@ -47,7 +47,7 @@ func accept(v: Visitor):
     elif v is CharacterVisitor:
         character.accept(v)
     elif v is HitboxVisitor:
-        hitbox.accept(v)
+        block_hitbox.accept(v)
     elif v is HealthVisitor:
         health.accept(v)
     elif v is MovementVisitor:
@@ -120,7 +120,7 @@ func _ready() -> void:
     add_to_group(Groups.PLAYER)
     team = team # trigger setter
     controller.config = player_controller_config
-    hitbox.disable()
+    block_hitbox.disable()
     
     health.current_changed.connect(_on_health_current_changed)
     #movement.accepted_visitor.connect(accept)
@@ -131,9 +131,9 @@ func _ready() -> void:
     controller.up.connect(_on_up)
     hurtbox.accepted_visitor.connect(accept)
     hurtbox.handled_command.connect(handle)
-    hitbox.accepted_visitor.connect(accept)
-    hitbox.handled_command.connect(handle)
-    hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
+    block_hitbox.accepted_visitor.connect(accept)
+    block_hitbox.handled_command.connect(handle)
+    block_hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     character.animation_step_changed.connect(_on_character_animation_step_changed)
 
     _update()
@@ -151,21 +151,27 @@ func _on_character_animation_step_changed(step: Character.AnimationStep):
         Character.AnimationName.BLOCK:
             match step:
                 Character.AnimationStep.ACTIVE:
+                    block_hitbox.enable()
                     for a in abilities:
                         Visitor.visit(self, a.on_block_active)
                 Character.AnimationStep.RECOVERY:
+                    block_hitbox.disable()
                     for a in abilities:
                         Visitor.visit(self, a.on_block_recovery)
         
         Character.AnimationName.ATTACK:
             match step:
                 Character.AnimationStep.ACTIVE:
-                    hitbox.enable()
                     character.set_weapon_color(Color.WHITE, 0.8)
+                    var charge_v = snappedf(controller.charge_duration / controller.max_charge_duration, 0.5)
                     for a in abilities:
-                        Visitor.visit(self, a.on_attack_active)
+                        if charge_v >= 0.5:
+                            _log.info("charged attack (%f)" % [charge_v])
+                            Visitor.visit(self, a.on_charged_attack_active)
+                        else:
+                            _log.info("attack (%f)" % [charge_v])
+                            Visitor.visit(self, a.on_attack_active)
                 Character.AnimationStep.RECOVERY:
-                    hitbox.disable()
                     character.set_weapon_color(Color.WHITE, 0)
     
 func _on_up():
@@ -239,7 +245,7 @@ func _update():
     _log.set_prefix(name)
     health._log.set_prefix(name)
     movement._log.set_prefix(name)
-    hitbox._log.set_prefix(name)
+    block_hitbox._log.set_prefix(name)
     hurtbox._log.set_prefix(name)
     character._log.set_prefix(name)
     camera._log.set_prefix(name)

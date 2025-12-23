@@ -4,7 +4,6 @@ class_name PlayerController
 var _log = Logger.new("player_controller")#, Logger.Level.DEBUG)
 
 @export var config: PlayerControllerConfig
-var max_charge_duration: float = 2
 
 func _process(delta: float) -> void:
     super._process(delta)

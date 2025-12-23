@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://dfwpv8dyquqpf"]
+[gd_resource type="Resource" script_class="Ability" load_steps=5 format=3 uid="uid://dfwpv8dyquqpf"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_0sctr"]
 [ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="2_0sctr"]
-[ext_resource type="Resource" uid="uid://bg73re11bsdno" path="res://resources/abilities/basic_attack/player_visitors/shoot_basic_attack.tres" id="2_46iqx"]
+[ext_resource type="Resource" uid="uid://bg73re11bsdno" path="res://resources/abilities/basic_attack/player_visitors/shoot_basic_attack_low.tres" id="2_46iqx"]
+[ext_resource type="Resource" uid="uid://cftqksqsy54rv" path="res://resources/abilities/basic_attack/player_visitors/shoot_basic_attack_high.tres" id="3_60w07"]
 
 [resource]
 script = ExtResource("2_0sctr")
@@ -10,14 +11,11 @@ name = &"magic_missile"
 overrides = false
 on_ready = Array[ExtResource("1_0sctr")]([])
 on_process = Array[ExtResource("1_0sctr")]([])
-on_me_hit_missile = Array[ExtResource("1_0sctr")]([])
-on_me_hit_missile_straight = Array[ExtResource("1_0sctr")]([])
-on_me_hit_missile_up = Array[ExtResource("1_0sctr")]([])
-on_me_hit_missile_down = Array[ExtResource("1_0sctr")]([])
-on_me_hit_player = Array[ExtResource("1_0sctr")]([])
-on_me_hit_player_platform = Array[ExtResource("1_0sctr")]([])
 on_health_take_damage = Array[ExtResource("1_0sctr")]([])
 on_press_up = Array[ExtResource("1_0sctr")]([])
 on_attack_active = Array[ExtResource("1_0sctr")]([ExtResource("2_46iqx")])
+on_charged_attack_active = Array[ExtResource("1_0sctr")]([ExtResource("3_60w07")])
+on_block_active = Array[ExtResource("1_0sctr")]([])
+on_block_recovery = Array[ExtResource("1_0sctr")]([])
 movement = Array[ExtResource("1_0sctr")]([])
 metadata/_custom_type_script = "uid://2ap2s3ni6oid"

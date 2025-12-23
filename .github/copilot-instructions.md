@@ -6,7 +6,7 @@
 
 ## Debug & Logging
 
-- **ALWAYS** check `logs/game.log` first when debugging - file logging is enabled via `project.godot`.
+- You must **ALWAYS** check `logs/game.log` before responding or attempting to understand a request - file logging is enabled via `project.godot`.
 - Use the `Logger` class (`logs.gd`) for all logging. Create instances with `Logger.new(id, level, prefix)`.
 - Set global log level via `Logger.global_level = Logger.Level.DEBUG/INFO/WARN/ERROR`.
 - Components typically have `var _log = Logger.new("component_name")` for instance-level logging.

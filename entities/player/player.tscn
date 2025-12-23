@@ -36,12 +36,12 @@ id = &"player_hurtbox"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_8fjmc")
 
-[node name="Hitbox" parent="." instance=ExtResource("5_fkugw")]
+[node name="BlockHitbox" parent="." instance=ExtResource("5_fkugw")]
 unique_name_in_owner = true
 id = &"player_hitbox"
 layer = ExtResource("4_qiwj3")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlockHitbox"]
 shape = SubResource("CircleShape2D_qiwj3")
 
 [node name="Character" parent="." instance=ExtResource("7_qiwj3")]
