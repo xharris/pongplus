@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="MissileCurveSide" load_steps=2 format=3 uid="uid://dwmnx2natdkn3"]
-
-[ext_resource type="Script" uid="uid://dg85iheencgn2" path="res://components/missile/visitors/missile_curve_side.gd" id="1_wml2k"]
-
-[resource]
-script = ExtResource("1_wml2k")
-value = 1
-metadata/_custom_type_script = "uid://dg85iheencgn2"

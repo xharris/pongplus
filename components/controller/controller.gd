@@ -1,7 +1,8 @@
 extends Node2D
 class_name Controller
 
-@export var max_charge_duration: float = 3
+var _log = Logger.new("controller")#, Logger.Level.DEBUG)
+@export var max_charge_duration: float = 2
 @export var counter_duration: float = 0.5
 var is_charging: bool = false
 var is_blocking: bool = false
@@ -33,18 +34,22 @@ func _ready() -> void:
     block_stop.connect(_on_block_stop)
 
 func _on_block_start():
+    _log.debug("block start")
     is_blocking = true
     block_duration = 0
 
 func _on_block_stop():
+    _log.debug("block stop")
     is_blocking = false
     block_duration = 0
 
 func _on_attack_charge():
+    _log.debug("attack charge")
     is_charging = true
     charge_duration = 0
 
 func _on_attack_release():
+    _log.debug("attack release")
     is_charging = false
 
 func _process(delta: float) -> void:

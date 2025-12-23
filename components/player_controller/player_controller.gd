@@ -1,9 +1,10 @@
 extends Controller
 class_name PlayerController
 
-var _log = Logger.new("player_controller")#, Logger.Level.DEBUG)
-
 @export var config: PlayerControllerConfig
+
+func _init() -> void:
+    _log.set_id("player_controller")
 
 func _process(delta: float) -> void:
     super._process(delta)
@@ -18,13 +19,16 @@ func _unhandled_input(event: InputEvent) -> void:
         return
     if event.device != config.device:
         return
+        
     if event.is_action_pressed("attack"):
         attack_charge.emit()
     if event.is_action_released("attack"):
         attack_release.emit()
+        
     if event.is_action_pressed("block"):
         block_start.emit()
     if event.is_action_released("block"):
         block_stop.emit()
+        
     if event.is_action("jump"):
         up.emit()

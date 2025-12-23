@@ -14,8 +14,6 @@ func accept(v: Visitor):
 func _ready() -> void:
     if not id.is_empty():
         _log.set_id(id)
-    EventBus.ball_created.connect(_on_ball_created, CONNECT_DEFERRED)
-    EventBus.ball_destroyed.connect(_on_ball_destroyed)
     EventBus.player_health_current_changed.connect(_on_player_health_current_changed)
     
     _log.debug("start")
@@ -27,13 +25,6 @@ func _on_player_health_current_changed(player: Player, amount: int):
     if gameplay and amount < 0 and player.health.is_alive():
         Visitor.visit(self, gameplay.on_player_take_damage)
         Visitor.visit(player, gameplay.on_player_take_damage)
-
-func _on_ball_destroyed(ball: Ball):
-    Visitor.visit(self, gameplay.on_ball_destroyed)
-    Visitor.visit(ball, gameplay.on_ball_destroyed)
-
-func _on_ball_created(ball: Ball):
-    update()
 
 func update():
     # set player abilities

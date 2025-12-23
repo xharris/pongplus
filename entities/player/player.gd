@@ -124,16 +124,15 @@ func _ready() -> void:
     
     health.current_changed.connect(_on_health_current_changed)
     #movement.accepted_visitor.connect(accept)
-    controller.attack_charge.connect(_on_attack_charge)
-    controller.attack_release.connect(_on_attack_release)
-    controller.block_start.connect(_on_block_start)
-    controller.block_stop.connect(_on_block_stop)
-    controller.up.connect(_on_up)
+    controller.attack_charge.connect(_on_attack_charge, CONNECT_DEFERRED)
+    controller.attack_release.connect(_on_attack_release, CONNECT_DEFERRED)
+    controller.block_start.connect(_on_block_start, CONNECT_DEFERRED)
+    controller.block_stop.connect(_on_block_stop, CONNECT_DEFERRED)
+    controller.up.connect(_on_up, CONNECT_DEFERRED)
     hurtbox.accepted_visitor.connect(accept)
     hurtbox.handled_command.connect(handle)
     block_hitbox.accepted_visitor.connect(accept)
     block_hitbox.handled_command.connect(handle)
-    block_hitbox.body_entered_once.connect(_on_hitbox_body_entered_once)
     character.animation_step_changed.connect(_on_character_animation_step_changed)
 
     _update()
@@ -189,32 +188,10 @@ func _on_attack_charge():
         character.play_animation(Character.AnimationName.ATTACK)
 
 func _on_attack_release():
-    if is_charge_locked() and is_attack_locked():
+    if not is_block_locked():
         # continue attack animation
         Input.start_joy_vibration(controller.config.device, 0.7, 0, 0.1)
         character.release_hold()
-
-func _on_hitbox_body_entered_once(body: Node2D):
-    if body is Hitbox:
-        var parent = body.get_parent()
-        if parent and Util.find_child(parent, Missile):
-            var visitors: Array[Visitor]
-            for a in abilities:
-                visitors.append_array(a.on_me_hit_missile)
-            match aim_direction:
-                AimDirection.UP:
-                    for a in abilities:
-                        visitors.append_array(a.on_me_hit_missile_up)
-                AimDirection.DOWN:
-                    for a in abilities:
-                        visitors.append_array(a.on_me_hit_missile_down)
-                AimDirection.STRAIGHT:
-                    for a in abilities:
-                        visitors.append_array(a.on_me_hit_missile_straight)
-            _log.debug("me hit %s (%s), %d visitor(s)" % [parent, AimDirection.find_key(aim_direction), visitors.size()])
-            Visitor.visit(self, visitors)
-            Visitor.visit(body, visitors)
-            aim_direction = AimDirection.STRAIGHT
 
 func is_animation_locked():
     return character.current_animation != Character.AnimationName.NONE

@@ -17,7 +17,7 @@ signal animation_step_changed(step: AnimationStep)
 @onready var sprite: Node2D = %Sprite
 @onready var weapon: Node2D = %Weapon
 
-var _log = Logger.new("character", Logger.Level.DEBUG)
+var _log = Logger.new("character")#, Logger.Level.DEBUG)
 
 @export var animation_step: AnimationStep
 @export var current_animation: AnimationName
