@@ -26,11 +26,14 @@ static func TEAM(me: Node, index: int, prev_index: int = 0) -> StringName:
     var group = &"team-%d" % (index)
     if not teams.has(group):
         teams.append(group)
+    # remove from previous team
     if me.is_in_group(prev_group):
         _log.debug("%s remove from %s" % [me, prev_group])
         me.remove_from_group(prev_group)
-    _log.info("%s add to %s" % [me, group])
-    me.add_to_group(group)
+    # add to new team
+    if not me.is_in_group(group):    
+        _log.info("%s add to %s" % [me, group])
+        me.add_to_group(group)
     return group
 
 ## Returns -1 if no team found

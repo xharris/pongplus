@@ -1,16 +1,16 @@
 [gd_resource type="Resource" script_class="Gameplay" load_steps=7 format=3 uid="uid://dfmaov33n1my"]
 
 [ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_a65u5"]
-[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="1_dwqvo"]
 [ext_resource type="Script" uid="uid://dgk27trhnuo5i" path="res://components/level/gameplay.gd" id="2_dnd7h"]
-[ext_resource type="Resource" uid="uid://b64tm3x3dgpw6" path="res://resources/abilities/platformer_movement/platformer_movement.tres" id="3_iyg3j"]
 [ext_resource type="Resource" uid="uid://cquy04epiwv03" path="res://resources/abilities/normal_block/normal_block.tres" id="4_ky0qt"]
 [ext_resource type="Resource" uid="uid://dfwpv8dyquqpf" path="res://resources/abilities/basic_attack/basic_attack.tres" id="5_dwqvo"]
+[ext_resource type="Resource" uid="uid://b64tm3x3dgpw6" path="res://resources/abilities/platformer_movement/platformer_movement.tres" id="5_iyg3j"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="6_ability"]
 
 [resource]
 script = ExtResource("2_dnd7h")
 name = &"default"
-player_abilties = Array[ExtResource("1_dwqvo")]([ExtResource("3_iyg3j"), ExtResource("4_ky0qt"), ExtResource("5_dwqvo")])
+player_abilties = Array[ExtResource("6_ability")]([ExtResource("4_ky0qt"), ExtResource("5_dwqvo"), ExtResource("5_iyg3j")])
 on_start = Array[ExtResource("1_a65u5")]([])
 on_player_take_damage = Array[ExtResource("1_a65u5")]([])
 on_exit = Array[ExtResource("1_a65u5")]([])

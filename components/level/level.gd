@@ -3,7 +3,7 @@ class_name Level
 
 signal accepted_visitor(v: Visitor)
 
-var _log = Logger.new("level")#, Logger.Level.DEBUG)
+var _log = Logger.new("level", Logger.Level.DEBUG)
 @export var gameplay: Gameplay
 ## Used for logging id
 @export var id: String
@@ -14,12 +14,16 @@ func accept(v: Visitor):
 func _ready() -> void:
     if not id.is_empty():
         _log.set_id(id)
+    EventBus.player_created.connect(_on_player_created)
     EventBus.player_health_current_changed.connect(_on_player_health_current_changed)
     
     _log.debug("start")
     update()
     if not _log.warn_if(not gameplay, "gameplay not set"):
         Visitor.visit.call_deferred(self, gameplay.on_start)
+
+func _on_player_created(player: Player):
+    update()
 
 func _on_player_health_current_changed(player: Player, amount: int):
     if gameplay and amount < 0 and player.health.is_alive():

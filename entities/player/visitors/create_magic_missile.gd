@@ -3,7 +3,7 @@ class_name CreateMagicMissile
 
 const SCENE = preload("res://entities/magic_missile/magic_missile.tscn")
 
-var _log = Logger.new("create_magic_missile", Logger.Level.DEBUG)
+var _log = Logger.new("create_magic_missile")#, Logger.Level.DEBUG)
 @export var config: MagicMissileConfig
 
 func visit_player(me: Player):

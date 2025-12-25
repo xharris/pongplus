@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TeamTargetStrategy" load_steps=2 format=3 uid="uid://b4q30oecmfhjr"]
 
-[ext_resource type="Script" uid="uid://cbcb0hoiwnlth" path="res://entities/player/team_target_strategy.gd" id="1_0tmba"]
+[ext_resource type="Script" uid="uid://cbcb0hoiwnlth" path="res://components/target/team_target_strategy.gd" id="1_0tmba"]
 
 [resource]
 script = ExtResource("1_0tmba")

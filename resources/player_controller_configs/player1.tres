@@ -1,43 +1,9 @@
-[gd_resource type="Resource" script_class="PlayerControllerConfig" load_steps=8 format=3 uid="uid://d243gfh81ut2o"]
+[gd_resource type="Resource" script_class="PlayerControllerConfig" load_steps=2 format=3 uid="uid://d243gfh81ut2o"]
 
 [ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="1_kb17b"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_kb17b"]
-device = -1
-keycode = 74
-unicode = 106
-
-[sub_resource type="InputEventKey" id="InputEventKey_l1ein"]
-device = -1
-keycode = 75
-unicode = 107
-
-[sub_resource type="InputEventKey" id="InputEventKey_yjewl"]
-device = -1
-keycode = 83
-unicode = 115
-
-[sub_resource type="InputEventKey" id="InputEventKey_a2utq"]
-device = -1
-keycode = 65
-unicode = 97
-
-[sub_resource type="InputEventKey" id="InputEventKey_pxxdn"]
-device = -1
-keycode = 68
-unicode = 100
-
-[sub_resource type="InputEventKey" id="InputEventKey_qxxyw"]
-device = -1
-keycode = 87
-unicode = 119
-
 [resource]
 script = ExtResource("1_kb17b")
-up = SubResource("InputEventKey_qxxyw")
-down = SubResource("InputEventKey_yjewl")
-left = SubResource("InputEventKey_a2utq")
-right = SubResource("InputEventKey_pxxdn")
-attack = SubResource("InputEventKey_kb17b")
-block = SubResource("InputEventKey_l1ein")
+name = &"p1"
+device = 0
 metadata/_custom_type_script = "uid://dgxxs0f1ucqi0"

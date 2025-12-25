@@ -1,6 +1,8 @@
 extends Movement
 class_name Player
 
+const SCENE = preload("res://entities/player/player.tscn")
+
 signal bounds_changed(bounds: Bounds)
 
 enum AimDirection {STRAIGHT, UP, DOWN}
@@ -21,17 +23,14 @@ static var _i = 0
 
 @export var player_controller_config: PlayerControllerConfig
 @export var abilities: Array[Ability]
-@export var team: int:
-    set(v):
-        Groups.TEAM(self, v, team)
-        team = v
-@export var layer: HitboxLayer
+@export var hitbox_layer: HitboxLayer
         
 var aim_direction: AimDirection = AimDirection.STRAIGHT
 ## TODO move coyote to separate vfx node?
 var coyote_distance = 140
 var coyote_rate_of_change = 120
 var coyote_time_scale = 1
+var team = 0
 
 var _platform_move_tween: Tween
 var _ability_ready_called: Array[StringName]
@@ -118,7 +117,6 @@ func _ready() -> void:
     _i += 1
     _log.set_prefix(name)
     add_to_group(Groups.PLAYER)
-    team = team # trigger setter
     controller.config = player_controller_config
     block_hitbox.disable()
     
@@ -136,6 +134,7 @@ func _ready() -> void:
     character.animation_step_changed.connect(_on_character_animation_step_changed)
 
     _update()
+    EventBus.player_created.emit(self)
     
 func _on_block_start():
     if not is_animation_locked():
@@ -236,4 +235,4 @@ func _update():
             visitor_state = PlayerVisitor.State.NONE
             movement.visitors.append_array(a.movement)
             _ability_ready_called.append(a.name)
-    layer.update(self)
+    hitbox_layer.update(self)

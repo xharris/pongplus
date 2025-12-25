@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlayerControllerConfig" load_steps=2 format=3 uid="uid://bu3mnq47yp6ra"]
+
+[ext_resource type="Script" uid="uid://dgxxs0f1ucqi0" path="res://components/player_controller/player_controller_config.gd" id="1_6n3kk"]
+
+[resource]
+script = ExtResource("1_6n3kk")
+name = &"p2"
+device = 1
+metadata/_custom_type_script = "uid://dgxxs0f1ucqi0"

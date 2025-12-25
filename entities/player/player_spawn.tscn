@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6xopw1anncoe"]
+
+[ext_resource type="Script" uid="uid://dv1g48mrwenx0" path="res://entities/player/player_spawn.gd" id="1_04qsv"]
+
+[node name="PlayerSpawn" type="Node2D"]
+script = ExtResource("1_04qsv")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+gizmo_extents = 73.0
