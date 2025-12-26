@@ -63,4 +63,5 @@ position = Vector2(1015, 560)
 player_controller_configs = Array[ExtResource("7_yk36c")]([ExtResource("8_46ysu"), ExtResource("9_n2ogb")])
 
 [node name="TrainingDummy" parent="." instance=ExtResource("10_46ysu")]
+unique_name_in_owner = true
 position = Vector2(79, 589)

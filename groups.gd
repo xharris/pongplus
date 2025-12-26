@@ -14,22 +14,24 @@ const GAME = &"game"
 const CAMERA = &"camera"
 const PLAYER = &"player"
 const SCORE_OVERLAY = &"score_overlay"
+const TARGET = &"target"
+const TRAINING_DUMMY = &"training_dummy"
 
 const TEAM_PREFIX = &"team-"
 const TEAM_NONE = &"team-none"
 
 static var teams: Array[StringName] = []
-static func TEAM(me: Node, index: int, prev_index: int = 0) -> StringName:
-    index = max(0, index)
-    prev_index = max(0, prev_index)
-    var prev_group = &"%s%d" % [TEAM_PREFIX, prev_index]
+static func TEAM(me: Node, index: int, remove_from_previous = true) -> StringName:
+    # get team name
+    index = max(0, index) 
     var group = &"team-%d" % (index)
     if not teams.has(group):
         teams.append(group)
-    # remove from previous team
-    if me.is_in_group(prev_group):
-        _log.debug("%s remove from %s" % [me, prev_group])
-        me.remove_from_group(prev_group)
+    # remove from previous team(s)
+    for g in teams:
+        if me.is_in_group(g):
+            _log.debug("%s remove from %s" % [me, g])
+            me.remove_from_group(g)   
     # add to new team
     if not me.is_in_group(group):    
         _log.info("%s add to %s" % [me, group])

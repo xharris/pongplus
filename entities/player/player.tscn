@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=13 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="PackedScene" uid="uid://ckj14pn1icvha" path="res://components/player_controller/player_controller.tscn" id="3_bls4j"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="5_fkugw"]
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="7_qiwj3"]
 [ext_resource type="PackedScene" uid="uid://do5aduvfpkbbv" path="res://components/camera/camera.tscn" id="8_26q78"]
+[ext_resource type="PackedScene" uid="uid://j4h1smjjwgmi" path="res://components/target/target.tscn" id="9_7thud"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://cvmuttenp57jn" path="res://components/status_effect/status_effect_manager.tscn" id="9_wvtmh"]
 
@@ -56,3 +57,5 @@ max = 3
 
 [node name="StatusEffectManager" parent="." instance=ExtResource("9_wvtmh")]
 unique_name_in_owner = true
+
+[node name="Target" parent="." instance=ExtResource("9_7thud")]

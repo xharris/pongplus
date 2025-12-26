@@ -1,5 +1,6 @@
 extends Node2D
 class_name Level
+## DONT FORGET to call super method when overriding
 
 signal accepted_visitor(v: Visitor)
 

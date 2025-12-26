@@ -30,7 +30,6 @@ var aim_direction: AimDirection = AimDirection.STRAIGHT
 var coyote_distance = 140
 var coyote_rate_of_change = 120
 var coyote_time_scale = 1
-var team = 0
 
 var _platform_move_tween: Tween
 var _ability_ready_called: Array[StringName]

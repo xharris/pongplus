@@ -1,7 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgl2ti6bcs2yb"]
+[gd_scene load_steps=6 format=3 uid="uid://bgl2ti6bcs2yb"]
 
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="1_id7qm"]
+[ext_resource type="PackedScene" uid="uid://j4h1smjjwgmi" path="res://components/target/target.tscn" id="2_id7qm"]
+[ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="3_1gy74"]
+[ext_resource type="Resource" uid="uid://cfciahdtwbl4c" path="res://resources/hitbox_layers/training_dummy_hurtbox.tres" id="4_l8cri"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l8cri"]
+radius = 16.8
 
 [node name="TrainingDummy" type="Node2D"]
 
 [node name="Character" parent="." instance=ExtResource("1_id7qm")]
+
+[node name="Target" parent="." instance=ExtResource("2_id7qm")]
+
+[node name="Hurtbox" parent="." instance=ExtResource("3_1gy74")]
+id = &"training_dummy"
+layer = ExtResource("4_l8cri")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_l8cri")

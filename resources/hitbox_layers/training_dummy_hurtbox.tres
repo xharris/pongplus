@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HitboxLayer" load_steps=3 format=3 uid="uid://cfciahdtwbl4c"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_6dklg"]
+[ext_resource type="Script" uid="uid://dw8ni5rbacm3h" path="res://components/hitbox_layers.gd" id="2_hxsx8"]
+
+[resource]
+script = ExtResource("2_hxsx8")
+layer = 3
+collide_with = Array[int]([2])
+on_collide = Array[ExtResource("1_6dklg")]([])
+metadata/_custom_type_script = "uid://dw8ni5rbacm3h"
