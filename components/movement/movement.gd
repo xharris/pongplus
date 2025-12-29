@@ -29,6 +29,8 @@ func handle(cmd: Command):
         var dir = Vector2(sign(cmd.direction.x), 0) * strength
         dir = dir.rotated(-deg_to_rad(cmd.angle) * sign(dir.x))
         velocity += dir
+    if cmd is MovementMoveTowards:
+        velocity = global_position.direction_to(cmd.point)
 
 func _process(delta: float) -> void:
     dt = delta

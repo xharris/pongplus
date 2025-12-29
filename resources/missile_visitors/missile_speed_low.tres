@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MissileDurationCurvePosition" load_steps=2 format=3 uid="uid://ccjy0jrfcnmw0"]
+[gd_resource type="Resource" script_class="MissileSpeed" load_steps=2 format=3 uid="uid://ccjy0jrfcnmw0"]
 
 [ext_resource type="Script" uid="uid://cohsym8o6rdq8" path="res://components/missile/visitors/missile_speed.gd" id="1_1v3vr"]
 

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=4 format=3 uid="uid://dfwpv8dyquqpf"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_4b5o5"]
+[ext_resource type="Resource" uid="uid://cjy4p1up6a8t6" path="res://resources/abilities/magic_missile/ability_ctrl_visitors/create_magic_missile.tres" id="2_gd8eh"]
+[ext_resource type="Script" uid="uid://2ap2s3ni6oid" path="res://components/ability/ability.gd" id="9_anm5v"]
+
+[resource]
+script = ExtResource("9_anm5v")
+name = &"magic_missile"
+overrides = false
+type = 0
+on_ready = Array[ExtResource("1_4b5o5")]([])
+on_process = Array[ExtResource("1_4b5o5")]([])
+on_health_take_damage = Array[ExtResource("1_4b5o5")]([])
+on_attack_active = Array[ExtResource("1_4b5o5")]([ExtResource("2_gd8eh")])
+on_press_up = Array[ExtResource("1_4b5o5")]([])
+on_charged_attack_active = Array[ExtResource("1_4b5o5")]([])
+on_block_active = Array[ExtResource("1_4b5o5")]([])
+on_block_recovery = Array[ExtResource("1_4b5o5")]([])
+metadata/_custom_type_script = "uid://2ap2s3ni6oid"

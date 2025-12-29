@@ -50,7 +50,7 @@ func accept(v: Visitor):
     if v is CharacterVisitor:
         v.visit_character(self)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
     _check_release_hold()
     if not Engine.is_editor_hint():
         is_idle = !is_falling && !is_hit && !is_walking
@@ -61,21 +61,28 @@ func _process(delta: float) -> void:
         animation_tree["parameters/face_direction/blend_position"] = face_direction.x
 
 func play_one_shot(animation_name: AnimationName):
+    _log.debug("play_one_shot: %s" % [AnimationName.find_key(animation_name)])
     match animation_name:
         AnimationName.ATTACK:
+            current_animation = AnimationName.ATTACK
             animation_tree["parameters/oneshot_attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
         AnimationName.BLOCK:
+            current_animation = AnimationName.BLOCK
             animation_tree["parameters/oneshot_block/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 
 func _ready() -> void:
-    animation_player.speed_scale = 20
+    animation_tree.active = true
+    animation_player.callback_mode_method = AnimationMixer.ANIMATION_CALLBACK_MODE_METHOD_IMMEDIATE
+    animation_tree.callback_mode_method = AnimationMixer.ANIMATION_CALLBACK_MODE_METHOD_IMMEDIATE
     animation_player.animation_finished.connect(_on_animation_finished)
+    _log.debug("ready, callback_mode_method set to IMMEDIATE")
     weapon = weapon
     update()
 
 func _on_animation_finished(_anim_name: StringName):
     _release_hold_requested = false
     _set_animation_step(AnimationStep.NONE)
+    current_animation = AnimationName.NONE
     #play_animation(AnimationName.NONE)
     
 func set_weapon(node: Node2D):
@@ -95,34 +102,9 @@ func _check_release_hold():
     if _is_holding and _release_hold_requested:
         _log.debug("release hold")
         _is_holding = false
-        #animation_player.speed_scale = 20
         animation_player.play(animation_player.current_animation)
         animation_player.advance(0)
   
-#func play_animation(animation: AnimationName, only_resume: bool = false):
-    #if only_resume and animation_player.current_animation_position <= 0:
-        #return
-    #match animation:
-        #AnimationName.NONE:
-            #animation_player.stop(true)
-            #animation_player.play("RESET")
-        #AnimationName.ATTACK:
-            #animation_player.play("attack")
-        #AnimationName.BLOCK:
-            #animation_player.play("block")
-        #AnimationName.HIT:
-            #animation_player.play("hit") 
-        #AnimationName.WALK:
-            #animation_player.play("walk")
-        #AnimationName.JUMP:
-            #animation_player.play("jump")
-        #AnimationName.FALL:
-            #animation_player.play("fall")
-    #if animation != current_animation:
-        #animation_name_changed.emit(animation)
-        #_log.debug("name: %s" % [AnimationName.find_key(animation)])
-    #current_animation = animation
-    
 ## For CallMethod track
 func _set_animation_step(step: AnimationStep):
     animation_step = step
@@ -131,34 +113,25 @@ func _set_animation_step(step: AnimationStep):
 
 ## For CallMethod track
 func _hold():
-    if not allow_hold or _is_holding or _release_hold_requested:
-        return
-    var pos := animation_player.current_animation_position
-    _log.debug("hold, frame: %f/%f" % [pos, animation_player.current_animation_length])
-    animation_player.pause()
-    _is_holding = true
+    pass
+    #if not allow_hold or _is_holding or _release_hold_requested:
+        #return
+    #var pos := animation_player.current_animation_position
+    #_log.debug("hold, frame: %f/%f" % [pos, animation_player.current_animation_length])
+    #animation_player.pause()
+    #_is_holding = true
 
-func _step_anticipation():
+## For CallMethod track
+func step_anticipation():
     _set_animation_step(AnimationStep.ANTICIPATION)
 
-func _step_active():
+## For CallMethod track
+func step_active():
     _set_animation_step(AnimationStep.ACTIVE)
-    
-func _step_recovery():
+   
+## For CallMethod track 
+func step_recovery():
     _set_animation_step(AnimationStep.RECOVERY)
-
-func face_right():
-    if sprite:
-        sprite.scale.x = abs(sprite.scale.x)
-
-func face_left():
-    if sprite:
-        sprite.scale.x = -abs(sprite.scale.x)
-
-func set_weapon_color(color: Color = Color.WHITE, value: float = 0):
-    var material: ShaderMaterial = weapon_container.material
-    material.set_shader_parameter("flash_color", color)
-    material.set_shader_parameter("flash_value", value)
 
 func update():
     if not is_inside_tree():

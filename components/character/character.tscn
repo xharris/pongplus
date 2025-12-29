@@ -192,16 +192,16 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "values": [{
 "args": [],
-"method": &"_step_anticipation"
+"method": &"step_anticipation"
 }, {
 "args": [],
-"method": &"_hold"
+"method": &"hold"
 }, {
 "args": [],
-"method": &"_step_active"
+"method": &"step_active"
 }, {
 "args": [],
-"method": &"_step_recovery"
+"method": &"step_recovery"
 }]
 }
 
@@ -572,14 +572,14 @@ graph_offset = Vector2(7.27549e-05, -27.9)
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_fdffj"]
 filter_enabled = true
-filters = ["AnimatedSprite/Sprite/ArmL/HandL/HandLSprite:z_index", "AnimatedSprite/Sprite/ArmL/HandL:rotation", "AnimatedSprite/Sprite/ArmL:rotation", "AnimatedSprite/Sprite/ArmR:rotation", "Weapon:z_index"]
+filters = [".", "AnimatedSprite/Sprite/ArmL/HandL/HandLSprite:z_index", "AnimatedSprite/Sprite/ArmL/HandL:rotation", "AnimatedSprite/Sprite/ArmL:rotation", "AnimatedSprite/Sprite/ArmR:rotation", "Weapon:z_index"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_4lp36"]
 filter_enabled = true
 filters = ["AnimatedSprite/Sprite/ArmL/HandL/HandLSprite:z_index", "AnimatedSprite/Sprite/ArmL/HandL:rotation", "AnimatedSprite/Sprite/ArmL:rotation", "AnimatedSprite/Sprite/ArmR:rotation", "Weapon:z_index"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ahdda"]
-graph_offset = Vector2(-576.832, 46.3748)
+graph_offset = Vector2(-545.152, -67.8652)
 nodes/attack/node = SubResource("AnimationNodeAnimation_5pm8e")
 nodes/attack/position = Vector2(-120, 380)
 nodes/attack_time_scale/node = SubResource("AnimationNodeTimeScale_uqrhf")
@@ -587,11 +587,11 @@ nodes/attack_time_scale/position = Vector2(30, 360)
 nodes/block/node = SubResource("AnimationNodeAnimation_ib46w")
 nodes/block/position = Vector2(500, 350)
 nodes/face_direction/node = SubResource("AnimationNodeBlendSpace1D_mjb6j")
-nodes/face_direction/position = Vector2(-470, 320)
+nodes/face_direction/position = Vector2(-430, 320)
 nodes/movement/node = SubResource("AnimationNodeStateMachine_0hohy")
 nodes/movement/position = Vector2(-780, 60)
 nodes/movement+face_direction/node = SubResource("AnimationNodeAdd2_clebq")
-nodes/movement+face_direction/position = Vector2(-280, 10)
+nodes/movement+face_direction/position = Vector2(-240, 10)
 nodes/movement_time_scale/node = SubResource("AnimationNodeTimeScale_5pm8e")
 nodes/movement_time_scale/position = Vector2(-520, 40)
 nodes/oneshot_attack/node = SubResource("AnimationNodeOneShot_fdffj")
@@ -613,6 +613,7 @@ script = ExtResource("1_5xa0e")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 callback_mode_process = 0
+callback_mode_method = 1
 libraries = {
 &"": SubResource("AnimationLibrary_uqrhf")
 }
@@ -621,17 +622,19 @@ speed_scale = 20.0
 [node name="AnimationTree" type="AnimationTree" parent="."]
 unique_name_in_owner = true
 root_node = NodePath("%AnimationTree/..")
+callback_mode_process = 0
+callback_mode_method = 1
 tree_root = SubResource("AnimationNodeBlendTree_ahdda")
 anim_player = NodePath("../AnimationPlayer")
 parameters/attack_time_scale/scale = 15.0
-parameters/face_direction/blend_position = -0.185953
+parameters/face_direction/blend_position = 0.685
 parameters/movement/conditions/is_falling = false
 parameters/movement/conditions/is_hit = false
 parameters/movement/conditions/is_idle = true
 parameters/movement/conditions/is_walking = false
 parameters/movement+face_direction/add_amount = 1.0
 parameters/movement_time_scale/scale = 10.0
-parameters/oneshot_attack/active = false
+parameters/oneshot_attack/active = 0.0
 parameters/oneshot_attack/internal_active = false
 parameters/oneshot_attack/request = 0
 parameters/oneshot_block/active = false
@@ -697,9 +700,9 @@ hframes = 3
 [node name="Weapon" type="Node2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_uqrhf")
-position = Vector2(-30, 20.7846)
-rotation = 2.09439
-scale = Vector2(3, -3)
+position = Vector2(30, 20.7846)
+rotation = 1.0472
+scale = Vector2(3, 3)
 
 [node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
 visible = false

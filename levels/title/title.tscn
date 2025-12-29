@@ -32,7 +32,6 @@ id = "title"
 metadata/_custom_type_script = "uid://himp0c2dh4b1"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = -1
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3

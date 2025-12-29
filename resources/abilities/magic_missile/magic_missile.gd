@@ -4,13 +4,16 @@ class_name MagicMissile
 @onready var hurtbox: Hitbox = %Hurtbox
 @onready var hitbox: Hitbox = %Hitbox
 
-var config: MagicMissileConfig
+@export var config: MagicMissileConfig
 
 func accept(v: Visitor):
     if v is MagicMissileVisitor:
         v.visit_magic_missile(self)
     elif v is MissileVisitor:
         v.visit_missile(self)
+
+func handle(cmd: Command):
+    super.handle(cmd)
 
 func _ready() -> void:
     super._ready()

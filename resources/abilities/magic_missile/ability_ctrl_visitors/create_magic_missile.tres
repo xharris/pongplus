@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AbilityInstantiate" load_steps=5 format=3 uid="uid://cjy4p1up6a8t6"]
+
+[ext_resource type="PackedScene" uid="uid://bnknwnsgysl40" path="res://resources/abilities/magic_missile/magic_missile.tscn" id="1_jv3ff"]
+[ext_resource type="Script" uid="uid://db0urdx8pt6dw" path="res://components/ability/visitors/instantiate.gd" id="2_2uy0y"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="3_uhug1"]
+[ext_resource type="Resource" uid="uid://co871nkhn38ft" path="res://resources/missile_visitors/missile_speed_mid.tres" id="4_wnfeq"]
+
+[resource]
+script = ExtResource("2_2uy0y")
+scene = ExtResource("1_jv3ff")
+visitors = Array[ExtResource("3_uhug1")]([ExtResource("4_wnfeq")])
+metadata/_custom_type_script = "uid://db0urdx8pt6dw"

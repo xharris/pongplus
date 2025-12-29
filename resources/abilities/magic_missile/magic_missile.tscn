@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bnknwnsgysl40"]
+[gd_scene load_steps=9 format=3 uid="uid://bnknwnsgysl40"]
 
-[ext_resource type="Script" uid="uid://b0fvvg3vmad6p" path="res://entities/magic_missile/magic_missile.gd" id="1_17dko"]
+[ext_resource type="Script" uid="uid://b0fvvg3vmad6p" path="res://resources/abilities/magic_missile/magic_missile.gd" id="1_17dko"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="2_824he"]
+[ext_resource type="Resource" uid="uid://betrfda0yyoy8" path="res://resources/abilities/magic_missile/magic_missile_configs/normal.tres" id="2_b4833"]
 [ext_resource type="PackedScene" uid="uid://c748xn105dplb" path="res://components/vfx_speedy/vfx_speedy.tscn" id="4_2am0j"]
-[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/magic_missile/ball.png" id="5_hbc8b"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://resources/abilities/magic_missile/ball.png" id="5_hbc8b"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="6_waybi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_haady"]
@@ -16,6 +17,7 @@ radius = 14.0
 top_level = true
 motion_mode = 1
 script = ExtResource("1_17dko")
+config = ExtResource("2_b4833")
 
 [node name="Hurtbox" parent="." instance=ExtResource("2_824he")]
 unique_name_in_owner = true

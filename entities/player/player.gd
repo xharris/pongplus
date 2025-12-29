@@ -26,14 +26,13 @@ static var _i = 0
 @export var hitbox_layer: HitboxLayer
         
 var aim_direction: Vector2
-## TODO move coyote to separate vfx node?
+## TODO move coyote time to separate vfx node
 var coyote_distance = 140
 var coyote_rate_of_change = 120
 var coyote_time_scale = 1
 
 var _platform_move_tween: Tween
 var _ability_ready_called: Array[StringName]
-var visitor_state: PlayerVisitor.State
 var _delta: float = 0
 var _bounds: Bounds = Bounds.IN
 
@@ -65,10 +64,19 @@ func _process(delta: float) -> void:
     super._process(delta)
     _delta = delta
     movement.move = controller.move_direction
-    
+    aim_direction = controller.aim_direction
+    # get aim direction
+    if controller.aim_direction != Vector2.ZERO:
+        aim_direction = controller.aim_direction
+    elif controller.move_direction != Vector2.ZERO:
+        aim_direction = controller.move_direction
+    elif aim_direction == Vector2.ZERO:
+        ## TODO use center of screen instead
+        aim_direction = Vector2(0, -1)
+    # update animations
     character.is_walking = movement.move != Vector2.ZERO and not is_movement_locked()
-    if controller.aim_direction.length() > 0.1:
-        character.face_direction = controller.aim_direction
+    if aim_direction.length() > 0.1:
+        character.face_direction = aim_direction
     
     if character.is_holding():
         # vibrate
@@ -129,10 +137,16 @@ func _ready() -> void:
     block_hitbox.accepted_visitor.connect(accept)
     block_hitbox.handled_command.connect(handle)
     character.animation_step_changed.connect(_on_character_animation_step_changed)
-    
+    ability_ctrl.instantiated.connect(_on_ability_instantiated)
 
     _update()
     EventBus.player_created.emit(self)
+    
+func _on_ability_instantiated(node: Node2D):
+    # shoot ability in aim direction
+    var move_towards = MissileMoveTowards.new()
+    move_towards.point = aim_direction
+    Command.handle(node, move_towards)
     
 func _on_character_animation_step_changed(step: Character.AnimationStep):
     match character.current_animation:

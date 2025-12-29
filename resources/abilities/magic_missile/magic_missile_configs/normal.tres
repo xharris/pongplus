@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MagicMissileConfig" load_steps=5 format=3 uid="uid://betrfda0yyoy8"]
+
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="1_g2xi6"]
+[ext_resource type="Script" uid="uid://4hagmndnft8j" path="res://components/command.gd" id="2_m41ul"]
+[ext_resource type="Script" uid="uid://1culyjbe0ab7" path="res://resources/abilities/magic_missile/magic_missile_config.gd" id="3_g2xi6"]
+[ext_resource type="Resource" uid="uid://co871nkhn38ft" path="res://resources/missile_visitors/missile_speed_mid.tres" id="3_m41ul"]
+
+[resource]
+script = ExtResource("3_g2xi6")
+on_ready = Array[ExtResource("1_g2xi6")]([ExtResource("3_m41ul")])
+can_hit_ally = false
+on_hit = Array[ExtResource("1_g2xi6")]([])
+on_hit_visit_self = Array[ExtResource("1_g2xi6")]([])
+on_hit_commands = Array[ExtResource("2_m41ul")]([])
+metadata/_custom_type_script = "uid://1culyjbe0ab7"

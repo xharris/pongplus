@@ -9,14 +9,20 @@ signal started_path_to(target: Node2D)
         speed = clampf(v, 0, 1)
         # update speed
         velocity = velocity.normalized() * speed_curve.sample(speed)
+        _log.debug("set speed: %f" % [speed])
 
-var _log = Logger.new("missile", Logger.Level.DEBUG)
+var _log = Logger.new("missile")#, Logger.Level.DEBUG)
 var target_history: Array[Node2D]
 
 func accept(v: Visitor):
     if v is MissileVisitor:
         v.visit_missile(self)
 
+func handle(cmd: Command):
+    if cmd is MissileMoveTowards:
+        _log.debug("move towards, velocity=%v" % [cmd.point])
+        velocity = cmd.point * speed_curve.sample(speed)
+        
 func _process(delta: float) -> void:
     move_and_slide()
     
@@ -30,7 +36,7 @@ func path_to(target: Node2D):
     velocity = \
         global_position.direction_to(target.global_position).normalized()\
         * speed_curve.sample(speed)
-    _log.info("path, velocity: %v" % [velocity])
+    _log.debug("path, velocity: %v" % [velocity])
     started_path_to.emit(target)
 
 func stop_pathing():

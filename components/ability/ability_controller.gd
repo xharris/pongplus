@@ -2,6 +2,7 @@ extends Node2D
 class_name AbilityController
 
 signal accepted_visitor(v: Visitor)
+signal instantiated(node: Node2D)
 
 var _log = Logger.new("ability_ctrl")#, Logger.Level.DEBUG)
 var abilities: Array[Ability]
@@ -10,6 +11,8 @@ var active_abilities: Array[Ability]
 var queue: Array[Ability]
 var queue_index: int = 0
 var _ability_ready_called: Dictionary
+## TODO player sets this to weapon tip
+var instantiate_position: Vector2
 
 func accept(v: Visitor):
     if v is AbilityControllerVisitor:

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dxc7pgfn6an5k" path="res://entities/vfx_test/vfx_test.gd" id="1_b3e4w"]
 [ext_resource type="PackedScene" uid="uid://c748xn105dplb" path="res://components/vfx_speedy/vfx_speedy.tscn" id="2_yaurb"]
 [ext_resource type="Script" uid="uid://c170bwxxiw32g" path="res://components/vfx_speedy/vfx_speedy_config.gd" id="3_21m5m"]
-[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://entities/magic_missile/ball.png" id="3_d2hm8"]
+[ext_resource type="Texture2D" uid="uid://capqpmjce2lnl" path="res://resources/abilities/magic_missile/ball.png" id="3_d2hm8"]
 
 [sub_resource type="Resource" id="Resource_d2hm8"]
 script = ExtResource("3_21m5m")
