@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://nwggbimfhwtc"]
+[gd_scene load_steps=5 format=3 uid="uid://nwggbimfhwtc"]
 
 [ext_resource type="Script" uid="uid://d4drjhi2ttmd7" path="res://game/game.gd" id="1_pxw13"]
 [ext_resource type="PackedScene" uid="uid://cmkbl3rf581y2" path="res://levels/title/title.tscn" id="3_u5opy"]
+[ext_resource type="PackedScene" uid="uid://ce4611n2exk0p" path="res://components/fullscreen_toggle/fullscreen_toggle.tscn" id="4_4fuuu"]
 [ext_resource type="PackedScene" uid="uid://cb741g5t3iwb4" path="res://ui/score_overlay/score_overlay.tscn" id="9_qrgux"]
 
 [node name="Game" type="Node2D"]
@@ -15,3 +16,5 @@ layer = -1
 
 [node name="ScoreOverlay" parent="CanvasLayer" instance=ExtResource("9_qrgux")]
 unique_name_in_owner = true
+
+[node name="FullscreenToggle" parent="." instance=ExtResource("4_4fuuu")]

@@ -24,6 +24,7 @@ func accept_with_source(v: Visitor, source: Node):
     visitor_source = null
 
 func _init() -> void:
+    RenderingServer.set_default_clear_color(MUI.GREY_50)
     update()
 
 func _ready() -> void:

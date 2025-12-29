@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://df1ed1c6hg78a"]
+[gd_scene load_steps=14 format=3 uid="uid://df1ed1c6hg78a"]
 
 [ext_resource type="Script" uid="uid://uyb4fw1c81vr" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="PackedScene" uid="uid://ckj14pn1icvha" path="res://components/player_controller/player_controller.tscn" id="3_bls4j"]
@@ -9,9 +9,10 @@
 [ext_resource type="PackedScene" uid="uid://j4h1smjjwgmi" path="res://components/target/target.tscn" id="9_7thud"]
 [ext_resource type="PackedScene" uid="uid://c2ij1bmmbk4su" path="res://components/health/health.tscn" id="9_bectd"]
 [ext_resource type="PackedScene" uid="uid://cvmuttenp57jn" path="res://components/status_effect/status_effect_manager.tscn" id="9_wvtmh"]
+[ext_resource type="PackedScene" uid="uid://ib4lqotk8acj" path="res://components/ability/ability_controller.tscn" id="10_wvtmh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bectd"]
-height = 57.0
+height = 80.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8fjmc"]
 radius = 16.0
@@ -20,10 +21,12 @@ radius = 16.0
 radius = 70.0
 
 [node name="Player" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_abrql")
 hitbox_layer = ExtResource("4_qiwj3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 1.05448)
 shape = SubResource("CapsuleShape2D_bectd")
 
 [node name="PlayerController" parent="." instance=ExtResource("3_bls4j")]
@@ -49,7 +52,6 @@ unique_name_in_owner = true
 
 [node name="Camera" parent="." instance=ExtResource("8_26q78")]
 unique_name_in_owner = true
-is_focal_point = true
 
 [node name="Health" parent="." instance=ExtResource("9_bectd")]
 unique_name_in_owner = true
@@ -59,3 +61,6 @@ max = 3
 unique_name_in_owner = true
 
 [node name="Target" parent="." instance=ExtResource("9_7thud")]
+
+[node name="AbilityController" parent="." instance=ExtResource("10_wvtmh")]
+unique_name_in_owner = true

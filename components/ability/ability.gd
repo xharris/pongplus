@@ -1,6 +1,13 @@
 extends Resource
 class_name Ability
 
+enum Type {
+    ## Included in ability rotation
+    QUEUED, 
+    ## Always active
+    PASSIVE
+}
+
 static var _static_log = Logger.new("ability")#, Logger.Level.DEBUG)
 
 static func has_ability(abilities: Array[Ability], ability: Ability) -> bool:
@@ -50,16 +57,14 @@ const ON_ME_HIT_PLAYER_PLATFORM = &"on_me_hit_player_platform"
 ## it's visitors will be called and abilities higher in the list will
 ## be skipped. This will not happen though if the visitor array is empty.
 @export var overrides: bool = true
+@export var type: Type
 
 @export var on_ready: Array[Visitor]
 @export var on_process: Array[Visitor]
-
 @export var on_health_take_damage: Array[Visitor]
-@export var on_press_up: Array[Visitor]
-
 @export var on_attack_active: Array[Visitor]
+
+@export var on_press_up: Array[Visitor]
 @export var on_charged_attack_active: Array[Visitor]
 @export var on_block_active: Array[Visitor]
 @export var on_block_recovery: Array[Visitor]
-
-@export var movement: Array[Visitor]

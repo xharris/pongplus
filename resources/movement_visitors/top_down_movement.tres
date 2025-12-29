@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MovementOmnidirectional" load_steps=2 format=3 uid="uid://bud26kyn3wegl"]
+
+[ext_resource type="Script" uid="uid://cm58su3bdobfa" path="res://components/movement/visitors/movement_omnidirectional.gd" id="1_l0oe1"]
+
+[resource]
+script = ExtResource("1_l0oe1")
+speed = 300.0
+acceleration = 20.0
+friction = 20.0
+metadata/_custom_type_script = "uid://cm58su3bdobfa"

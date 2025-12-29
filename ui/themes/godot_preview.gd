@@ -3,8 +3,7 @@ extends Control
 
 @onready var tab_container: TabContainer = %TabContainer
 @onready var tree: Tree = %Tree
-
-var icon = preload("res://entities/ball/ball.png")
+@export var icon: Texture2D
 
 func _ready() -> void:
     tab_container.set_tab_icon(1, icon)

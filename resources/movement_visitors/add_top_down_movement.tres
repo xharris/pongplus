@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MovementAddVisitors" load_steps=4 format=3 uid="uid://ddrkr1xpesx3v"]
+
+[ext_resource type="Script" uid="uid://cwr7gu10awu4c" path="res://components/movement/visitors/movement_add_visitors.gd" id="1_huffc"]
+[ext_resource type="Script" uid="uid://fblxl8ipdlsr" path="res://components/visitor/visitor.gd" id="2_ougpx"]
+[ext_resource type="Resource" uid="uid://bud26kyn3wegl" path="res://resources/movement_visitors/top_down_movement.tres" id="3_ssehx"]
+
+[resource]
+script = ExtResource("1_huffc")
+visitors = Array[ExtResource("2_ougpx")]([ExtResource("3_ssehx")])
+metadata/_custom_type_script = "uid://cwr7gu10awu4c"

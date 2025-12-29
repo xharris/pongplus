@@ -13,6 +13,9 @@ func _process(delta: float) -> void:
     move_direction = Input.get_vector(
         "left", "right", "up", "down"
     )
+    aim_direction = Input.get_vector(
+        "aim_left", "aim_right", "aim_up", "aim_down"
+    )
 
 func _unhandled_input(event: InputEvent) -> void:
     if not config:

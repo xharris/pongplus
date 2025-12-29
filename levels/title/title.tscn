@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cmkbl3rf581y2"]
+[gd_scene load_steps=15 format=3 uid="uid://cmkbl3rf581y2"]
 
 [ext_resource type="Script" uid="uid://ca5ficoql8yb8" path="res://levels/title/title.gd" id="1_vucde"]
 [ext_resource type="Resource" uid="uid://dfmaov33n1my" path="res://resources/gameplay/default_gameplay.tres" id="2_b7l43"]
@@ -11,8 +11,18 @@
 [ext_resource type="Resource" uid="uid://bu3mnq47yp6ra" path="res://resources/player_controller_configs/player2.tres" id="9_n2ogb"]
 [ext_resource type="PackedScene" uid="uid://bgl2ti6bcs2yb" path="res://entities/training_dummy/training_dummy.tscn" id="10_46ysu"]
 
+[sub_resource type="Gradient" id="Gradient_46ysu"]
+colors = PackedColorArray(0.129412, 0.129412, 0.129412, 1, 0.129412, 0.129412, 0.129412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n2ogb"]
+gradient = SubResource("Gradient_46ysu")
+fill_to = Vector2(0, 0.0790598)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b7l43"]
-size = Vector2(1792.5, 45)
+size = Vector2(1224, 45)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46ysu"]
+size = Vector2(52, 539.25)
 
 [node name="Title" type="Node2D"]
 position = Vector2(1, 0)
@@ -42,26 +52,75 @@ offset_bottom = 253.0
 layout_mode = 2
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Magic Missiles"
 uppercase = true
 
 [node name="HowToPlay" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Press any button"
+
+[node name="TrainingDummy" parent="." instance=ExtResource("10_46ysu")]
+unique_name_in_owner = true
+position = Vector2(575, 320)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -1.0
+offset_top = 576.0
+offset_right = 63.0
+offset_bottom = 640.0
+scale = Vector2(18.002, 1.49093)
+texture = SubResource("GradientTexture2D_n2ogb")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 63.0
+offset_top = -152.0
+offset_right = 127.0
+offset_bottom = -88.0
+rotation = 1.57079
+scale = Vector2(18.002, 1.49093)
+texture = SubResource("GradientTexture2D_n2ogb")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+offset_left = 1087.0
+offset_top = 1072.0
+offset_right = 1151.0
+offset_bottom = 1136.0
+rotation = 4.71238
+scale = Vector2(18.002, 1.49093)
+texture = SubResource("GradientTexture2D_n2ogb")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+offset_left = 1151.0
+offset_top = 64.0
+offset_right = 1215.0
+offset_bottom = 128.0
+rotation = 3.14159
+scale = Vector2(18.002, 1.49093)
+texture = SubResource("GradientTexture2D_n2ogb")
 
 [node name="Floor" parent="." instance=ExtResource("7_d1k64")]
 layer = ExtResource("8_b7l43")
 
 [node name="Room" type="CollisionShape2D" parent="Floor"]
-position = Vector2(575, 640)
+position = Vector2(579, 600)
 shape = SubResource("RectangleShape2D_b7l43")
+
+[node name="Room2" type="CollisionShape2D" parent="Floor"]
+position = Vector2(583, 40)
+shape = SubResource("RectangleShape2D_b7l43")
+
+[node name="Room3" type="CollisionShape2D" parent="Floor"]
+position = Vector2(39, 314.375)
+shape = SubResource("RectangleShape2D_46ysu")
+
+[node name="Room4" type="CollisionShape2D" parent="Floor"]
+position = Vector2(1111, 320)
+shape = SubResource("RectangleShape2D_46ysu")
 
 [node name="PlayerSpawn" parent="." instance=ExtResource("6_wtaml")]
 position = Vector2(1015, 560)
 player_controller_configs = Array[ExtResource("7_yk36c")]([ExtResource("8_46ysu"), ExtResource("9_n2ogb")])
-
-[node name="TrainingDummy" parent="." instance=ExtResource("10_46ysu")]
-unique_name_in_owner = true
-position = Vector2(79, 589)

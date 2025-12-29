@@ -11,6 +11,7 @@ var is_countering: bool:
         return is_blocking and block_duration <= counter_duration
 ## normal vector of direction to move (ie. joystick movement)
 var move_direction: Vector2
+var aim_direction: Vector2
 var charge_duration: float
 var block_duration: float
 

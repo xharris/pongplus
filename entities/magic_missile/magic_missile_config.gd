@@ -2,6 +2,7 @@ extends Resource
 class_name MagicMissileConfig
 
 @export var on_ready: Array[Visitor]
+@export var can_hit_ally: bool
 ## Visitors to run on body when this missile hits it
 @export var on_hit: Array[Visitor]
 ## Visitors to run on this missile when it hits a body

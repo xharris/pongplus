@@ -24,7 +24,7 @@ func _ready() -> void:
 func _on_hitbox_body_entered_once(body: Node2D):
     var my_team = Groups.get_team(self)
     var other_team = Groups.get_team(body)
-    if my_team == other_team:
+    if my_team == other_team and (config and not config.can_hit_ally):
         return
     Visitor.visit(self, config.on_hit_visit_self)
     Visitor.visit(body, config.on_hit)

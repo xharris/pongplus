@@ -1,16 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgl2ti6bcs2yb"]
+[gd_scene load_steps=8 format=3 uid="uid://bgl2ti6bcs2yb"]
 
 [ext_resource type="PackedScene" uid="uid://bjkuareenbkbr" path="res://components/character/character.tscn" id="1_id7qm"]
+[ext_resource type="Script" uid="uid://bgrp34wkgqgxp" path="res://entities/training_dummy/training_dummy.gd" id="1_x7gou"]
 [ext_resource type="PackedScene" uid="uid://j4h1smjjwgmi" path="res://components/target/target.tscn" id="2_id7qm"]
 [ext_resource type="PackedScene" uid="uid://4b5bvjbbd8nl" path="res://components/hitbox/hitbox.tscn" id="3_1gy74"]
+[ext_resource type="Resource" uid="uid://etx8p3d4wl2v" path="res://resources/character_configs/training_dummy/training_dummy.tres" id="3_nw7nf"]
 [ext_resource type="Resource" uid="uid://cfciahdtwbl4c" path="res://resources/hitbox_layers/training_dummy_hurtbox.tres" id="4_l8cri"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8cri"]
 radius = 16.8
 
 [node name="TrainingDummy" type="Node2D"]
+script = ExtResource("1_x7gou")
 
 [node name="Character" parent="." instance=ExtResource("1_id7qm")]
+unique_name_in_owner = true
+config = ExtResource("3_nw7nf")
 
 [node name="Target" parent="." instance=ExtResource("2_id7qm")]
 

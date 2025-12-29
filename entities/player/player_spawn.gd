@@ -8,7 +8,7 @@ func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("attack") or event.is_action_pressed("jump"):
         for c in player_controller_configs:
             for p: Player in get_tree().get_nodes_in_group(Groups.PLAYER):
-                if p.player_controller_config.device == event.device:
+                if p.player_controller_config and p.player_controller_config.device == event.device:
                     # player already spawned
                     return
             if c.device == event.device:

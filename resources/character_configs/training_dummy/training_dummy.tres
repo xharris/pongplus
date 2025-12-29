@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterConfig" load_steps=3 format=3 uid="uid://etx8p3d4wl2v"]
+
+[ext_resource type="Script" uid="uid://bks8u07n3fxj1" path="res://components/character/character_config.gd" id="1_7sh6p"]
+[ext_resource type="Texture2D" uid="uid://d0sd6ld4dktn" path="res://resources/character_configs/training_dummy/dummy2.png" id="2_tq1og"]
+
+[resource]
+script = ExtResource("1_7sh6p")
+spritesheet = ExtResource("2_tq1og")
+hide_arms = true
+metadata/_custom_type_script = "uid://bks8u07n3fxj1"

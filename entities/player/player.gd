@@ -20,12 +20,12 @@ static var _i = 0
 @onready var camera: Camera = %Camera
 @onready var health: Health = %Health
 @onready var status_effects: StatusEffectManager = %StatusEffectManager
+@onready var ability_ctrl: AbilityController = %AbilityController
 
 @export var player_controller_config: PlayerControllerConfig
-@export var abilities: Array[Ability]
 @export var hitbox_layer: HitboxLayer
         
-var aim_direction: AimDirection = AimDirection.STRAIGHT
+var aim_direction: Vector2
 ## TODO move coyote to separate vfx node?
 var coyote_distance = 140
 var coyote_rate_of_change = 120
@@ -40,6 +40,8 @@ var _bounds: Bounds = Bounds.IN
 func accept(v: Visitor):
     if v is PlayerVisitor:
         v.visit_player(self)
+    elif v is MovementVisitor:
+        v.visit_movement(self)
     elif v is CameraVisitor:
         camera.accept(v)
     elif v is CharacterVisitor:
@@ -48,10 +50,10 @@ func accept(v: Visitor):
         block_hitbox.accept(v)
     elif v is HealthVisitor:
         health.accept(v)
-    elif v is MovementVisitor:
-        v.visit_movement(self)
     elif v is StatusEffectManagerVisitor:
         status_effects.accept(v)
+    elif v is AbilityControllerVisitor:
+        ability_ctrl.accept(v)
     else:
         accepted_visitor.emit(v)
 
@@ -62,13 +64,12 @@ func handle(cmd: Command):
 func _process(delta: float) -> void:
     super._process(delta)
     _delta = delta
-    for a in abilities:
-        visitor_state = PlayerVisitor.State.PROCESS
-        Visitor.visit(self, a.on_process)
-        visitor_state = PlayerVisitor.State.NONE
     movement.move = controller.move_direction
-    #if controller.move_direction != Vector2.ZERO:
-        #_log.debug("controller.move_direction=%s movement.velocity=%s" % [controller.move_direction, movement.velocity])
+    
+    character.is_walking = movement.move != Vector2.ZERO and not is_movement_locked()
+    if controller.aim_direction.length() > 0.1:
+        character.face_direction = controller.aim_direction
+    
     if character.is_holding():
         # vibrate
         var v: float
@@ -121,75 +122,48 @@ func _ready() -> void:
     
     health.current_changed.connect(_on_health_current_changed)
     #movement.accepted_visitor.connect(accept)
-    controller.attack_charge.connect(_on_attack_charge, CONNECT_DEFERRED)
     controller.attack_release.connect(_on_attack_release, CONNECT_DEFERRED)
-    controller.block_start.connect(_on_block_start, CONNECT_DEFERRED)
-    controller.block_stop.connect(_on_block_stop, CONNECT_DEFERRED)
     controller.up.connect(_on_up, CONNECT_DEFERRED)
     hurtbox.accepted_visitor.connect(accept)
     hurtbox.handled_command.connect(handle)
     block_hitbox.accepted_visitor.connect(accept)
     block_hitbox.handled_command.connect(handle)
     character.animation_step_changed.connect(_on_character_animation_step_changed)
+    
 
     _update()
     EventBus.player_created.emit(self)
     
-func _on_block_start():
-    if not is_animation_locked():
-        character.play_animation(Character.AnimationName.BLOCK)
-
-func _on_block_stop():
-    if is_block_locked():
-        character.release_hold()
-    
 func _on_character_animation_step_changed(step: Character.AnimationStep):
     match character.current_animation:
-        Character.AnimationName.BLOCK:
-            match step:
-                Character.AnimationStep.ACTIVE:
-                    block_hitbox.enable()
-                    for a in abilities:
-                        Visitor.visit(self, a.on_block_active)
-                Character.AnimationStep.RECOVERY:
-                    block_hitbox.disable()
-                    for a in abilities:
-                        Visitor.visit(self, a.on_block_recovery)
+        #Character.AnimationName.BLOCK:
+            #match step:
+                #Character.AnimationStep.ACTIVE:
+                    #block_hitbox.enable()
+                    #for a in abilities:
+                        #Visitor.visit(self, a.on_block_active)
+                #Character.AnimationStep.RECOVERY:
+                    #block_hitbox.disable()
+                    #for a in abilities:
+                        #Visitor.visit(self, a.on_block_recovery)
         
         Character.AnimationName.ATTACK:
             match step:
                 Character.AnimationStep.ACTIVE:
-                    character.set_weapon_color(Color.WHITE, 0.8)
-                    var charge_v = snappedf(controller.charge_duration / controller.max_charge_duration, 0.5)
-                    for a in abilities:
-                        if charge_v >= 0.5:
-                            _log.info("charged attack (%f)" % [charge_v])
-                            Visitor.visit(self, a.on_charged_attack_active)
-                        else:
-                            _log.info("attack (%f)" % [charge_v])
-                            Visitor.visit(self, a.on_attack_active)
-                Character.AnimationStep.RECOVERY:
-                    character.set_weapon_color(Color.WHITE, 0)
+                    ability_ctrl.attack_active()
     
 func _on_up():
-    for a in abilities:
-        Visitor.visit(self, a.on_press_up)
+    ability_ctrl.press_up()
     
 func _on_health_current_changed(amount: int):
     if amount < 0:
-        for a in abilities:
-            Visitor.visit(self, a.on_health_take_damage)
+        ability_ctrl.health_take_damage()
     EventBus.player_health_current_changed.emit(self, amount)
 
-func _on_attack_charge():
-    if not is_block_locked() and not is_attack_locked():
-        character.play_animation(Character.AnimationName.ATTACK)
-
 func _on_attack_release():
-    if not is_block_locked():
-        # continue attack animation
-        Input.start_joy_vibration(controller.config.device, 0.7, 0, 0.1)
-        character.release_hold()
+    # continue attack animation
+    Input.start_joy_vibration(controller.config.device, 0.7, 0, 0.1)
+    character.play_one_shot(Character.AnimationName.ATTACK)
 
 func is_animation_locked():
     return character.current_animation != Character.AnimationName.NONE
@@ -226,12 +200,4 @@ func _update():
     camera._log.set_prefix(name)
     health._log.set_prefix(name)
     status_effects._log.set_prefix(name)
-    for a in abilities:
-        if not _ability_ready_called.has(a.name):
-            # new ability added
-            visitor_state = PlayerVisitor.State.READY
-            Visitor.visit(self, a.on_ready)
-            visitor_state = PlayerVisitor.State.NONE
-            movement.visitors.append_array(a.movement)
-            _ability_ready_called.append(a.name)
     hitbox_layer.update(self)
